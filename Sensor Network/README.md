@@ -2,6 +2,9 @@
 
 ## Sensor Network
 ![](https://cdn-reichelt.de/bilder/web/xxl_ws/A300/SBC-NODEMCU-ESP32-01.png)
+![](https://github.com/kaiwen98/spacey/blob/master/images/sensormote.png)
+
+
 ### Introduction
    A “Wireless Sensor Network” will be set up such that the network of sensors will span over the seats in a restaurant establishment. The area will be divided into individual clusters whereby the cluster head sensor node will consolidate the data from the cluster nodes in regular time intervals and relay the information to a server connected to the same wireless network.
   <br> The occupancy status of a table is signalled by contact sensors attached to each seat around the table, whereby a customer sitting on it will trigger a change in signal sent from the cluster sensor node to the cluster head node. </br>
