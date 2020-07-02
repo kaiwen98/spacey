@@ -11,4 +11,7 @@ canvas_line_obj = []
 canvas_rec_obj = []
 num_coordinates_max = 0
 res = RestaurantSpace()
+node = None
+x, y = 0, 0
+deposit_flag = True
 

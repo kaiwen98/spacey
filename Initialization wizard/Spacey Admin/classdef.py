@@ -74,32 +74,36 @@ class Node(object):
     
 
 class CursorNode(object):
-    def __init__(self, canvas, xpos, ypos, restaurant):
+    def __init__(self, canvas, xpos, ypos):
         self.canvas = canvas
-        self.nodeCount = 0
         self.xpos, self.ypos = xpos, ypos
         self.xlen, self.ylen = 10, 10 #size of node
         self.x_mid, self.y_mid = self.xpos + self.xlen/2, self.ypos + self.ylen/2
         self.obj= canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "red")
         canvas.tag_bind(self.obj, '<B1-Motion>', self.move)
         canvas.tag_bind(self.obj, '<ButtonRelease-1>', self.release)
-        canvas.tag_bind(self.obj, '<Button-3>', self.deposit)
-        self.restaurant = restaurant
+        #canvas.tag_bind(self.obj, '<Button-3>', self.deposit)
+        self.restaurant = cfg.res
         self.move_flag = False
+        self.callBack = []
+    
+    def setDevInfo(self, dev_info):
+        self.dev_info = dev_info
     
     def setCallback(self, cb):
-        self.callBack = cb
+        self.callBack.append(cb)
         
-
-
-
-    def deposit(self, event):
+    def deposit(self):
         print("enter registered")
-        self.nodeCount += 1
-        node = Node(self.canvas, self.x_mid-self.xlen/2, self.y_mid - self.ylen/2)
-        self.restaurant.registerNode(self.x_mid, self.y_mid, 1,1,1,node)
-        self.restaurant.printMoteAt(self.x_mid, self.y_mid)
-        self.nodeDetectCallback()
+        if cfg.deposit_flag is True:
+            self.node = Node(self.canvas, self.x_mid-self.xlen/2, self.y_mid - self.ylen/2)
+            cfg.x = self.x_mid
+            cfg.y = self.y_mid
+            cfg.node = self.node
+            self.nodeDetectCallback()
+            cfg.deposit_flag = False
+        else:
+            return
     
 
  
@@ -145,14 +149,27 @@ class CursorNode(object):
         self.move_flag = False
         self.x_mid = new_xpos
         self.y_mid = new_ypos
+        cfg.x = self.x_mid
+        cfg.y = self.y_mid
         self.nodeDetectCallback()
 
     def nodeDetectCallback(self):
+
         if (self.x_mid, self.y_mid) in self.restaurant.dict_sensor_motes:
             text = self.restaurant.printMoteAt(self.x_mid, self.y_mid)
-            self.callBack(text)
-        else:
-            return
+            self.callBack[1]("lawn green")
+            self.callBack[0](text) # Print text on status label
+
+        else:   
+            cfg.deposit_flag = False
+            self.callBack[0]("No node information") # Print text on status label
+            print("mid")
+            self.callBack[1]("yellow")
+
+
+
+            
+            
 
         
 
@@ -161,8 +178,8 @@ class menu_upload(object):
         self.frame = frame
         #self.frame = Frame(frame)
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
-        self.labelFrame = LabelFrame(self.frame, text = "Upload: "+ str(cfg.filename), padx = 20, pady = 20, bg = "gray55")
-        self.labelFrame.pack(fill = X, side = TOP, pady = 40, padx = 10)
+        self.labelFrame = LabelFrame(self.frame, text = "Upload: "+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
+        self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
         self.obj = Button(self.labelFrame, text = "Upload", command = self.fileupload)
         self.obj.pack(ipadx = 10, ipady = 10)
 
@@ -176,8 +193,8 @@ class map_refresh(object):
         self.frame = frame
         #self.frame = Frame(frame)
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
-        self.labelFrame = LabelFrame(self.frame, text = "Upload: "+ str(cfg.filename), padx = 20, pady = 20, bg = "gray55")
-        self.labelFrame.pack(fill = X, side = TOP, pady = 40, padx = 10)
+        self.labelFrame = LabelFrame(self.frame, text = "Upload: "+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
+        self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
         self.num = newGrid
         self.map = canvasGridFrame
         self.but1 = Button(self.labelFrame, text = "Scale up", command = self.updateUp)
@@ -186,9 +203,6 @@ class map_refresh(object):
         self.but2.pack(ipadx = 10, ipady = 10, fill = X)
         self.cursor = cursor
 
-        
-
-
     def updateUp(self):
         self.num += 2
         
@@ -196,7 +210,7 @@ class map_refresh(object):
         for i in cfg.canvas_rec_obj:
             self.map.canvas.delete(i)
         refresh = self.map.refresh(self.num)
-        #self.cursor = CursorNode(self.map.canvas,xpos = 513,ypos = 392)
+        self.cursor.canvas.tag_raise(self.cursor.obj)
 
     def updateDown(self):
         self.num -= 2
@@ -207,47 +221,100 @@ class map_refresh(object):
         for i in cfg.canvas_rec_obj:
             self.map.canvas.delete(i)
         refresh = self.map.refresh(self.num)
-        #self.cursor = CursorNode(self.map.canvas,xpos = 513,ypos = 392)
+        self.cursor.canvas.tag_raise(self.cursor.obj)
       
         
 
 class menu_devinfo(object):
     def __init__(self, frame):
         self.frame = frame
-        #self.frame = Frame(frame, bg = "red")
-        #self.frame.grid(row = 1, column = 0, sticky = E+W)
-        self.labelFrame = LabelFrame(self.frame, text = "Set Sensor ID", padx = 20, pady = 20, bg = "gray55")
-        self.labelFrame.pack(fill = X, side = TOP, pady = 40, padx = 10)
+        self.getFlag = False
+        self.entryList = []
+        self.callBack = []
+
+        self.labelFrame = LabelFrame(self.frame, text = "Set Sensor ID", height = 500, width = 550, bg = "gray55")
+        self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
+
+        self.nodeEntry = [-1, -1, -1]
 
         self.idFlag = True
-        self.entry = Entry(self.labelFrame, bd = 5)
-        self.entry.grid(row = 1)
-        self.devUpdate = [0 for i in range(100)]
-        self.devUpdateID = 3
-        self.entry.bind('<Return>', self.enter)
 
-    def idEntry(self):
-        if self.idFlag is True:
-            self.obj = Label(self.labelFrame,text = "Please select device...")
-            self.obj.grid(row = 2)
+        self.frame1 = Frame(self.labelFrame,bg = "gray55")
+        self.frame1.pack(side = TOP, fill = X, padx = 10, pady = 5)
+        self.entry1_label = Label(self.frame1, text = "Level ID", bd = 5, width = 20)
+        self.entry1_label.pack(side = LEFT)
+        self.entryList.append(Entry(self.frame1, bd = 5))
+        self.entryList[0].pack(side = LEFT)
 
+        self.frame2 = Frame(self.labelFrame, bg = "gray55")
+        self.frame2.pack(side = TOP, fill = X, padx = 10, pady = 5)
+        self.entry2_label = Label(self.frame2, text = "Cluster ID", bd = 5, width = 20)
+        self.entry2_label.pack(side = LEFT)
+        self.entryList.append(Entry(self.frame2, bd = 5))
+        self.entryList[1].pack(side = LEFT)
 
-    def enter(self, event):
+        self.frame3 = Frame(self.labelFrame, bg = "gray55")
+        self.frame3.pack(side = TOP, fill = X, padx = 10, pady = 5)
+        self.entry3_label = Label(self.frame3, text = "Sensor ID", bd = 5, width = 20)
+        self.entry3_label.pack(side = LEFT)
+        self.entryList.append(Entry(self.frame3, bd = 5))
+        self.entryList[2].pack(side = LEFT)
+
+        self.entryList[0].bind('<Return>', lambda event : self.enter(event, 0))
+        self.entryList[1].bind('<Return>', lambda event : self.enter(event, 1))
+        self.entryList[2].bind('<Return>', lambda event : self.enter(event, 2))
+    
+    def setCallback(self, cb):
+        self.callBack.append(cb)
+
+    def highlight_dev_info(self, _bg):
+        print("highlihgt")
+        for i in self.entryList:
+            i.config(bg = _bg)
+        self.entryList[0].focus()
+        
+    def enter(self, event, id):
         print("Yup")
-        if self.entry.get().isnumeric() is True: 
-            self.devUpdate[self.devUpdateID] = int(self.entry.get())
+        val = int(self.entryList[id].get())
+        if (val >= 0):
+            self.nodeEntry[id] = val
+            self.entryList[id].config(bg = "lawn green")
 
-        self.entry.delete(0, 100)
+        if id < (len(self.entryList)-1):
+            self.entryList[id+1].focus()
+
+        for i in range(len(self.nodeEntry)):
+            if self.nodeEntry[i] < 0:
+                print("Incomplete")
+                self.entryList[i].config(bg = "red")
+                if (i == len(self.nodeEntry)-1): return
+        
+        for i in self.entryList:
+            i.delete(0, END)
+            i.config(bg = "lawn green")
+        self.entryList[0].focus()
+
+        x = self.nodeEntry
+        cfg.res.registerNode(cfg.x, cfg.y, x[0], x[1], x[2], cfg.node)
+        cfg.res.printMoteAt(cfg.x, cfg.y)
+        self.nodeEntry = [-1,-1,-1]
+        cfg.deposit_flag = True
+        self.callBack[0]()
+
+        
+            
 
 class menu_status(object):
     def __init__(self, frame):
         self.frame = frame
         #self.frame = Frame(frame, bg = "red")
         #self.frame.grid(row = 1, column = 0, sticky = E+W)
-        self.labelFrame = LabelFrame(self.frame, text = "Status bar", bg = "gray55")
-        self.labelFrame.pack(fill = X, side = TOP, pady = 40, padx = 10)
-        self.obj = Label(self.labelFrame,text = "Update complete: ID: 02 Cluster: 02 Seat: 245", bd = 100)
-        self.obj.grid(stick ="")
+        self.labelFrame = LabelFrame(self.frame, text = "Status bar", bg = "gray55", height = 300, width = 550)
+        #self.labelFrame.pack(side = TOP, pady = 40, padx = 10)
+        self.labelFrame.pack(fill = X, padx = 10, pady = 20, side = TOP)
+        self.labelFrame.pack_propagate(0)
+        self.obj = Label(self.labelFrame,text = "", bd = 100, height = 300, width = 550)
+        self.obj.pack(padx = 10, pady = 10)
     def updateText(self, _text):
         self.obj.configure(text = _text)
         self.obj.update()

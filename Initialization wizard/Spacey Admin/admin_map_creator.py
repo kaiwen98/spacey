@@ -54,9 +54,8 @@ def setup(root):
     my_canvas = canvas_obj.canvas
     
     grid = spc.CanvasGridFrame(my_canvas, scaleNum) # Creates gridlines so that the boxes inserted will appear more organised
-    cursor = spc.CursorNode(my_canvas,xpos = 513,ypos = 392, restaurant = cfg.res)  # Creates rectangle cursor (in red)
+    cursor = spc.CursorNode(my_canvas,xpos = 513,ypos = 392)  # Creates rectangle cursor (in red)
 
-    #my_canvas.tag_raise(rec.obj) # 
 
     ### Creation of Config menu ###
 
@@ -70,8 +69,12 @@ def setup(root):
 
     upload = spc.menu_upload(frame_menu1)
     dev_info = spc.menu_devinfo(frame_menu1)
+    dev_info.setCallback(cursor.deposit)
     status = spc.menu_status(frame_menu1)
     cursor.setCallback(status.updateText)
+    cursor.setCallback(dev_info.highlight_dev_info)
+
+    #cursor.setDevInfo(dev_info)
 
     frame_menu2 = LabelFrame(frame_menu, text = "Configurations", width = w/4, height = h, bg = "gray40")
     frame_menu2.pack(side = LEFT, expand = 1)
