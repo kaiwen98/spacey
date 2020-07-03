@@ -8,6 +8,7 @@
 
 
 
+
 from tkinter import *
 import classdef as spc
 from tkinter import filedialog
@@ -15,6 +16,7 @@ import config as cfg
 from sensor_data import *
 from functools import partial
 from queue import Queue
+
 
 scaleNum = 50
 
@@ -84,15 +86,20 @@ def setup(root):
 
     upload = spc.menu_upload(frame_menu1)
     dev_info = spc.menu_devinfo(frame_menu1)
+    status = spc.menu_status(frame_menu1)
+    cfg.error = spc.menu_debug(frame_menu1)
+
+    # Set callbacks for cursor
+    cursor.setCallback(status.updateText)
+    cursor.setCallback(dev_info.highlightDeviceInfo)
+    cursor.setCallback(lambda i: focus_toggle(dev_info.keyEntry, i))
+
+    # Set callbacks for dev_info
     dev_info.setCallback(cursor.deposit)
     dev_info.setCallback(cursor.nodeDetectCallback)
     dev_info.setCallback(lambda i: focus_toggle(dev_info.keyEntry, i))
-    status = spc.menu_status(frame_menu1)
-    cursor.setCallback(status.updateText)
-    cursor.setCallback(dev_info.highlight_dev_info)
-    cursor.setCallback(lambda i: focus_toggle(dev_info.keyEntry, i))
+    
 
-    #cursor.setDevInfo(dev_info)
 
     frame_menu2 = LabelFrame(frame_menu, text = "Configurations", width = w/4, height = h, bg = "gray40")
     frame_menu2.pack(side = LEFT, expand = 1)
@@ -102,62 +109,11 @@ def setup(root):
     dev_info2 = spc.menu_devinfo(frame_menu2)
     maprefresh2 = spc.map_refresh(frame_menu2, grid, scaleNum, cursor)
 
-    #displayco1 = Label(frame, text = "", bg = "yellow")
-    #displayco1.grid(row = 0,column = 0, sticky = W)
-    #displayco2 = Label(frame, text = "", bg = "yellow")
-    #displayco2.grid(row = 1,column = 0, sticky = W)
-    #displayco3 = Label(frame, text = "", bg = "yellow")
-    #displayco3.grid(row = 2,column = 0, sticky = W)
-    #displayco.pack(side = BOTTOM, pady = 0)
-
-
     root.bind('<Escape>', quit)
-
-    #cfg.myCanvas.canvas.bind('<Button-1>', track)
-    #cfg.myCanvas.canvas.bind('<Button-1>', cursor.move)
-    #cfg.myCanvas.canvas.bind('<ButtonRelease-1>', cursor.release)
-    #cfg.myCanvas.canvas.bind('<Button-3>', cursor.deleteNode)
     root.bind('<Control-z>', lambda event: focus_toggle(event, dev_info.keyEntry))
-
-    # my_canvas.bind('<ButtonRelease-1>', rec.release)
-
-
-
 
 if __name__ == "__main__":
     root = Tk()
     setup(root)
     root.mainloop()
 
-
-
-#dev bind_root(root):
-
-#dev bind_canvas(canvas):
-"""my_canvas.create_rectangle(200, 100, 700, 600, fill="#B5F3FA", width = 0)
-my_canvas.create_line(50, 100, 250, 200, fill="red", width=10)
-for i in range(10):
-    my_canvas.create_line(50 * i, 0, 50 * i, 400)
-    my_canvas.create_line(0, 50 * i, 400, 50 * i) """
-"""
-img = PhotoImage(file = "C:/Users/Looi Kai Wen/Desktop/Spacey/gui experiment/dcspirte_back.png")
-#my_image = my_canvas.create_image(50,50,anchor = NW, image = img)
-my_box = my_canvas.create_rectangle(x, y, x+50, y+50,fill = "red", width = 1.0)
-help(my_canvas.create_image)
-
-def callback(t):
-    my_box = my_canvas.create_rectangle(t.x, t.y, t.x+50, t.y+50,fill = "red", width = 1.0)
-
-def move(e):
-    global img
-    #img = PhotoImage(file = "C:/Users/Looi Kai Wen/Desktop/Spacey/gui experiment/dcspirte_back.png")
-    my_box = my_canvas.create_rectangle(e.x, e.y, e.x+50, e.y+50,fill = "red", width = 1.0)
-    # my_image = my_canvas.create_image(e.x,e.y,image=img)
-    my_label.config(text="Coordinates x: "+str(e.x)+ "y: "+str(e.y))
-
-my_label = Label(root,text="")
-my_label.pack(pady = 20)
-
-my_canvas.bind('<B1-Motion>', move)
-my_canvas.bind('<Button-1>', callback)
-"""

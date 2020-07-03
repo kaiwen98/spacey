@@ -14,6 +14,9 @@ import config as cfg
 from sensor_data import *
 from functools import partial
 from queue import Queue
+from tkinter import font
+
+
 
 
 class myCanvasObject(object):
@@ -59,10 +62,10 @@ class CanvasGridFrame(object):
         y2 = cfg.y_list[1]
         _y1 = cfg.y_list[int(cfg.canvas_h/step)]
         _y2 = cfg.y_list[int(cfg.canvas_h/step)-5]
-        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,y1,_x1,y2, fill = "black"))        
-        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,_y2,_x1,_y1, fill = "black"))
-        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,y2,x2,_y2, fill = "black"))
-        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(_x2,y2,_x1,_y2, fill = "black"))
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,y1,_x1,y2, fill = "gray10"))        
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,_y2,_x1,_y1, fill = "gray10"))
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,y2,x2,_y2, fill = "gray10"))
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(_x2,y2,_x1,_y2, fill = "gray10"))
 
 
     def refresh(self,_num):
@@ -112,9 +115,10 @@ class CursorNode(object):
     
     def deleteNode(self, event):
         if (self.x_mid, self.y_mid) in self.restaurant.dict_sensor_motes:
-            print("deleted")
-            self.callBack[0]("Node deleted.")
+            print("deleted")            
             self.restaurant.deleteNode(self.x_mid, self.y_mid)
+            cfg.error.updateText("Node deleted at x:{x} and y:{y}".format(x = cfg.x, y = cfg.y), "deep pink")
+            self.nodeDetectCallback()
             return
         else:
             print("Invalid")
@@ -291,11 +295,20 @@ class map_refresh(object):
 class menu_devinfo(object):
     def __init__(self, frame):
         self.frame = frame
+        self.rowFrame = []
+        self.entryLabel = []
+        self.radio = []
         self.getFlag = False
         self.entryList = []
         self.callBack = []
         self.hold = []
         self.text = []
+        self.numEntries = 3
+        self.keyEntry = None
+        self.needCorrect = [False, False, False]
+        self.error_text = []
+
+        # Initialize variable texts
         for i in range(3):
             self.hold.append(IntVar())
             self.text.append(StringVar())
@@ -304,54 +317,40 @@ class menu_devinfo(object):
         self.labelFrame = LabelFrame(self.frame, text = "Set Sensor ID", height = 500, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
 
+        # Autosaved entries
         self.nodeEntry = [-1, -1, -1]
         self.prevEntry = [-1, -1, -1]
 
-        self.idFlag = True
+        # Set up rows of entry
+        self.titleName = ["Level ID", "Cluster ID", "Sensor ID"]
+        for i in range(self.numEntries):
+            self.setEntryRow(i)
 
-        self.frame1 = Frame(self.labelFrame,bg = "gray55")
-        self.frame1.pack(side = TOP, fill = X, padx = 10, pady = 5)
-        self.entry1_label = Label(self.frame1, text = "Level ID", bd = 5, width = 20)
-        self.entry1_label.pack(side = LEFT)
-        self.entryList.append(Entry(self.frame1, bd = 5, textvariable = self.text[0]))
-        self.entryList[0].pack(side = LEFT)
-        self.radio1 = Checkbutton(self.frame1, text = "Hold", variable = self.hold[0], command = partial(self.restoreprev, 0), bg = "gray55", )
-        self.radio1.pack(side = LEFT)
-
-        self.frame2 = Frame(self.labelFrame, bg = "gray55")
-        self.frame2.pack(side = TOP, fill = X, padx = 10, pady = 5)
-        self.entry2_label = Label(self.frame2, text = "Cluster ID", bd = 5, width = 20)
-        self.entry2_label.pack(side = LEFT)
-        self.entryList.append(Entry(self.frame2, bd = 5, textvariable = self.text[1]))
-        self.entryList[1].pack(side = LEFT)
-        self.radio2 = Checkbutton(self.frame2, text = "Hold", variable = self.hold[1], command = partial(self.restoreprev, 1), bg = "gray55")
-        self.radio2.pack(side = LEFT)
-
-        self.frame3 = Frame(self.labelFrame, bg = "gray55")
-        self.frame3.pack(side = TOP, fill = X, padx = 10, pady = 5)
-        self.entry3_label = Label(self.frame3, text = "Sensor ID", bd = 5, width = 20)
-        self.entry3_label.pack(side = LEFT)
-        self.entryList.append(Entry(self.frame3, bd = 5, textvariable = self.text[2]))
-        self.entryList[2].pack(side = LEFT)
-        self.radio3 = Checkbutton(self.frame3, text = "Hold", variable = self.hold[2], command = partial(self.restoreprev, 2), bg = "gray55")
-        self.radio3.pack(side = LEFT)
-
-        self.entryList[0].bind('<Return>', lambda event : self.enter(event, 0))
-        self.entryList[1].bind('<Return>', lambda event : self.enter(event, 1))
-        self.entryList[2].bind('<Return>', lambda event : self.enter(event, 2))
-        for i in range(10):
-            self.entryList[0].bind(str(i), lambda event : self.enter(event, 0))
-            self.entryList[1].bind(str(i), lambda event : self.enter(event, 1))
-            self.entryList[2].bind(str(i), lambda event : self.enter(event, 2))
-        
-        self.keyEntry = None
-        self.needCorrect = [False, False, False]
+        # Key bindings
+        for i in range(10): #bind all numeric keys to entry
+            for j in range(len(self.entryList)): #bind all entries
+                self.entryList[j].bind(str(i), lambda event : self.enter(event, j))
+                self.entryList[j].bind('<Return>', lambda event : self.enter(event, j))
     
-    def restoreprev(self, i):
-        if self.hold[i].get():
-            if self.entryList[i].get() is "":
+        
+    def setEntryRow(self,i):
+        self.rowFrame.append(Frame(self.labelFrame, bg = "gray55"))
+        self.rowFrame[i].pack(side = TOP, fill = X, padx = 10, pady = 5)
+        self.entryLabel.append(Label(self.rowFrame[i], text = self.titleName[i], bd = 5, width = 20))
+        self.entryLabel[i].pack(side = LEFT)
+        self.entryList.append(Entry(self.rowFrame[i], bd = 5, textvariable = self.text[i]))
+        self.entryList[i].pack(side = LEFT)
+        self.radio.append(Checkbutton(self.rowFrame[i], text = "Hold", variable = self.hold[i], command = partial(self.restorePreviousEntries, i), bg = "gray55"))
+        self.radio[i].pack(side = LEFT)
+
+
+
+    def restorePreviousEntries(self, i):
+        
+        if self.hold[i].get():  # If the user selects radio button 
+            if self.entryList[i].get() is "":   # If the user wants to recall and hold previous entry
                 self.text[i].set(self.prevEntry[i])
-            else:
+            else:   # If the user typed a value to hold to 
                 self.text[i].set(self.entryList[i].get())
             self.entryList[i].config(state = DISABLED, disabledbackground= "sky blue")
         else:
@@ -361,67 +360,83 @@ class menu_devinfo(object):
     def setCallback(self, cb):
         self.callBack.append(cb)
 
-    def highlight_dev_info(self, _bg):
+    def highlightDeviceInfo(self, _bg):
         print("highlight: " + str(_bg))
         for i in self.entryList:
             i.config(bg = _bg)
         self.keyEntry = self.entryList[0]
+
+        # Grant focus to the entry only if it comes from a <Return> or a <Mouse Release>
         if cfg.initflag: 
             self.keyEntry.focus()
             cfg.initflag = False
    
     def enter(self, event, id):
+        
+        emptyCount = []
+        # Performs a check throughout the inputs of all 3 entries
         for i in range(len(self.entryList)):
-            if (self.entryList[i].get()).isnumeric():
+            if not len(self.entryList[i].get()): 
+                self.error_text.append(("<Entry [{num}]>: Empty".format(num = self.titleName[i]), "yellow"))
+                self.entryList[i].config(bg = "red")
+                self.needCorrect[i] = True
+            elif (self.entryList[i].get()).isnumeric():
                 if int(self.entryList[i].get()) >=0:
-                    print("-2")
                     self.nodeEntry[i] = int(self.entryList[i].get())
                     self.prevEntry[i] = self.nodeEntry[i]
                     self.entryList[i].config(bg = "lawn green")
                     self.needCorrect[i] = False
                 else:
+                    self.error_text.append(("<Entry [{num}]>: Number must be positive".format(num = self.titleName[i]), "orange"))
                     self.entryList[i].config(bg = "red")
                     self.needCorrect[i] = True
 
             else:
-                print("-3")
+                self.error_text.append(("<Entry [{num}]>: Entry must be a positive number".format(num = self.titleName[i]), "orange"))
                 self.entryList[i].config(bg = "red")
                 self.needCorrect[i] = True
         
-        sum = 0
+            
+
+        numErrors = 0
         for i in self.needCorrect:
-            sum += i 
+            numErrors += i 
 
-        if sum: 
-            print(self.needCorrect)
+        if numErrors: 
             self.keyEntry = self.entryList[self.needCorrect.index(True)]
+            cfg.error.updateText(self.error_text[self.needCorrect.index(True)][0], self.error_text[self.needCorrect.index(True)][1])
             self.keyEntry.focus()
-            return
+            return # If there are invalid entries, cannot proceed to store data.
 
-        
-        print(self.nodeEntry)
+        self.error_text.clear()
+        cfg.error.updateText("No error", "pale green") 
 
+        # If not voted by radio to hold value, clear it
         for i in range(len(self.entryList)):
             if not self.hold[i].get():
                 self.entryList[i].delete(0, END)
 
         x = self.nodeEntry
         
+        # Deposit sensor node on map
         cfg.deposit_flag = True
         self.callBack[0]()
+
+        # Save sensor detail locally in previously declared class
         cfg.res.registerNode(cfg.x, cfg.y, x[0], x[1], x[2], cfg.node)
         cfg.res.printMoteAt(cfg.x, cfg.y)
+
+        # Reset the intermediate entry
         self.nodeEntry = [-1,-1,-1]
+
         self.callBack[1]()  # Callback to deposit sensor node
+        cfg.error.updateText("Node inserted at x:{x} and y:{y}".format(x = cfg.x, y = cfg.y), "deep pink")
         self.callBack[2](1) # Callback to give up focus back to canvas
 
 class menu_status(object):
     def __init__(self, frame):
         self.frame = frame
-        #self.frame = Frame(frame, bg = "red")
-        #self.frame.grid(row = 1, column = 0, sticky = E+W)
         self.labelFrame = LabelFrame(self.frame, text = "Status bar", bg = "gray55", height = 300, width = 550)
-        #self.labelFrame.pack(side = TOP, pady = 40, padx = 10)
         self.labelFrame.pack(fill = X, padx = 10, pady = 20, side = TOP)
         self.labelFrame.pack_propagate(0)
         self.obj = Label(self.labelFrame,text = "", bd = 100, height = 300, width = 550)
@@ -430,3 +445,29 @@ class menu_status(object):
         self.obj.configure(text = _text)
         self.obj.update()
 
+class menu_debug(object):
+    def __init__(self, frame):
+        #cfg.error_font = font.Font(family = "Times", font = "3", weight =  "BOLD")
+        cfg.error_font = font.Font(family="Courier New", size=10, weight = "bold")
+        self.frame = frame
+        self.labelFrame = LabelFrame(self.frame, text = "Debugger", bg = "gray55", height = 300, width = 550)
+        self.labelFrame.pack(fill = X, padx = 10, pady = 20, side = TOP)
+        self.labelFrame.pack_propagate(0)
+        self.obj = Listbox(self.labelFrame,height = 300, width = 550, bg = "gray10", font = cfg.error_font)
+        self.yscroll = Scrollbar(self.labelFrame, orient = "vertical", command = self.obj.yview)
+        self.xscroll = Scrollbar(self.labelFrame, orient = "horizontal", command = self.obj.xview)
+
+        self.yscroll.pack(padx = 10, pady = 10, side = LEFT, fill = Y)
+        self.xscroll.pack(padx = 10, pady = 10, side = BOTTOM, fill = X)
+        self.obj.pack(ipadx = 30, ipady = 30, side = LEFT, fill = Y)
+        
+
+        self.obj.configure(xscrollcommand= self.xscroll.set, yscrollcommand = self.yscroll.set)
+        self.obj.insert(END, "Initialized")
+        self.obj.itemconfig(0, foreground="sky blue")
+
+    def updateText(self, _text, _bg):
+        self.obj.insert(END, _text)
+        self.obj.itemconfig(END, foreground = _bg)
+        self.obj.see("end")
+        #self.obj.update()

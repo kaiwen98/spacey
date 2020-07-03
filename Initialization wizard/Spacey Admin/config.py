@@ -18,3 +18,5 @@ myCanvas = None
 step = 0
 toggle = 0
 initflag = 0
+error = None
+error_font = None
