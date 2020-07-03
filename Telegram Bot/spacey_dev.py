@@ -17,7 +17,7 @@ def error_callback(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
     # logger.info("User {user} sent {message}".format(user=update.message.from_user.username, message=update.message.text))
 
-bot = telegram.Bot(token="1165909865:AAEv_8NwFukQvWjcKb-WJzpntlhIjY193sw")
+bot = telegram.Bot(token=TOKEN)
 LOCATION, CHECKWHAT= range(2)
 
 def start(update, context):
@@ -156,7 +156,7 @@ def test(update, context):
 
 def main():
     # Create the Updater and pass in bot's token.
-    updater = Updater("1165909865:AAEv_8NwFukQvWjcKb-WJzpntlhIjY193sw", use_context=True)
+    updater = Updater(TOKEN, use_context=True)
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
