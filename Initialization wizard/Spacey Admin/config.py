@@ -4,14 +4,17 @@ from tkinter import filedialog
 import config as cfg
 from sensor_data import *
 
+
+
 x_list = []
 y_list = []
 filename = ""
-canvas_line_obj = []
-canvas_rec_obj = []
 num_coordinates_max = 0
-res = RestaurantSpace()
+res = None
 node = None
 x, y = 0, 0
 deposit_flag = True
-
+myCanvas = None
+step = 0
+toggle = 0
+initflag = 0

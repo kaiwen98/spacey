@@ -14,6 +14,7 @@ from tkinter import filedialog
 import config as cfg
 from sensor_data import *
 from functools import partial
+from queue import Queue
 
 scaleNum = 50
 
@@ -25,6 +26,19 @@ def track(event):
 
 def quit(event):
     exit()
+
+def focus_toggle(event, widget):
+    cfg.toggle = 1- cfg.toggle
+    if cfg.toggle:
+        cfg.myCanvas.canvas.focus_set()
+    else: 
+        widget.focus_set()
+
+def focus_toggle(widget, mode):
+    if mode:
+        cfg.myCanvas.canvas.focus_set()
+    else: 
+        widget.focus_set()
 
 ### Initialization of window ###
 
@@ -49,12 +63,13 @@ def setup(root):
     frame_canvas.pack_propagate(False) # Fix frame size to dimensions
 
 
-    canvas_obj = myCanvasObject(frame_canvas, width = w, height = h) # Set canvas within frame
-    canvas_obj.canvas.pack(fill = "both", expand = 1, padx = 10, pady = 10) # Set padding
-    my_canvas = canvas_obj.canvas
+    cfg.myCanvas = spc.myCanvasObject(frame_canvas, width = w, height = h) # Set canvas within frame
+    cfg.myCanvas.canvas.pack(fill = "both", expand = 1, padx = 10, pady = 10) # Set padding
     
-    grid = spc.CanvasGridFrame(my_canvas, scaleNum) # Creates gridlines so that the boxes inserted will appear more organised
-    cursor = spc.CursorNode(my_canvas,xpos = 513,ypos = 392)  # Creates rectangle cursor (in red)
+    cfg.res = RestaurantSpace(cfg.myCanvas.canvas)
+
+    grid = spc.CanvasGridFrame(cfg.myCanvas.canvas, scaleNum) # Creates gridlines so that the boxes inserted will appear more organised
+    cursor = spc.CursorNode(cfg.myCanvas.canvas , xpos = 513 , ypos = 392)  # Creates rectangle cursor (in red)
 
 
     ### Creation of Config menu ###
@@ -70,9 +85,12 @@ def setup(root):
     upload = spc.menu_upload(frame_menu1)
     dev_info = spc.menu_devinfo(frame_menu1)
     dev_info.setCallback(cursor.deposit)
+    dev_info.setCallback(cursor.nodeDetectCallback)
+    dev_info.setCallback(lambda i: focus_toggle(dev_info.keyEntry, i))
     status = spc.menu_status(frame_menu1)
     cursor.setCallback(status.updateText)
     cursor.setCallback(dev_info.highlight_dev_info)
+    cursor.setCallback(lambda i: focus_toggle(dev_info.keyEntry, i))
 
     #cursor.setDevInfo(dev_info)
 
@@ -95,13 +113,15 @@ def setup(root):
 
     root.bind('<Escape>', quit)
 
-    my_canvas.bind('<Button-1>', track)
-    my_canvas.bind('<Button-1>', cursor.move)
-    my_canvas.bind('<ButtonRelease-1>', cursor.release)
-    my_canvas.bind('<Button-3>', cursor.deposit)
-    #root.bind('<Return>', rec.deposit)
+    #cfg.myCanvas.canvas.bind('<Button-1>', track)
+    #cfg.myCanvas.canvas.bind('<Button-1>', cursor.move)
+    #cfg.myCanvas.canvas.bind('<ButtonRelease-1>', cursor.release)
+    #cfg.myCanvas.canvas.bind('<Button-3>', cursor.deleteNode)
+    root.bind('<Control-z>', lambda event: focus_toggle(event, dev_info.keyEntry))
 
     # my_canvas.bind('<ButtonRelease-1>', rec.release)
+
+
 
 
 if __name__ == "__main__":

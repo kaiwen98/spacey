@@ -13,7 +13,15 @@ from tkinter import filedialog
 import config as cfg
 from sensor_data import *
 from functools import partial
+from queue import Queue
 
+
+class myCanvasObject(object):
+    def __init__(self,frame, width, height):
+        self.canvas = Canvas(frame, width = width, height = height)
+        self.line_obj = []
+        self.rec_obj = {}
+        self.border_obj = []
 
 
 class CanvasGridFrame(object):
@@ -27,19 +35,19 @@ class CanvasGridFrame(object):
 
 
     def createGrid(self,num):
-        step = self.xlen / num
+        cfg.step = self.xlen / num
         cfg.x_list.clear()
         cfg.y_list.clear()
         for i in range(num+1):
-            cfg.x_list.append(round(self.xpos+i*step))
-            cfg.y_list.append(round(self.ypos+i*step))
-            cfg.canvas_line_obj.append(self.canvas.create_line(self.xpos+i*step, self.ypos, self.xpos+i*step, self.ypos + self.ylen, fill = "sky blue", width = 5))
-            cfg.canvas_line_obj.append(self.canvas.create_line(self.xpos, self.ypos+i*step, self.xpos+self.xlen, self.ypos+i*step, fill = "sky blue", width = 5))
+            cfg.x_list.append(round(self.xpos+i*cfg.step))
+            cfg.y_list.append(round(self.ypos+i*cfg.step))
+            cfg.myCanvas.line_obj.append(self.canvas.create_line(self.xpos+i*cfg.step, self.ypos, self.xpos+i*cfg.step, self.ypos + self.ylen, fill = "sky blue", width = 5))
+            cfg.myCanvas.line_obj.append(self.canvas.create_line(self.xpos, self.ypos+i*cfg.step, self.xpos+self.xlen, self.ypos+i*cfg.step, fill = "sky blue", width = 5))
 
  
-        num_coordinates_max = (cfg.canvas_w/step-1) * (cfg.canvas_h/step-1)
+        num_coordinates_max = (cfg.canvas_w/cfg.step-1) * (cfg.canvas_h/cfg.step-1)
    
-        self.drawBoundary(step)
+        self.drawBoundary(cfg.step)
     
     def drawBoundary(self, step):
         x1 = cfg.x_list[0]
@@ -51,16 +59,16 @@ class CanvasGridFrame(object):
         y2 = cfg.y_list[1]
         _y1 = cfg.y_list[int(cfg.canvas_h/step)]
         _y2 = cfg.y_list[int(cfg.canvas_h/step)-5]
-        cfg.canvas_rec_obj.append(self.canvas.create_rectangle(x1,y1,_x1,y2, fill = "black"))        
-        cfg.canvas_rec_obj.append(self.canvas.create_rectangle(x1,_y2,_x1,_y1, fill = "black"))
-        cfg.canvas_rec_obj.append(self.canvas.create_rectangle(x1,y2,x2,_y2, fill = "black"))
-        cfg.canvas_rec_obj.append(self.canvas.create_rectangle(_x2,y2,_x1,_y2, fill = "black"))
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,y1,_x1,y2, fill = "black"))        
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,_y2,_x1,_y1, fill = "black"))
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,y2,x2,_y2, fill = "black"))
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(_x2,y2,_x1,_y2, fill = "black"))
 
 
     def refresh(self,_num):
-        for x in cfg.canvas_line_obj:
+        for x in cfg.myCanvas.line_obj:
             self.canvas.delete(x) 
-        for y in cfg.canvas_line_obj:
+        for y in cfg.myCanvas.line_obj:
             self.canvas.delete(y)
         self.grid = self.createGrid(_num)
 
@@ -69,8 +77,7 @@ class Node(object):
         print("init")
         self.canvas = canvas
         self.xlen, self.ylen = 10, 10 #size of node
-        self.obj = canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "blue")
-        cfg.canvas_rec_obj.append(self.obj)
+        cfg.node = canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "blue")
     
 
 class CursorNode(object):
@@ -80,15 +87,39 @@ class CursorNode(object):
         self.xlen, self.ylen = 10, 10 #size of node
         self.x_mid, self.y_mid = self.xpos + self.xlen/2, self.ypos + self.ylen/2
         self.obj= canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "red")
+
         canvas.tag_bind(self.obj, '<B1-Motion>', self.move)
-        canvas.tag_bind(self.obj, '<ButtonRelease-1>', self.release)
-        #canvas.tag_bind(self.obj, '<Button-3>', self.deposit)
+        canvas.bind('<ButtonRelease-1>', self.release)
+        canvas.bind('<Button-3>', self.deleteNode)
+
+        canvas.bind('<Up>', lambda event: self.move_unit(event, 'W') )
+        canvas.bind('<Left>', lambda event: self.move_unit(event, 'A') )
+        canvas.bind('<Down>', lambda event: self.move_unit(event, 'S') )
+        canvas.bind('<Right>', lambda event: self.move_unit(event, 'D') )
+        canvas.bind('<ButtonRelease-1>', self.release)
+        canvas.bind('<KeyRelease-Up>', self.release_unit)
+        canvas.bind('<KeyRelease-Down>', self.release_unit)
+        canvas.bind('<KeyRelease-Left>', self.release_unit)
+        canvas.bind('<KeyRelease-Right>', self.release_unit)
+        canvas.bind('<Return>', self.enter)
+        canvas.bind('<Button-3>', self.deleteNode)
+        canvas.bind('<Control-x>', self.deleteNode)
+
+
         self.restaurant = cfg.res
         self.move_flag = False
         self.callBack = []
     
-    def setDevInfo(self, dev_info):
-        self.dev_info = dev_info
+    def deleteNode(self, event):
+        if (self.x_mid, self.y_mid) in self.restaurant.dict_sensor_motes:
+            print("deleted")
+            self.callBack[0]("Node deleted.")
+            self.restaurant.deleteNode(self.x_mid, self.y_mid)
+            return
+        else:
+            print("Invalid")
+            return
+
     
     def setCallback(self, cb):
         self.callBack.append(cb)
@@ -96,10 +127,9 @@ class CursorNode(object):
     def deposit(self):
         print("enter registered")
         if cfg.deposit_flag is True:
-            self.node = Node(self.canvas, self.x_mid-self.xlen/2, self.y_mid - self.ylen/2)
+            node = Node(self.canvas, self.x_mid-self.xlen/2, self.y_mid - self.ylen/2)
             cfg.x = self.x_mid
             cfg.y = self.y_mid
-            cfg.node = self.node
             self.nodeDetectCallback()
             cfg.deposit_flag = False
         else:
@@ -141,6 +171,23 @@ class CursorNode(object):
             self.mouse_xpos = event.x
             self.mouse_ypos = event.y
 
+    def move_unit(self, event, dir):
+        self.move_flag = True
+        print("lol")
+        if dir is "W":
+            self.canvas.move(self.obj, 0 , -cfg.step)
+            self.y_mid -= cfg.step
+        elif dir is "A":
+            self.canvas.move(self.obj, -cfg.step, 0)
+            self.x_mid -= cfg.step
+        elif dir is "S":
+            self.canvas.move(self.obj, 0 , cfg.step)
+            self.y_mid += cfg.step
+        elif dir is "D":
+            self.canvas.move(self.obj, cfg.step, 0)
+            self.x_mid += cfg.step
+        self.canvas.tag_raise(self.obj)
+
     def release(self, event):
         new_xpos, new_ypos = self.estimate(event.x,cfg.x_list), self.estimate(event.y,cfg.y_list)
         self.canvas.move(self.obj, new_xpos-self.x_mid ,new_ypos-self.y_mid)
@@ -151,7 +198,23 @@ class CursorNode(object):
         self.y_mid = new_ypos
         cfg.x = self.x_mid
         cfg.y = self.y_mid
+        cfg.initflag = True
         self.nodeDetectCallback()
+        self.canvas.tag_raise(self.obj)
+        
+
+    def release_unit(self, event):
+        self.move_flag = False
+        cfg.x = self.x_mid
+        cfg.y = self.y_mid
+        self.nodeDetectCallback()
+        self.canvas.tag_raise(self.obj)
+    
+    def enter(self, event):
+        cfg.initflag = True
+        self.nodeDetectCallback()
+
+        
 
     def nodeDetectCallback(self):
 
@@ -163,8 +226,8 @@ class CursorNode(object):
         else:   
             cfg.deposit_flag = False
             self.callBack[0]("No node information") # Print text on status label
-            print("mid")
             self.callBack[1]("yellow")
+            
 
 
 
@@ -176,8 +239,6 @@ class CursorNode(object):
 class menu_upload(object):
     def __init__(self, frame):
         self.frame = frame
-        #self.frame = Frame(frame)
-        #self.frame.grid(row = 0, column = 0, sticky = E+W)
         self.labelFrame = LabelFrame(self.frame, text = "Upload: "+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
         self.obj = Button(self.labelFrame, text = "Upload", command = self.fileupload)
@@ -207,8 +268,9 @@ class map_refresh(object):
         self.num += 2
         
         print("refreshedup")
-        for i in cfg.canvas_rec_obj:
-            self.map.canvas.delete(i)
+        cfg.res.deleteAllNodes()
+        for j in cfg.myCanvas.border_obj:
+            cfg.myCanvas.canvas.delete(j)
         refresh = self.map.refresh(self.num)
         self.cursor.canvas.tag_raise(self.cursor.obj)
 
@@ -218,8 +280,9 @@ class map_refresh(object):
             return
         
         print("refresheddown")
-        for i in cfg.canvas_rec_obj:
-            self.map.canvas.delete(i)
+        cfg.res.deleteAllNodes()
+        for j in cfg.myCanvas.border_obj:
+            cfg.myCanvas.canvas.delete(j)
         refresh = self.map.refresh(self.num)
         self.cursor.canvas.tag_raise(self.cursor.obj)
       
@@ -231,11 +294,18 @@ class menu_devinfo(object):
         self.getFlag = False
         self.entryList = []
         self.callBack = []
+        self.hold = []
+        self.text = []
+        for i in range(3):
+            self.hold.append(IntVar())
+            self.text.append(StringVar())
+     
 
         self.labelFrame = LabelFrame(self.frame, text = "Set Sensor ID", height = 500, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
 
         self.nodeEntry = [-1, -1, -1]
+        self.prevEntry = [-1, -1, -1]
 
         self.idFlag = True
 
@@ -243,66 +313,107 @@ class menu_devinfo(object):
         self.frame1.pack(side = TOP, fill = X, padx = 10, pady = 5)
         self.entry1_label = Label(self.frame1, text = "Level ID", bd = 5, width = 20)
         self.entry1_label.pack(side = LEFT)
-        self.entryList.append(Entry(self.frame1, bd = 5))
+        self.entryList.append(Entry(self.frame1, bd = 5, textvariable = self.text[0]))
         self.entryList[0].pack(side = LEFT)
+        self.radio1 = Checkbutton(self.frame1, text = "Hold", variable = self.hold[0], command = partial(self.restoreprev, 0), bg = "gray55", )
+        self.radio1.pack(side = LEFT)
 
         self.frame2 = Frame(self.labelFrame, bg = "gray55")
         self.frame2.pack(side = TOP, fill = X, padx = 10, pady = 5)
         self.entry2_label = Label(self.frame2, text = "Cluster ID", bd = 5, width = 20)
         self.entry2_label.pack(side = LEFT)
-        self.entryList.append(Entry(self.frame2, bd = 5))
+        self.entryList.append(Entry(self.frame2, bd = 5, textvariable = self.text[1]))
         self.entryList[1].pack(side = LEFT)
+        self.radio2 = Checkbutton(self.frame2, text = "Hold", variable = self.hold[1], command = partial(self.restoreprev, 1), bg = "gray55")
+        self.radio2.pack(side = LEFT)
 
         self.frame3 = Frame(self.labelFrame, bg = "gray55")
         self.frame3.pack(side = TOP, fill = X, padx = 10, pady = 5)
         self.entry3_label = Label(self.frame3, text = "Sensor ID", bd = 5, width = 20)
         self.entry3_label.pack(side = LEFT)
-        self.entryList.append(Entry(self.frame3, bd = 5))
+        self.entryList.append(Entry(self.frame3, bd = 5, textvariable = self.text[2]))
         self.entryList[2].pack(side = LEFT)
+        self.radio3 = Checkbutton(self.frame3, text = "Hold", variable = self.hold[2], command = partial(self.restoreprev, 2), bg = "gray55")
+        self.radio3.pack(side = LEFT)
 
         self.entryList[0].bind('<Return>', lambda event : self.enter(event, 0))
         self.entryList[1].bind('<Return>', lambda event : self.enter(event, 1))
         self.entryList[2].bind('<Return>', lambda event : self.enter(event, 2))
+        for i in range(10):
+            self.entryList[0].bind(str(i), lambda event : self.enter(event, 0))
+            self.entryList[1].bind(str(i), lambda event : self.enter(event, 1))
+            self.entryList[2].bind(str(i), lambda event : self.enter(event, 2))
+        
+        self.keyEntry = None
+        self.needCorrect = [False, False, False]
     
+    def restoreprev(self, i):
+        if self.hold[i].get():
+            if self.entryList[i].get() is "":
+                self.text[i].set(self.prevEntry[i])
+            else:
+                self.text[i].set(self.entryList[i].get())
+            self.entryList[i].config(state = DISABLED, disabledbackground= "sky blue")
+        else:
+            self.text[i].set("")
+            self.entryList[i].config(state = NORMAL)
+
     def setCallback(self, cb):
         self.callBack.append(cb)
 
     def highlight_dev_info(self, _bg):
-        print("highlihgt")
+        print("highlight: " + str(_bg))
         for i in self.entryList:
             i.config(bg = _bg)
-        self.entryList[0].focus()
-        
+        self.keyEntry = self.entryList[0]
+        if cfg.initflag: 
+            self.keyEntry.focus()
+            cfg.initflag = False
+   
     def enter(self, event, id):
-        print("Yup")
-        val = int(self.entryList[id].get())
-        if (val >= 0):
-            self.nodeEntry[id] = val
-            self.entryList[id].config(bg = "lawn green")
+        for i in range(len(self.entryList)):
+            if (self.entryList[i].get()).isnumeric():
+                if int(self.entryList[i].get()) >=0:
+                    print("-2")
+                    self.nodeEntry[i] = int(self.entryList[i].get())
+                    self.prevEntry[i] = self.nodeEntry[i]
+                    self.entryList[i].config(bg = "lawn green")
+                    self.needCorrect[i] = False
+                else:
+                    self.entryList[i].config(bg = "red")
+                    self.needCorrect[i] = True
 
-        if id < (len(self.entryList)-1):
-            self.entryList[id+1].focus()
-
-        for i in range(len(self.nodeEntry)):
-            if self.nodeEntry[i] < 0:
-                print("Incomplete")
+            else:
+                print("-3")
                 self.entryList[i].config(bg = "red")
-                if (i == len(self.nodeEntry)-1): return
+                self.needCorrect[i] = True
         
-        for i in self.entryList:
-            i.delete(0, END)
-            i.config(bg = "lawn green")
-        self.entryList[0].focus()
+        sum = 0
+        for i in self.needCorrect:
+            sum += i 
+
+        if sum: 
+            print(self.needCorrect)
+            self.keyEntry = self.entryList[self.needCorrect.index(True)]
+            self.keyEntry.focus()
+            return
+
+        
+        print(self.nodeEntry)
+
+        for i in range(len(self.entryList)):
+            if not self.hold[i].get():
+                self.entryList[i].delete(0, END)
 
         x = self.nodeEntry
+        
+        cfg.deposit_flag = True
+        self.callBack[0]()
         cfg.res.registerNode(cfg.x, cfg.y, x[0], x[1], x[2], cfg.node)
         cfg.res.printMoteAt(cfg.x, cfg.y)
         self.nodeEntry = [-1,-1,-1]
-        cfg.deposit_flag = True
-        self.callBack[0]()
-
-        
-            
+        self.callBack[1]()  # Callback to deposit sensor node
+        self.callBack[2](1) # Callback to give up focus back to canvas
 
 class menu_status(object):
     def __init__(self, frame):
