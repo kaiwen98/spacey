@@ -26,7 +26,22 @@ class myCanvasObject(object):
         self.rec_obj = {}
         self.border_obj = []
         self.floorplan_obj = None
+        self.xlen = 0
+        self.ylen = 0
 
+    def deleteNode(self, idx):
+        self.canvas.delete(cfg.myCanvas.rec_obj[idx])
+        del self.rec_obj[idx]
+
+    def deleteAllGrids(self):
+        for i in self.line_obj:
+            self.canvas.delete(i)
+        for j in self.border_obj:
+            self.canvas.delete(j)
+    def placeNode(self, idx):
+        self.xlen, self.ylen = cfg.box_len, cfg.box_len #size of node
+        #cfg.node = canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "blue")
+        self.rec_obj[idx] = self.canvas.create_rectangle(cfg.x-self.xlen, cfg.y-self.ylen,cfg.x+self.xlen, cfg.y+self.ylen, fill = "blue")
 
 class CanvasGridFrame(object):
     def __init__(self,canvas, num):
@@ -38,7 +53,8 @@ class CanvasGridFrame(object):
       
 
 
-    def createGrid(self,num):
+    def createGrid(self):
+        num = cfg.scale
         cfg.step = self.xlen / num
         cfg.box_len = cfg.step
         cfg.x_list.clear()
@@ -51,7 +67,7 @@ class CanvasGridFrame(object):
 
  
         cfg.num_coordinates_max = (cfg.canvas_w/cfg.step-1) * (cfg.canvas_h/cfg.step-1)
-        if cfg.error is not None: cfg.error.updateText("Max coordinates: {num}".format(num = cfg.num_coordinates_max), "yellow")
+        if cfg.error is not None: cfg.error.updateText("Max coordinates: {_num}".format(_num = cfg.num_coordinates_max), "yellow")
         self.drawBoundary(cfg.step)
         cfg.myCanvas.canvas.tag_raise(cfg.cursor)
     
@@ -68,6 +84,8 @@ class CanvasGridFrame(object):
         _y2 = cfg.y_list[int(cfg.canvas_h/step)-2]
 
         cfg.x_bb1, cfg.y_bb1, cfg.x_bb2, cfg.y_bb2 = x2,y2,_x2, _y2
+        cfg.img_x_bb1, cfg.img_y_bb1 = cfg.x_bb1, cfg.y_bb1
+        
         
         """
         print("x1: " + str(x1))
@@ -85,15 +103,14 @@ class CanvasGridFrame(object):
         cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(_x2,y2,_x1+step,_y2, fill = "gray10")) #east
 
 
-    def refresh(self,_num):
-        for x in cfg.myCanvas.line_obj:
-            self.canvas.delete(x) 
-        for y in cfg.myCanvas.line_obj:
-            self.canvas.delete(y)
-        self.grid = self.createGrid(_num)
+    def refresh(self):
+        cfg.res.deleteAllNodes()
+        cfg.myCanvas.deleteAllGrids()
+        self.grid = self.createGrid()
         cfg.img.resize()
+        cfg.myCanvas.canvas.tag_raise(cfg.cursor)
         
-
+"""
 class Node(object):
     def __init__(self, canvas, xpos, ypos):
         print("init")
@@ -101,6 +118,7 @@ class Node(object):
         self.xlen, self.ylen = cfg.box_len, cfg.box_len #size of node
         #cfg.node = canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "blue")
         cfg.node = canvas.create_rectangle(cfg.x-self.xlen, cfg.y-self.ylen,cfg.x+self.xlen, cfg.y+self.ylen, fill = "blue")
+"""
 
 class CursorNode(object):
     def __init__(self, canvas, xpos, ypos):
@@ -150,7 +168,7 @@ class CursorNode(object):
     def deposit(self):
         print("enter registered")
         if cfg.deposit_flag is True:
-            node = Node(self.canvas, self.x_mid-self.xlen/2, self.y_mid - self.ylen/2)
+            # node = Node(self.canvas, self.x_mid-self.xlen/2, self.y_mid - self.ylen/2)
             cfg.x = self.x_mid
             cfg.y = self.y_mid
             self.nodeDetectCallback()
@@ -256,55 +274,43 @@ class menu_upload(object):
     def __init__(self, frame):
         self.frame = frame
         self.labelFrame = LabelFrame(self.frame, text = "Upload: "+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
-        self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
-        self.obj = Button(self.labelFrame, text = "Upload", command = self.fileupload)
-        self.obj.pack(ipadx = 10, ipady = 10)
+        self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
+        self.obj = Button(self.labelFrame, text = "Upload Floor plan", command = self.fileupload)
+        self.obj.pack(ipadx = 10, ipady = 10, fill = X)
 
     def fileupload(self):
-        filename = filedialog.askopenfilename(initialdir = "/", title = "Select File", filetypes = (("png files","*.png"), ("jpeg files","*.jpg"),("all files","*.*")))
+        cfg.res.deleteAllNodes()
+        filename = filedialog.askopenfilename(initialdir = "/", title = "Select File", filetypes = (("all files","*.*"),("png files","*.png"), ("jpeg files","*.jpg")))
         self.label = Label(self.labelFrame, text = "Uploaded: "+ str(filename))
         self.label.pack(fill = X)
         cfg.img = imgpro.floorPlan(filename, cfg.myCanvas.canvas)
 
 class map_refresh(object):
-    def __init__(self, frame, canvasGridFrame, newGrid, cursor, factor):
+    def __init__(self, frame,factor):
         self.frame = frame
         #self.frame = Frame(frame)
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
         self.labelFrame = LabelFrame(self.frame, text = "Grid scale... "+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
-        self.num = newGrid
-        self.map = canvasGridFrame
         self.but1 = Button(self.labelFrame, text = "Scale up", command = self.updateUp)
         self.but1.pack(ipadx = 10, ipady = 10, fill = X)
         self.but2 = Button(self.labelFrame, text = "Scale down", command = self.updateDown)
         self.but2.pack(ipadx = 10, ipady = 10, fill = X)
-        self.cursor = cursor
         self.factor = factor
 
     def updateUp(self):
-        self.num += self.factor
-        print("refreshedup")
-        cfg.res.deleteAllNodes()
-        for j in cfg.myCanvas.border_obj:
-            cfg.myCanvas.canvas.delete(j)
-        refresh = self.map.refresh(self.num)
-        self.cursor.canvas.tag_raise(self.cursor.obj)
+        cfg.scale += self.factor
+        refresh = cfg.grid.refresh()
 
     def updateDown(self):
         
-        if cfg.canvas_w/(self.num-self.factor) > cfg.max_step:
+        if (cfg.scale - self.factor) <= 0 or cfg.canvas_w/(cfg.scale - self.factor) > cfg.max_step:
             cfg.error.updateText("Cannot scale down any further", "orange")
             return
-        self.num -= self.factor
-        print("refresheddown")
-        cfg.res.deleteAllNodes()
-        for j in cfg.myCanvas.border_obj:
-            cfg.myCanvas.canvas.delete(j)
-        
- 
-        refresh = self.map.refresh(self.num)
-        self.cursor.canvas.tag_raise(self.cursor.obj)
+
+        cfg.scale -= self.factor
+        refresh = cfg.grid.refresh()
+
       
         
 
@@ -331,7 +337,7 @@ class menu_devinfo(object):
      
 
         self.labelFrame = LabelFrame(self.frame, text = "Set Sensor ID", height = 500, width = 550, bg = "gray55")
-        self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
+        self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
 
         # Autosaved entries
         self.nodeEntry = [-1, -1, -1]
@@ -350,9 +356,9 @@ class menu_devinfo(object):
     def setEntryRow(self,i):
         self.rowFrame.append(Frame(self.labelFrame, bg = "gray55"))
         self.rowFrame[i].pack(side = TOP, fill = X, padx = 10, pady = 5)
-        self.entryLabel.append(Label(self.rowFrame[i], text = self.titleName[i], bd = 5, width = 20))
+        self.entryLabel.append(Label(self.rowFrame[i], text = self.titleName[i], bd = 5, width = 8))
         self.entryLabel[i].pack(side = LEFT)
-        self.entryList.append(Entry(self.rowFrame[i], bd = 5, textvariable = self.text[i], highlightcolor = cfg.hlcolor, highlightthickness = 5))
+        self.entryList.append(Entry(self.rowFrame[i], bd = 5, textvariable = self.text[i], highlightcolor = cfg.hlcolor, highlightthickness = 5, highlightbackground = "gray55"))
         self.entryList[i].pack(side = LEFT)
         self.radio.append(Checkbutton(self.rowFrame[i], text = "Hold", variable = self.hold[i], command = partial(self.restorePreviousEntries, i), bg = "gray55"))
         self.radio[i].pack(side = LEFT)
@@ -453,7 +459,7 @@ class menu_status(object):
     def __init__(self, frame):
         self.frame = frame
         self.labelFrame = LabelFrame(self.frame, text = "Status bar", bg = "gray55", height = 300, width = 550)
-        self.labelFrame.pack(fill = X, padx = 10, pady = 20, side = TOP)
+        self.labelFrame.pack(fill = X, padx = cfg.padx, pady = cfg.pady, side = TOP)
         self.labelFrame.pack_propagate(0)
         self.obj = Label(self.labelFrame,text = "", bd = 100, height = 300, width = 550)
         self.obj.pack(padx = 10, pady = 10)
@@ -467,7 +473,7 @@ class menu_debug(object):
         cfg.error_font = font.Font(family="Courier New", size=10, weight = "bold")
         self.frame = frame
         self.labelFrame = LabelFrame(self.frame, text = "Debugger", bg = "gray55", height = 300, width = 550)
-        self.labelFrame.pack(fill = X, padx = 10, pady = 20, side = TOP)
+        self.labelFrame.pack(fill = X, padx = cfg.padx, pady = cfg.pady, side = TOP)
         self.labelFrame.pack_propagate(0)
         self.obj = Listbox(self.labelFrame,height = 300, width = 550, bg = "gray10", font = cfg.error_font)
         self.yscroll = Scrollbar(self.labelFrame, orient = "vertical", command = self.obj.yview)
@@ -494,10 +500,15 @@ class img_xyshift(object):
         self.frame = frame
         #self.frame = Frame(frame)
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
-        self.labelFrame = LabelFrame(self.frame, text = "Floorplan shifts..."+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
-        self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
-        self.framex = Frame(self.labelFrame, height = 70)
-        self.framey = Frame(self.labelFrame, height = 70)
+        self.labelFrame = LabelFrame(self.frame, text = "Floorplan shifts..."+ str(cfg.filename), height = 140, width = 550, bg = "gray55")
+        self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
+        self.parentFrame1 = Frame(self.labelFrame, height = 140)
+        self.parentFrame2 = Frame(self.labelFrame, height = 140)
+        self.parentFrame1.pack(side = LEFT, padx = 10)
+        self.parentFrame2.pack(side = LEFT, padx = 10)
+
+        self.framex = Frame(self.parentFrame1, height = 70)
+        self.framey = Frame(self.parentFrame1, height = 70)
         self.framex.pack(side = TOP, fill = X)
         self.framey.pack(side = TOP, fill = X)
 
@@ -511,17 +522,43 @@ class img_xyshift(object):
         self.but2 = Button(self.framey, text = "Down", command = self.down, width = 4)
         self.but2.pack(ipadx = 10, ipady = 10, side = LEFT)
 
+        self.framex2 = Frame(self.parentFrame2, height = 70)
+        self.framey2 = Frame(self.parentFrame2, height = 70)
+        self.framex2.pack(side = TOP, fill = X)
+        self.framey2.pack(side = TOP, fill = X)  
+
+        self.but1 = Button(self.framex2, text = "Scale +", command = self.s_up, width = 4)
+        self.but1.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
+        self.but2 = Button(self.framey2, text = "Scale -", command = self.s_down, width = 4)
+        self.but2.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
+
         self.factor = factor
 
     def left(self):
+        cfg.img_x_bb1 -= self.factor 
         cfg.myCanvas.canvas.move(cfg.myCanvas.floorplan_obj, -self.factor, 0)
     def right(self):
+        cfg.img_x_bb1 += self.factor 
         cfg.myCanvas.canvas.move(cfg.myCanvas.floorplan_obj, self.factor, 0)
     
     def up(self):
+        cfg.img_y_bb1 -= self.factor 
         cfg.myCanvas.canvas.move(cfg.myCanvas.floorplan_obj, 0, -self.factor)
     def down(self):
+        cfg.img_y_bb1 += self.factor 
         cfg.myCanvas.canvas.move(cfg.myCanvas.floorplan_obj, 0, self.factor)
+    
+    def s_up(self):
+        if cfg.img.padding == 0: 
+            cfg.error.updateText("<Floor Plan> Cannot scale down further", "orange")
+            return
+        cfg.img.padding -= self.factor
+        cfg.imgpadding = cfg.img.padding
+        cfg.img.resize()
+    def s_down(self):
+        cfg.img.padding += self.factor
+        cfg.imgpadding = cfg.img.padding
+        cfg.img.resize()
 
 class img_scaleshift(object):
     def __init__(self, frame, factor):
@@ -529,10 +566,10 @@ class img_scaleshift(object):
         #self.frame = Frame(frame)
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
         self.labelFrame = LabelFrame(self.frame, text = "Floorplan scales..."+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
-        self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
-        self.but1 = Button(self.labelFrame, text = "Up", command = self.up, width = 4)
+        self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
+        self.but1 = Button(self.labelFrame, text = "Size +", command = self.up, width = 4)
         self.but1.pack(ipadx = 10, ipady = 10, side = LEFT)
-        self.but2 = Button(self.labelFrame, text = "Down", command = self.down, width = 4)
+        self.but2 = Button(self.labelFrame, text = "Size -", command = self.down, width = 4)
         self.but2.pack(ipadx = 10, ipady = 10, side = LEFT)
         self.factor = factor
 
@@ -541,10 +578,13 @@ class img_scaleshift(object):
             cfg.error.updateText("<Floor Plan> Cannot scale down further", "orange")
             return
         cfg.img.padding -= self.factor
+        cfg.imgpadding = cfg.img.padding
         cfg.img.resize()
     def down(self):
         cfg.img.padding += self.factor
+        cfg.imgpadding = cfg.img.padding
         cfg.img.resize()
+        
 
 class node_scaleshift(object):
     def __init__(self, frame, factor):
@@ -552,11 +592,11 @@ class node_scaleshift(object):
         #self.frame = Frame(frame)
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
         self.labelFrame = LabelFrame(self.frame, text = "Node scales..."+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
-        self.labelFrame.pack(fill = X, side = TOP, pady = 20, padx = 10)
+        self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
         self.but1 = Button(self.labelFrame, text = "Up", command = self.up, width = 4)
-        self.but1.pack(ipadx = 10, ipady = 10, side = LEFT)
+        self.but1.pack(ipadx = 10, ipady = 10, side = LEFT, padx = 25)
         self.but2 = Button(self.labelFrame, text = "Down", command = self.down, width = 4)
-        self.but2.pack(ipadx = 10, ipady = 10, side = LEFT)
+        self.but2.pack(ipadx = 10, ipady = 10, side = LEFT, padx = 25)
         self.factor = factor
 
     def up(self):
@@ -565,4 +605,55 @@ class node_scaleshift(object):
     def down(self):
         cfg.box_len -= self.factor
         cfg.res.changeNodeSize()
+
+class json_viewer(object):
+    def __init__(self, frame):
+        #cfg.error_font = font.Font(family = "Times", font = "3", weight =  "BOLD")
+        cfg.json_font = font.Font(family="Courier New", size=8, weight = "bold")
+        self.frame = frame
+        self.labelFrame = LabelFrame(self.frame, text = "JSON Viewer", bg = "gray55", height = 550, width = 550)
+        self.labelFrame.pack(fill = "x", padx = cfg.padx, pady = cfg.pady, side = TOP)
+        self.labelFrame.pack_propagate(0)
+        self.frame2 = Frame(self.labelFrame, bg = "gray55", height = 40)
+        self.frame2.pack(fill = X, side = TOP)
+        self.frame1 = Frame(self.labelFrame, bg = "gray55")
+        self.frame1.pack(fill = X, side = TOP)
+       
+        self.butt = Button(self.frame2, text = "Upload JSON", command = self.upload, width = 550)
+        self.butt.pack()
+        self.butt1 = Button(self.frame2, text = "Download JSON", command = self.download, width = 550)
+        self.butt1.pack()
+        #self.butt.pack(ipadx = 30, ipady = 30, fill = X)
+        self.obj = Text(self.frame1,  width = 550, bg = "gray10", font = cfg.json_font)
+        self.yscroll = Scrollbar(self.frame1, orient = "vertical", command = self.obj.yview)
+        self.xscroll = Scrollbar(self.frame1, orient = "horizontal", command = self.obj.xview)
+        self.yscroll.pack(padx = 10, pady = 10, side = LEFT, fill = Y)
+        self.xscroll.pack(padx = 10, pady = 10, side = BOTTOM, fill = X)
+        self.obj.pack(pady = 10, ipadx = 30, ipady = 30, side = LEFT)
         
+
+
+        self.obj.configure(xscrollcommand= self.xscroll.set, yscrollcommand = self.yscroll.set)
+        self.obj.tag_config("b", foreground = "sky blue")
+        self.obj.tag_config("p", foreground = "deep pink")
+        self.obj.tag_config("y", foreground = "yellow")
+        self.obj.insert(END, "Wait for JSON to be uploaded\n\n", "b")
+        
+
+    def updateText(self, _text, _bg):
+        self.obj.insert(END, _text, _bg)
+        self.obj.see("end")
+        #self.obj.update()
+
+    def upload(self):
+        str1 = cfg.res.compile('devinfo.json')
+        str2 = cfg.compile('cfginfo.json')
+        self.updateText(str2+"\n", "y")
+        self.updateText(str1+"\n", "p")
+        self.updateText(">>>"+"-"*15+"\n", "b")
+    
+    def download(self):
+        filename = filedialog.askopenfilename(initialdir = "../", title = "Select File", filetypes = [("Json File", "*.json")])
+        str1 = cfg.res.decompile(filename)
+        self.updateText(str1+"\n", "p")
+        self.updateText(">>>"+"+"*15+"\n", "b")

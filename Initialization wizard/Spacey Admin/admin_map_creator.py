@@ -28,7 +28,6 @@ print(image_path)
 
 image_file = os.path.join(image_path, "image_edited.png")
 
-cfg.scale = 50
 
 def uploadimage(filename):
     filename = filedialog.askopenfilename(initialdir = "/", title = "Select File", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
@@ -84,8 +83,9 @@ def setup():
 
 
     cfg.res = RestaurantSpace(cfg.myCanvas.canvas)
+    
     cursor = spc.CursorNode(cfg.myCanvas.canvas , xpos = 0 , ypos = 0)  # Creates rectangle cursor (in red)
-    grid = spc.CanvasGridFrame(cfg.myCanvas.canvas, cfg.scale) # Creates gridlines so that the boxes inserted will appear more organised
+    cfg.grid = spc.CanvasGridFrame(cfg.myCanvas.canvas, cfg.scale) # Creates gridlines so that the boxes inserted will appear more organised
    
     ### Creation of Config menu ###
     
@@ -93,8 +93,8 @@ def setup():
     frame_menu.pack(padx = 20, pady = 20, side = LEFT, expand = 1)
     frame_menu.pack_propagate(False)
 
-    frame_menu1 = LabelFrame(frame_menu, text = "Configurations", width = w/3, height = h, bg = "gray40")
-    frame_menu1.pack(side = LEFT, expand = 1)
+    frame_menu1 = LabelFrame(frame_menu, text = "Configurations", width = w/4, height = h, bg = "gray40")
+    frame_menu1.pack(side = LEFT, expand = 1, fill = X)
     frame_menu1.pack_propagate(False)
 
     upload = spc.menu_upload(frame_menu1)
@@ -120,12 +120,15 @@ def setup():
     frame_menu2.pack_propagate(False)
 
     nodescale = spc.node_scaleshift(frame_menu2, 3)
-    upload2 = spc.img_scaleshift(frame_menu2, 10)
-    dev_info2 = spc.img_xyshift(frame_menu2,10)
-    maprefresh2 = spc.map_refresh(frame_menu2, grid, cfg.scale, cursor, 10)
+    #upload2 = spc.img_scaleshift(frame_menu2, 10)
+    dev_info2 = spc.img_xyshift(frame_menu2, 10)
+    maprefresh2 = spc.map_refresh(frame_menu2, 10)
+    jsonview = spc.json_viewer(frame_menu2)
 
     root.bind('<Escape>', quit)
     root.bind('<Control-z>', lambda event: focus_toggle(event, dev_info.keyEntry))
+    ##############################################################################
+    #cfg.res.decompile('mc.bin')
 
     root.mainloop()
 if __name__ == "__main__":

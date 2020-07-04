@@ -13,6 +13,7 @@ class floorPlan(object):
     def __init__(self, path, canvas):
         self.canvas = canvas
         self.path = path
+        cfg.imgpath = path
         self.img = self.preprocess()
         self.padding = 0
         self.resize()
@@ -56,8 +57,13 @@ class floorPlan(object):
         else                  : factor = factor_w
         height_r = int((float(self.img.size[1])) * float(factor))
         self.img = self.img.resize((width_r, height_r), p_Image.ANTIALIAS)
+
+        path = os.path.dirname(self.path)
+        cfg.imgpath = os.path.join(path, "processed_img.png")
+        self.img.save(cfg.imgpath, "PNG")
         self.photoimg = p_ImageTk.PhotoImage(self.img)
-        cfg.myCanvas.floorplan_obj = self.canvas.create_image(self.x_mid,self.y_mid, anchor = "center", image = self.photoimg)
+        #cfg.myCanvas.floorplan_obj = self.canvas.create_image(self.x_mid,self.y_mid, anchor = "center", image = self.photoimg)
+        cfg.myCanvas.floorplan_obj = self.canvas.create_image(cfg.x_bb1,cfg.y_bb1, anchor = "nw", image = self.photoimg)
         for i in cfg.myCanvas.rec_obj:
             cfg.myCanvas.canvas.tag_raise(i)
 
