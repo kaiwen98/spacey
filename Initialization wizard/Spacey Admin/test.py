@@ -1,34 +1,32 @@
-import tkinter as tk
-import random
+from PIL import Image, ImageEnhance, ImageOps
+import os
+path = os.getcwd()
 
-def draw_square(event):
-    x0 = random.randint(30, 370)
-    y0 = random.randint(30, 170)
-    size = random.randint(10, 30)
+image_path = os.path.join(path, "images")
+print(image_path)
 
-    event.widget.create_rectangle(x0, y0, x0+size, y0+size, fill="red")
+image_file = os.path.join(image_path, "floor_plan4.png")
 
-def give_focus(event):
-    event.widget.focus_set()
-    event.widget.configure(background="bisque")
+img = Image.open(image_file)
+img = img.convert("RGBA")
+enhancer = ImageEnhance.Contrast(img)
+img = enhancer.enhance(10)
+enhancer = ImageEnhance.Sharpness(img)
+img = enhancer.enhance(10)
 
-def lose_focus(event):
-    event.widget.configure(background="white")
+img.show()
 
-root = tk.Tk()
-label = tk.Label(root, text="Click to focus a canvas, press 's' to draw a square")
-canvas1 = tk.Canvas(root, width=400, height=200, background="white",
-                    borderwidth=1, relief="raised")
-canvas2 = tk.Canvas(root, width=400, height=200, background="white",
-                    borderwidth=1, relief="raised")
+datas = img.getdata()
 
-label.pack(side="top", fill="x")
-canvas1.pack(fill="both", expand=True)
-canvas2.pack(fill="both", expand=True)
+newData = []
+for item in datas:
+    if item[0] < 5 and item[1] < 5 and item[2] < 5 and item[3] != 0:
+        newData.append((0,0,0,255))
+    else:
+        newData.append((255, 255, 255, 0))
+        
 
-for canvas in (canvas1, canvas2):
-    canvas.bind("<FocusOut>",lose_focus)
-    canvas.bind("<1>", give_focus)
-    canvas.bind("<s>", draw_square)
-
-root.mainloop()
+img.putdata(newData)
+new_image_file = os.path.join(image_path, "image_edited4.png")
+print(new_image_file)
+img.save(new_image_file,"PNG")

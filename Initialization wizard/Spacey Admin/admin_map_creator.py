@@ -16,9 +16,19 @@ import config as cfg
 from sensor_data import *
 from functools import partial
 from queue import Queue
+import imgpro
 
+from PIL import Image as p_Image, ImageEnhance as p_ImageEnhance, ImageOps as p_ImageOp, ImageTk as p_ImageTk
+import os
 
-scaleNum = 50
+path = os.path.dirname(os.getcwd())
+
+image_path = os.path.join(path, "images")
+print(image_path)
+
+image_file = os.path.join(image_path, "image_edited.png")
+
+cfg.scale = 50
 
 def uploadimage(filename):
     filename = filedialog.askopenfilename(initialdir = "/", title = "Select File", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
@@ -42,12 +52,15 @@ def focus_toggle(widget, mode):
     else: 
         widget.focus_set()
 
+
+
 ### Initialization of window ###
 
 
 
-def setup(root):
-    global canvas_w, canvas_h
+def setup():
+    root = Tk()
+    global canvas_w, canvas_h, image_file
     root.state('zoomed') # Full window view
     root.title('Title') # Set title name
     root.configure(bg = "gray22") #Bg colour
@@ -67,15 +80,15 @@ def setup(root):
 
     cfg.myCanvas = spc.myCanvasObject(frame_canvas, width = w, height = h) # Set canvas within frame
     cfg.myCanvas.canvas.pack(fill = "both", expand = 1, padx = 10, pady = 10) # Set padding
-    
+    #cfg.myCanvas.canvas.pack()
+
+
     cfg.res = RestaurantSpace(cfg.myCanvas.canvas)
-
-    grid = spc.CanvasGridFrame(cfg.myCanvas.canvas, scaleNum) # Creates gridlines so that the boxes inserted will appear more organised
-    cursor = spc.CursorNode(cfg.myCanvas.canvas , xpos = 513 , ypos = 392)  # Creates rectangle cursor (in red)
-
-
+    cursor = spc.CursorNode(cfg.myCanvas.canvas , xpos = 0 , ypos = 0)  # Creates rectangle cursor (in red)
+    grid = spc.CanvasGridFrame(cfg.myCanvas.canvas, cfg.scale) # Creates gridlines so that the boxes inserted will appear more organised
+   
     ### Creation of Config menu ###
-
+    
     frame_menu = frame_menu1 = LabelFrame(root, text = "Configurations", width = w/2, height = h, bg = "gray40")
     frame_menu.pack(padx = 20, pady = 20, side = LEFT, expand = 1)
     frame_menu.pack_propagate(False)
@@ -88,7 +101,8 @@ def setup(root):
     dev_info = spc.menu_devinfo(frame_menu1)
     status = spc.menu_status(frame_menu1)
     cfg.error = spc.menu_debug(frame_menu1)
-
+    
+    
     # Set callbacks for cursor
     cursor.setCallback(status.updateText)
     cursor.setCallback(dev_info.highlightDeviceInfo)
@@ -105,15 +119,16 @@ def setup(root):
     frame_menu2.pack(side = LEFT, expand = 1)
     frame_menu2.pack_propagate(False)
 
-    upload2 = spc.menu_upload(frame_menu2)
-    dev_info2 = spc.menu_devinfo(frame_menu2)
-    maprefresh2 = spc.map_refresh(frame_menu2, grid, scaleNum, cursor)
+    nodescale = spc.node_scaleshift(frame_menu2, 3)
+    upload2 = spc.img_scaleshift(frame_menu2, 10)
+    dev_info2 = spc.img_xyshift(frame_menu2,10)
+    maprefresh2 = spc.map_refresh(frame_menu2, grid, cfg.scale, cursor, 10)
 
     root.bind('<Escape>', quit)
     root.bind('<Control-z>', lambda event: focus_toggle(event, dev_info.keyEntry))
 
-if __name__ == "__main__":
-    root = Tk()
-    setup(root)
     root.mainloop()
+if __name__ == "__main__":
+    setup()
+    
 

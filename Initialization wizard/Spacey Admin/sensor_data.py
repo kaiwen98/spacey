@@ -4,12 +4,9 @@ from tkinter import filedialog
 import config as cfg
 from sensor_data import *
 
-
-    
-
-
 class RestaurantSpace(object):
     def __init__(self, canvas):
+        self.idxList = []
         self.x_coord = {}
         self.y_coord = {}
         self.space_id = {}
@@ -18,6 +15,12 @@ class RestaurantSpace(object):
         self.size = 0
         self.dict_sensor_motes = {}
         self.canvas = canvas
+    
+    def changeNodeSize(self):
+        for i in self.idxList:
+            x = self.x_coord[i]
+            y = self.y_coord[i]
+            cfg.myCanvas.canvas.coords(cfg.myCanvas.rec_obj[i], x-cfg.box_len, y-cfg.box_len, x+cfg.box_len, y+cfg.box_len)
         
 
     def registerNode(self,x,y,space,level,id, obj):
@@ -41,6 +44,7 @@ class RestaurantSpace(object):
         del self.space_id[idx]
         del self.device_cluster_level[idx]
         del self.device_cluster_id[idx]
+        del self.idxList[idx]
         self.size -= 1
 
         self.canvas.delete(cfg.myCanvas.rec_obj[idx])
@@ -53,8 +57,21 @@ class RestaurantSpace(object):
 
     def deleteAllNodes(self):
         print("delete all")
-        for idx in range(self.size):
-            self.deleteNode(self.x_coord[idx], self.y_coord[idx])
+        self.x_coord.clear()
+        self.y_coord.clear()
+        self.space_id.clear()
+        self.device_cluster_level.clear()
+        self.device_cluster_id.clear()
+
+        for i in self.idxList:
+            j = cfg.myCanvas.rec_obj[i]
+            cfg.myCanvas.canvas.delete(j)
+        self.idxList.clear()
+     
+        cfg.myCanvas.rec_obj.clear()
+         
+
+            
     
     def printMoteAt(self,x, y):
         if (x,y) in self.dict_sensor_motes.keys():
@@ -69,13 +86,14 @@ class sensor_mote_data(object):
     def __init__(self,res,x,y,space,level,id, obj):
         self.idx = len(res.x_coord)
         self.res = res
+        res.idxList.append(self.idx)
         res.x_coord[self.idx] = x
         res.y_coord[self.idx] = y
         res.space_id[self.idx] = space
         res.device_cluster_level[self.idx] = level
         res.device_cluster_id[self.idx] = id 
         cfg.myCanvas.rec_obj[self.idx] = obj
-
+      
     
     def printMote(self):
         return ("Mote x: " + str(self.res.x_coord[self.idx])
@@ -86,4 +104,5 @@ class sensor_mote_data(object):
         )
 
 
+  
         
