@@ -67,7 +67,6 @@ class RestaurantSpace(object):
         print(self.y_coord)
 
     def deleteAllNodes(self):
-        print("delete all")
         self.x_coord.clear()
         self.y_coord.clear()
         self.space_id.clear()
@@ -79,28 +78,10 @@ class RestaurantSpace(object):
         self.idxList.clear()
      
         cfg.myCanvas.rec_obj.clear()
-    
-    def compile(self, path):
-        
-        for i in self.devinfo:
-            cfg.devinfo[i] = getattr(self, i) 
+        if cfg.error is not None:
+            cfg.error.updateText("Deleted all Nodes", "orange")
 
-        # print(json.dumps(cfg.devinfo))
-        with open(path, 'w') as outfile:
-            json.dump(cfg.devinfo, outfile)
-        with open(path, 'r') as infile:
-            data = json.load(infile)
-        return str(json.dumps(data, indent=1))
-    
-
-
-    def decompile(self, path):
-        with open(path, 'r') as outfile:
-            cfg.devinfo = json.load(outfile)
-            # print(cfg.devinfo)
-        for i in self.devinfo:
-            setattr(self, i, cfg.devinfo[i])
-
+    def unpackFromJson(self):
         for idx in self.idxList:
             x = self.x_coord[idx]
             y = self.y_coord[idx]
@@ -112,7 +93,6 @@ class RestaurantSpace(object):
             cfg.x = self.x_coord.get(i)
             cfg.y = self.y_coord.get(i)
             cfg.myCanvas.placeNode(i)
-        return str(json.dumps(cfg.devinfo, indent=1))
     
     def printMoteAt(self,x, y):
         if (x,y) in self.dict_sensor_motes.keys():

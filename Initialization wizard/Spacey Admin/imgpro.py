@@ -10,11 +10,13 @@ from PIL import Image as p_Image, ImageEnhance as p_ImageEnhance, ImageOps as p_
 import os
 
 class floorPlan(object):
-    def __init__(self, path, canvas):
+    # mode: True = preprocess, False = raw
+    def __init__(self, path, canvas, mode = True):
         self.canvas = canvas
         self.path = path
-        cfg.imgpath = path
-        self.img = self.preprocess()
+        #assign backwards
+        cfg.prepimgpath = path
+        self.img = self.preprocess(mode)
         self.padding = 0
         self.resize()
         self.x_mid = int(cfg.x_bb1 + (cfg.x_bb2 - cfg.x_bb1)/2)
@@ -22,21 +24,22 @@ class floorPlan(object):
         
 
 
-    def preprocess(self):
+    def preprocess(self, mode):
         img = p_Image.open(self.path)
-        img = img.convert("RGBA")
-        enhancer = p_ImageEnhance.Contrast(img)
-        img = enhancer.enhance(10)
-        enhancer = p_ImageEnhance.Sharpness(img)
-        img = enhancer.enhance(10)
-        datas = img.getdata()
-        newData = []
-        for item in datas:
-            if item[0] < 5 and item[1] < 5 and item[2] < 5 and item[3] != 0:
-                newData.append((0,0,0,255))
-            else:
-                newData.append((255, 255, 255, 0))
-        img.putdata(newData)
+        if mode:
+            img = img.convert("RGBA")
+            enhancer = p_ImageEnhance.Contrast(img)
+            img = enhancer.enhance(10)
+            enhancer = p_ImageEnhance.Sharpness(img)
+            img = enhancer.enhance(10)
+            datas = img.getdata()
+            newData = []
+            for item in datas:
+                if item[0] < 5 and item[1] < 5 and item[2] < 5 and item[3] != 0:
+                    newData.append((0,0,0,255))
+                else:
+                    newData.append((255, 255, 255, 0))
+            img.putdata(newData)
         return img
 
     def resize(self):
@@ -57,14 +60,13 @@ class floorPlan(object):
         else                  : factor = factor_w
         height_r = int((float(self.img.size[1])) * float(factor))
         self.img = self.img.resize((width_r, height_r), p_Image.ANTIALIAS)
-
-        path = os.path.dirname(self.path)
-        cfg.imgpath = os.path.join(path, "processed_img.png")
-        self.img.save(cfg.imgpath, "PNG")
         self.photoimg = p_ImageTk.PhotoImage(self.img)
-        #cfg.myCanvas.floorplan_obj = self.canvas.create_image(self.x_mid,self.y_mid, anchor = "center", image = self.photoimg)
         cfg.myCanvas.floorplan_obj = self.canvas.create_image(cfg.x_bb1,cfg.y_bb1, anchor = "nw", image = self.photoimg)
         for i in cfg.myCanvas.rec_obj:
             cfg.myCanvas.canvas.tag_raise(i)
 
+    def save(self):
+        path = os.path.dirname(self.path)
+        cfg.postimgpath = os.path.join(path, "processed_img_"+cfg.base(cfg.filename)+".png")
+        self.img.save(cfg.postimgpath, "PNG")
     

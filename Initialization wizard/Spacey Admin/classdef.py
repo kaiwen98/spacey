@@ -28,6 +28,9 @@ class myCanvasObject(object):
         self.floorplan_obj = None
         self.xlen = 0
         self.ylen = 0
+    
+    def deleteImage(self):
+        self.canvas.delete(self.floorplan_obj)
 
     def deleteNode(self, idx):
         self.canvas.delete(cfg.myCanvas.rec_obj[idx])
@@ -49,14 +52,14 @@ class CanvasGridFrame(object):
         self.canvas = canvas
         self.deviceID = 0
         cfg.bg = canvas.create_rectangle(self.xpos, self.ypos, self.xpos + self.xlen, self.ypos+self.ylen, fill="SteelBlue1", width = 0)
-        self.grid = self.createGrid(num)
+        self.grid = self.createGrid()
       
 
 
     def createGrid(self):
         num = cfg.scale
         cfg.step = self.xlen / num
-        cfg.box_len = cfg.step
+        #   cfg.box_len = cfg.step
         cfg.x_list.clear()
         cfg.y_list.clear()
         for i in range(num+1):
@@ -103,8 +106,8 @@ class CanvasGridFrame(object):
         cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(_x2,y2,_x1+step,_y2, fill = "gray10")) #east
 
 
-    def refresh(self):
-        cfg.res.deleteAllNodes()
+    def refresh(self, delete = True):
+        if delete: cfg.res.deleteAllNodes()
         cfg.myCanvas.deleteAllGrids()
         self.grid = self.createGrid()
         cfg.img.resize()
@@ -273,17 +276,25 @@ class CursorNode(object):
 class menu_upload(object):
     def __init__(self, frame):
         self.frame = frame
-        self.labelFrame = LabelFrame(self.frame, text = "Upload: "+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
+        self.labelFrame = LabelFrame(self.frame, text = "Floor Plan Manager"+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
         self.obj = Button(self.labelFrame, text = "Upload Floor plan", command = self.fileupload)
-        self.obj.pack(ipadx = 10, ipady = 10, fill = X)
+        self.obj.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
+        self.obj = Button(self.labelFrame, text = "Clear Floor plan", command = self.floorplanclear)
+        self.obj.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
 
     def fileupload(self):
         cfg.res.deleteAllNodes()
         filename = filedialog.askopenfilename(initialdir = "/", title = "Select File", filetypes = (("all files","*.*"),("png files","*.png"), ("jpeg files","*.jpg")))
         self.label = Label(self.labelFrame, text = "Uploaded: "+ str(filename))
         self.label.pack(fill = X)
+        # Create Image generator
         cfg.img = imgpro.floorPlan(filename, cfg.myCanvas.canvas)
+    
+    def floorplanclear(self):
+        cfg.myCanvas.deleteImage()
+        cfg.res.deleteAllNodes()
+        
 
 class map_refresh(object):
     def __init__(self, frame,factor):
@@ -301,6 +312,7 @@ class map_refresh(object):
     def updateUp(self):
         cfg.scale += self.factor
         refresh = cfg.grid.refresh()
+        
 
     def updateDown(self):
         
@@ -310,6 +322,7 @@ class map_refresh(object):
 
         cfg.scale -= self.factor
         refresh = cfg.grid.refresh()
+        
 
       
         
@@ -624,20 +637,18 @@ class json_viewer(object):
         self.butt1 = Button(self.frame2, text = "Download JSON", command = self.download, width = 550)
         self.butt1.pack()
         #self.butt.pack(ipadx = 30, ipady = 30, fill = X)
-        self.obj = Text(self.frame1,  width = 550, bg = "gray10", font = cfg.json_font)
+        self.obj = Text(self.frame1,  width = 550, height = 190, bg = "gray10", font = cfg.json_font)
         self.yscroll = Scrollbar(self.frame1, orient = "vertical", command = self.obj.yview)
-        self.xscroll = Scrollbar(self.frame1, orient = "horizontal", command = self.obj.xview)
         self.yscroll.pack(padx = 10, pady = 10, side = LEFT, fill = Y)
-        self.xscroll.pack(padx = 10, pady = 10, side = BOTTOM, fill = X)
-        self.obj.pack(pady = 10, ipadx = 30, ipady = 30, side = LEFT)
+        self.obj.pack(pady = 10, ipadx = 30, ipady = 30, side = LEFT, fill = Y)
         
 
 
-        self.obj.configure(xscrollcommand= self.xscroll.set, yscrollcommand = self.yscroll.set)
+        self.obj.configure(yscrollcommand = self.yscroll.set)
         self.obj.tag_config("b", foreground = "sky blue")
         self.obj.tag_config("p", foreground = "deep pink")
         self.obj.tag_config("y", foreground = "yellow")
-        self.obj.insert(END, "Wait for JSON to be uploaded\n\n", "b")
+        self.obj.insert(END, "Wait for JSON to be \nuploaded...\n\n", "b")
         
 
     def updateText(self, _text, _bg):
@@ -646,14 +657,16 @@ class json_viewer(object):
         #self.obj.update()
 
     def upload(self):
-        str1 = cfg.res.compile('devinfo.json')
-        str2 = cfg.compile('cfginfo.json')
-        self.updateText(str2+"\n", "y")
+        cfg.filename = filedialog.asksaveasfilename(initialdir = "../", title = "Select File", filetypes = [("Json File", "*.json")])
+        cfg.img.save()
+        cfg.filename = cfg.filename + ".json"
+        str1 = cfg.compile(cfg.filename)
         self.updateText(str1+"\n", "p")
         self.updateText(">>>"+"-"*15+"\n", "b")
+        cfg.error.updateText("JSON Updated successfully", "pale green")
     
     def download(self):
         filename = filedialog.askopenfilename(initialdir = "../", title = "Select File", filetypes = [("Json File", "*.json")])
-        str1 = cfg.res.decompile(filename)
+        str1 = cfg.decompile(filename)
         self.updateText(str1+"\n", "p")
         self.updateText(">>>"+"+"*15+"\n", "b")

@@ -3,13 +3,15 @@ import classdef as spc
 from tkinter import filedialog
 import config as cfg
 from sensor_data import *
+import imgpro
+import os
 
 # step -> box_len 
 
 """
 Load JSON procedure:
-- place photo with padding
-- correct grid adjustment
+- place photo with padding: cfg
+- correct grid adjustment: cfg.scale
 - Node information              x
 """
 
@@ -31,13 +33,13 @@ error = None #error obj
 error_font = None #error font
 json_font = None #json font
 max_step = 200 #prevent grid line from scaling down to self collapse
-cfg.hlcolor = "yellow" #glb highlight color
+hlcolor = "yellow" #glb highlight color
 cursor = None #glb cursor
 box_len = step #length of node
 scale = 50 #num of grid lines along x axis
 bg = None #backgroun sky blue
-devinfo = {} #json purpose
-imgpath = None #path of image
+prepimgpath = None #path of image
+postimgpath = None
 pady = 10 #padding for widget format
 padx = 10
 grid = None
@@ -46,24 +48,54 @@ filename = ""
 img_x_bb1 = 0 #img bb box corner
 img_y_bb1 = 0
 
-config_op = ["x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "imgpath"]
+config_op = ["x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "box_len", "postimgpath"]
+
+devinfo = {} #json purpose
 configinfo = {}
+zipinfo = {}
 
 
 def compile(path):
     for i in config_op:
         configinfo[i] = globals()[i] 
-    # print(json.dumps(cfg.devinfo))
+  
+    for i in res.devinfo:
+        devinfo[i] = getattr(res, i) 
+
+    zipinfo["configinfo"] = configinfo
+    zipinfo["devinfo"] = devinfo
+
     with open(path, 'w') as outfile:
-        json.dump(configinfo, outfile)
+        json.dump(zipinfo, outfile)
+
     with open(path) as infile:
         data = json.loads(infile.read())
     return json.dumps(data, indent=1)
 
+
 def decompile(path):
     with open(path, 'r') as outfile:
-        configinfo = json.load(outfile)
-        # print(cfg.devinfo)
+        zipinfo = json.load(outfile)
+    configinfo = zipinfo.get("configinfo")
+    devinfo = zipinfo.get("devinfo")
+    print(devinfo)
     for i in config_op:
         globals()[i] = configinfo[i]
-    return json.dumps(configinfo, indent=1)
+    
+    for i in res.devinfo:
+        setattr(res, i, devinfo[i])
+
+    
+    unpackFromJson()
+    res.unpackFromJson()
+
+    return json.dumps(zipinfo, indent=1)
+
+def unpackFromJson():
+    global img
+    img = imgpro.floorPlan(postimgpath, cfg.myCanvas.canvas, False)
+    grid.refresh(delete = False)
+
+def base(filename):
+    print(filename)
+    return os.path.basename(filename)
