@@ -61,7 +61,9 @@ class floorPlan(object):
         height_r = int((float(self.img.size[1])) * float(factor))
         self.img = self.img.resize((width_r, height_r), p_Image.ANTIALIAS)
         self.photoimg = p_ImageTk.PhotoImage(self.img)
-        cfg.myCanvas.floorplan_obj = self.canvas.create_image(cfg.x_bb1,cfg.y_bb1, anchor = "nw", image = self.photoimg)
+        print(cfg.img_x_bb1)
+        print(cfg.img_y_bb1)
+        cfg.myCanvas.floorplan_obj = self.canvas.create_image(cfg.img_x_bb1,cfg.img_y_bb1, anchor = "nw", image = self.photoimg)
         for i in cfg.myCanvas.rec_obj:
             cfg.myCanvas.canvas.tag_raise(i)
 

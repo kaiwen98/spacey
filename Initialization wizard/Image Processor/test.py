@@ -1,40 +1,50 @@
-from tkinter import *
-from tkinter import ttk
-from tkinter import filedialog
- 
- 
- 
-class Root(Tk):
-    def __init__(self):
-        super(Root, self).__init__()
-        self.title("Python Tkinter Dialog Widget")
-        self.minsize(640, 400)
-        #self.wm_iconbitmap('icon.ico')
- 
-        self.labelFrame = ttk.LabelFrame(self, text = "Open File")
-        help(ttk.LabelFrame)
-        self.labelFrame.grid(row = 0, padx = 20, pady = 20)
- 
-        self.button()
- 
- 
- 
-    def button(self):
-        self.button = ttk.Button(self.labelFrame, text = "Browse A File",command = self.fileDialog)
-        self.button.grid(row = 1)
- 
- 
-    def fileDialog(self):
- 
-        filename = filedialog.askopenfilename(initialdir =  "/", title = "Select A File", filetype =
-        (("jpeg files","*.jpg"),("all files","*.*")) )
-        self.label = ttk.Label(self.labelFrame, text = "")
-        self.label.grid(row = 2)
-        self.label.configure(text = filename)
- 
- 
- 
- 
- 
-root = Root()
-root.mainloop()
+# 5c98e2
+
+from PIL import Image, ImageDraw, ImageFilter
+import os
+import p_config as cfg
+
+cfg.decompile("lol1.json")
+path = os.getcwd()
+path = os.path.join(path, "images")
+nodeOff_path = os.path.join(path, "unoccupied_nodes.png")
+nodeOn_path = os.path.join(path, "occupied_nodes.png")
+floorplan_path = cfg.postimgpath
+
+node_off = Image.open(nodeOff_path)
+node_off = node_off.resize((int(cfg.box_len*2.5), cfg.box_len*2))
+node_on = Image.open(nodeOn_path)
+node_on = node_on.resize((int(cfg.box_len*2.5), cfg.box_len*2))
+
+bg = Image.new('RGBA', (cfg.canvas_xlen, cfg.canvas_ylen), (92, 152, 226, 255))
+floorplan = Image.open(floorplan_path)
+
+datas = floorplan.getdata()
+newData = []
+for item in datas:
+    if item[3] > 100:
+        #newData.append((51,82,133,255))
+        newData.append((50,50,50,255))
+    else:
+        newData.append((0, 0, 0, 0))
+floorplan.putdata(newData)
+
+bg.paste(floorplan, (cfg.img_x_bb1, cfg.img_y_bb1), mask = floorplan)
+#bg.paste(floorplan, (0,0), mask = floorplan)
+
+
+
+for i in cfg.res.idxList:
+
+    x = cfg.res.x_coord[i]
+    y = cfg.res.y_coord[i]
+
+    if cfg.res.occupied[i]: node = node_on
+    else: node = node_off
+    bg.paste(node, (int(x),int(y)))
+
+#bg.paste(node_off,(0, 0))
+#bg.paste(node_off,(100, 500))
+bg.show()
+bg.save('test.png', quality=95, format = "PNG")
+

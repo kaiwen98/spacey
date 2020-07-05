@@ -94,8 +94,9 @@ def decompile(path):
 def unpackFromJson():
     global img
     img = imgpro.floorPlan(postimgpath, cfg.myCanvas.canvas, False)
-    grid.refresh(delete = False)
+    grid.refresh(delete = False, resize = False)
+    cfg.myCanvas.restoreTagOrder()
 
-def base(filename):
+def base(filename): 
     print(filename)
     return os.path.basename(filename)

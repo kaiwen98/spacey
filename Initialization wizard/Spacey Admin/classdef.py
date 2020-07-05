@@ -41,6 +41,16 @@ class myCanvasObject(object):
             self.canvas.delete(i)
         for j in self.border_obj:
             self.canvas.delete(j)
+    def restoreTagOrder(self):
+        for i in self.line_obj:
+            self.canvas.tag_raise(i)
+        self.canvas.tag_raise(self.floorplan_obj)
+        for i in self.rec_obj.values():
+            self.canvas.tag_raise(i)
+        self.canvas.tag_raise(cfg.cursor)
+        for i in self.border_obj:
+            self.canvas.tag_raise(i)
+
     def placeNode(self, idx):
         self.xlen, self.ylen = cfg.box_len, cfg.box_len #size of node
         #cfg.node = canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "blue")
@@ -58,7 +68,7 @@ class CanvasGridFrame(object):
 
     def createGrid(self):
         num = cfg.scale
-        cfg.step = self.xlen / num
+        cfg.step = int(self.xlen / num)
         #   cfg.box_len = cfg.step
         cfg.x_list.clear()
         cfg.y_list.clear()
@@ -106,11 +116,11 @@ class CanvasGridFrame(object):
         cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(_x2,y2,_x1+step,_y2, fill = "gray10")) #east
 
 
-    def refresh(self, delete = True):
+    def refresh(self, delete = True, resize = True):
         if delete: cfg.res.deleteAllNodes()
         cfg.myCanvas.deleteAllGrids()
         self.grid = self.createGrid()
-        cfg.img.resize()
+        if resize: cfg.img.resize()
         cfg.myCanvas.canvas.tag_raise(cfg.cursor)
         
 """
@@ -128,7 +138,7 @@ class CursorNode(object):
         self.canvas = canvas
         self.xpos, self.ypos = xpos, ypos
         self.xlen, self.ylen = 10, 10 #size of node
-        self.x_mid, self.y_mid = self.xpos + self.xlen/2, self.ypos + self.ylen/2
+        self.x_mid, self.y_mid = int(self.xpos + self.xlen/2), int(self.ypos + self.ylen/2)
         self.obj= canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "red")
         cfg.cursor = self.obj
         canvas.tag_bind(self.obj, '<B1-Motion>', self.move)
@@ -316,7 +326,7 @@ class map_refresh(object):
 
     def updateDown(self):
         
-        if (cfg.scale - self.factor) <= 0 or cfg.canvas_w/(cfg.scale - self.factor) > cfg.max_step:
+        if (cfg.scale - self.factor) <= 0 or int(cfg.canvas_w/(cfg.scale - self.factor)) > cfg.max_step:
             cfg.error.updateText("Cannot scale down any further", "orange")
             return
 
@@ -614,6 +624,7 @@ class node_scaleshift(object):
 
     def up(self):
         cfg.box_len += self.factor
+        cfg.error.updateText("Node length: {n}".format(n = cfg.box_len), "yellow")
         cfg.res.changeNodeSize()
     def down(self):
         cfg.box_len -= self.factor
