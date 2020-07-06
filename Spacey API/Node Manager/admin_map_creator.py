@@ -60,11 +60,11 @@ def focus_canvas():
 
 
 def setup():
-    root = Tk()
+    cfg.root = Tk()
     global canvas_w, canvas_h, image_file
-    root.state('zoomed') # Full window view
-    root.title('Title') # Set title name
-    root.configure(bg = "gray22") #Bg colour
+    cfg.root.state('zoomed') # Full window view
+    cfg.root.title('Spacey Node Manager') # Set title name
+    cfg.root.configure(bg = "gray22") #Bg colour
     # Icon of the window
     # root.iconbitmap('')
     #root.geometry('1200x1200')  #size of w
@@ -74,7 +74,7 @@ def setup():
     cfg.canvas_w, cfg.canvas_h = 1200, 1000
     w, h = 1200, 1000
     print("from main: " + str(cfg.canvas_w))
-    frame_canvas = LabelFrame(root, text = "Map", width = w, height = h, bg = "gray40") # Set frame to embed canvas
+    frame_canvas = LabelFrame(cfg.root, text = "Map", width = w, height = h, bg = "gray40") # Set frame to embed canvas
     frame_canvas.pack(padx = 20, pady = 20, side = RIGHT) # Align right with padding
     frame_canvas.pack_propagate(False) # Fix frame size to dimensions
 
@@ -91,7 +91,7 @@ def setup():
    
     ### Creation of Config menu ###
     
-    frame_menu = frame_menu1 = LabelFrame(root, text = "Configurations", width = w/2, height = h, bg = "gray40")
+    frame_menu = frame_menu1 = LabelFrame(cfg.root, text = "Configurations", width = w/2, height = h, bg = "gray40")
     frame_menu.pack(padx = 20, pady = 20, side = LEFT, expand = 1)
     frame_menu.pack_propagate(False)
 
@@ -103,6 +103,7 @@ def setup():
     dev_info = spc.menu_devinfo(frame_menu1)
     status = spc.menu_status(frame_menu1)
     cfg.error = spc.menu_debug(frame_menu1)
+    help = spc.menu_help(frame_menu1)
     
     
     # Set callbacks for cursor
@@ -128,12 +129,12 @@ def setup():
     maprefresh2 = spc.map_refresh(frame_menu2, 10)
     jsonview = spc.json_viewer(frame_menu2)
 
-    root.bind('<Escape>', quit)
-    root.bind('<Control-z>', lambda event: focus_toggle(event, dev_info.keyEntry))
+    cfg.root.bind('<Escape>', quit)
+    cfg.root.bind('<Control-z>', lambda event: focus_toggle(event, dev_info.keyEntry))
     ##############################################################################
     #cfg.res.decompile('mc.bin')
 
-    root.mainloop()
+    cfg.root.mainloop()
 if __name__ == "__main__":
     setup()
     

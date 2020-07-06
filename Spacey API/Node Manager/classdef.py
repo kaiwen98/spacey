@@ -290,7 +290,7 @@ class menu_upload(object):
         self.frame = frame
         self.labelFrame = LabelFrame(self.frame, text = "Floor Plan Manager"+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
-        self.obj = Button(self.labelFrame, text = "Upload Floor plan", command = self.fileupload)
+        self.obj = Button(self.labelFrame, text = "Download Floor plan", command = self.fileupload)
         self.obj.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
         self.obj = Button(self.labelFrame, text = "Clear Floor plan", command = self.floorplanclear)
         self.obj.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
@@ -488,7 +488,7 @@ class menu_devinfo(object):
 class menu_status(object):
     def __init__(self, frame):
         self.frame = frame
-        self.labelFrame = LabelFrame(self.frame, text = "Status bar", bg = "gray55", height = 300, width = 550)
+        self.labelFrame = LabelFrame(self.frame, text = "Status bar", bg = "gray55", height = 150, width = 550)
         self.labelFrame.pack(fill = X, padx = cfg.padx, pady = cfg.pady, side = TOP)
         self.labelFrame.pack_propagate(0)
         self.obj = Label(self.labelFrame,text = "", bd = 100, height = 300, width = 550)
@@ -496,6 +496,20 @@ class menu_status(object):
     def updateText(self, _text):
         self.obj.configure(text = _text)
         self.obj.update()
+
+class menu_help(object):
+    def __init__(self, frame):
+        self.frame = frame
+        self.labelFrame = LabelFrame(self.frame, text = "Help", bg = "gray55", height = 117, width = 550)
+        self.labelFrame.pack(fill = X, padx = cfg.padx, pady = cfg.pady, side = TOP)
+        self.labelFrame.pack_propagate(0)
+        self.obj = Button(self.labelFrame,text = "Press me for help!", command = self.newWindow, width = 550, height = 105, bg = "khaki")
+        self.obj.pack(padx = 10, pady = 10, fill = Y)
+    
+    def newWindow():
+        newWindow = Toplevel(app)
+
+
 
 class menu_debug(object):
     def __init__(self, frame):
