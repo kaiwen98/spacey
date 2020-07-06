@@ -21,8 +21,10 @@ postimgpath = None
 img_x_bb1, img_y_bb1 = 0,0 #img bb box corner
 canvas_xlen = 0
 canvas_ylen = 0
+img_padding = 0
 
-config_op = ["x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "box_len", "postimgpath"]
+
+config_op = ["x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "box_len", "postimgpath", "img_padding"]
 
 devinfo = {} #json purpose
 configinfo = {}

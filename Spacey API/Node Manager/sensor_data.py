@@ -54,7 +54,7 @@ class RestaurantSpace(object):
         del self.space_id[idx]
         del self.device_cluster_level[idx]
         del self.device_cluster_id[idx]
-        del self.idxList[idx]
+        del self.idxList[int(idx)]
         self.size -= 1
 
         cfg.myCanvas.deleteNode(idx)
@@ -75,6 +75,7 @@ class RestaurantSpace(object):
 
         for i in self.idxList:
             cfg.myCanvas.deleteNode(i)
+            self.size -= 1
         self.idxList.clear()
      
         cfg.myCanvas.rec_obj.clear()

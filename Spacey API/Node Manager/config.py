@@ -5,6 +5,7 @@ import config as cfg
 from sensor_data import *
 import imgpro
 import os
+from os.path import dirname as dir
 
 # step -> box_len 
 
@@ -14,6 +15,13 @@ Load JSON procedure:
 - correct grid adjustment: cfg.scale
 - Node information              x
 """
+
+root = dir(dir(__file__))
+floorplan_folder_input = os.path.join(root, "floorplan_images", "input floorplan")
+floorplan_folder_output = os.path.join(root, "floorplan_images", "output floorplan")
+json_folder = os.path.join(root, "json_files")
+
+
 
 x_list = [] #list of all possible coordinates
 y_list = []
@@ -44,11 +52,12 @@ pady = 10 #padding for widget format
 padx = 10
 grid = None
 filename = ""
+img_padding = 0
 
 img_x_bb1 = 0 #img bb box corner
 img_y_bb1 = 0
 
-config_op = ["x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "box_len", "postimgpath"]
+config_op = ["x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "box_len", "postimgpath", "img_padding"]
 
 devinfo = {} #json purpose
 configinfo = {}
@@ -78,14 +87,12 @@ def decompile(path):
         zipinfo = json.load(outfile)
     configinfo = zipinfo.get("configinfo")
     devinfo = zipinfo.get("devinfo")
-    print(devinfo)
     for i in config_op:
         globals()[i] = configinfo[i]
     
     for i in res.devinfo:
         setattr(res, i, devinfo[i])
 
-    
     unpackFromJson()
     res.unpackFromJson()
 

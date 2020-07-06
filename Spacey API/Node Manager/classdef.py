@@ -29,12 +29,19 @@ class myCanvasObject(object):
         self.xlen = 0
         self.ylen = 0
     
+    def resetCursorLocation(self):
+        self.canvas.move(cfg.cursor, cfg.x_list[int(cfg.scale/2)] - cfg.x, cfg.x_list[int(cfg.scale/2)] - cfg.y)
+        cfg.x = cfg.x_list[int(cfg.scale/2)]
+        cfg.y = cfg.y_list[int(cfg.scale/2)]
+    
     def deleteImage(self):
         self.canvas.delete(self.floorplan_obj)
 
     def deleteNode(self, idx):
-        self.canvas.delete(cfg.myCanvas.rec_obj[idx])
+        print("before ", self.rec_obj.keys())
+        self.canvas.delete(self.rec_obj[idx])
         del self.rec_obj[idx]
+        print("after ", self.rec_obj.keys())
 
     def deleteAllGrids(self):
         for i in self.line_obj:
@@ -82,6 +89,7 @@ class CanvasGridFrame(object):
         cfg.num_coordinates_max = (cfg.canvas_w/cfg.step-1) * (cfg.canvas_h/cfg.step-1)
         if cfg.error is not None: cfg.error.updateText("Max coordinates: {_num}".format(_num = cfg.num_coordinates_max), "yellow")
         self.drawBoundary(cfg.step)
+        cfg.myCanvas.resetCursorLocation()
         cfg.myCanvas.canvas.tag_raise(cfg.cursor)
     
     def drawBoundary(self, step):
@@ -138,7 +146,7 @@ class CursorNode(object):
         self.canvas = canvas
         self.xpos, self.ypos = xpos, ypos
         self.xlen, self.ylen = 10, 10 #size of node
-        self.x_mid, self.y_mid = int(self.xpos + self.xlen/2), int(self.ypos + self.ylen/2)
+        cfg.x, cfg.y = int(self.xpos + self.xlen/2), int(self.ypos + self.ylen/2)
         self.obj= canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "red")
         cfg.cursor = self.obj
         canvas.tag_bind(self.obj, '<B1-Motion>', self.move)
@@ -164,15 +172,16 @@ class CursorNode(object):
         self.callBack = []
     
     def deleteNode(self, event):
-        if (self.x_mid, self.y_mid) in self.restaurant.dict_sensor_motes:
+        if (cfg.x, cfg.y) in self.restaurant.dict_sensor_motes:
             print("deleted")            
-            self.restaurant.deleteNode(self.x_mid, self.y_mid)
+            self.restaurant.deleteNode(cfg.x, cfg.y)
             cfg.error.updateText("Node deleted at x:{x} and y:{y}".format(x = cfg.x, y = cfg.y), "deep pink")
             self.nodeDetectCallback()
             return
         else:
             print("Invalid")
             return
+    
 
     
     def setCallback(self, cb):
@@ -181,9 +190,6 @@ class CursorNode(object):
     def deposit(self):
         print("enter registered")
         if cfg.deposit_flag is True:
-            # node = Node(self.canvas, self.x_mid-self.xlen/2, self.y_mid - self.ylen/2)
-            cfg.x = self.x_mid
-            cfg.y = self.y_mid
             self.nodeDetectCallback()
             cfg.deposit_flag = False
         else:
@@ -215,8 +221,8 @@ class CursorNode(object):
         if self.move_flag:
             new_xpos, new_ypos = event.x, event.y
             self.canvas.move(self.obj, new_xpos-self.mouse_xpos ,new_ypos-self.mouse_ypos)
-            self.x_mid += new_xpos-self.mouse_xpos
-            self.y_mid += new_ypos-self.mouse_ypos
+            cfg.x += new_xpos-self.mouse_xpos
+            cfg.y += new_ypos-self.mouse_ypos
             self.mouse_xpos = new_xpos
             self.mouse_ypos = new_ypos
         else:
@@ -230,28 +236,26 @@ class CursorNode(object):
         print("lol")
         if dir is "W":
             self.canvas.move(self.obj, 0 , -cfg.step)
-            self.y_mid -= cfg.step
+            cfg.y -= cfg.step
         elif dir is "A":
             self.canvas.move(self.obj, -cfg.step, 0)
-            self.x_mid -= cfg.step
+            cfg.x -= cfg.step
         elif dir is "S":
             self.canvas.move(self.obj, 0 , cfg.step)
-            self.y_mid += cfg.step
+            cfg.y += cfg.step
         elif dir is "D":
             self.canvas.move(self.obj, cfg.step, 0)
-            self.x_mid += cfg.step
+            cfg.x += cfg.step
         self.canvas.tag_raise(self.obj)
 
     def release(self, event):
         new_xpos, new_ypos = self.estimate(event.x,cfg.x_list), self.estimate(event.y,cfg.y_list)
-        self.canvas.move(self.obj, new_xpos-self.x_mid ,new_ypos-self.y_mid)
+        self.canvas.move(self.obj, new_xpos-cfg.x ,new_ypos-cfg.y)
         self.mouse_xpos = new_xpos
         self.mouse_ypos = new_ypos
         self.move_flag = False
-        self.x_mid = new_xpos
-        self.y_mid = new_ypos
-        cfg.x = self.x_mid
-        cfg.y = self.y_mid
+        cfg.x = new_xpos
+        cfg.y = new_ypos
         cfg.initflag = True
         self.nodeDetectCallback()
         self.canvas.tag_raise(self.obj)
@@ -259,8 +263,6 @@ class CursorNode(object):
 
     def release_unit(self, event):
         self.move_flag = False
-        cfg.x = self.x_mid
-        cfg.y = self.y_mid
         self.nodeDetectCallback()
         self.canvas.tag_raise(self.obj)
     
@@ -272,8 +274,8 @@ class CursorNode(object):
 
     def nodeDetectCallback(self):
 
-        if (self.x_mid, self.y_mid) in self.restaurant.dict_sensor_motes:
-            text = self.restaurant.printMoteAt(self.x_mid, self.y_mid)
+        if (cfg.x, cfg.y) in self.restaurant.dict_sensor_motes:
+            text = self.restaurant.printMoteAt(cfg.x, cfg.y)
             self.callBack[1]("lawn green")
             self.callBack[0](text) # Print text on status label
 
@@ -294,8 +296,9 @@ class menu_upload(object):
         self.obj.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
 
     def fileupload(self):
+        cfg.myCanvas.deleteImage()
         cfg.res.deleteAllNodes()
-        filename = filedialog.askopenfilename(initialdir = "/", title = "Select File", filetypes = (("all files","*.*"),("png files","*.png"), ("jpeg files","*.jpg")))
+        filename = filedialog.askopenfilename(initialdir = cfg.floorplan_folder_input, title = "Select File", filetypes = (("all files","*.*"),("png files","*.png"), ("jpeg files","*.jpg")))
         self.label = Label(self.labelFrame, text = "Uploaded: "+ str(filename))
         self.label.pack(fill = X)
         # Create Image generator
@@ -320,14 +323,18 @@ class map_refresh(object):
         self.factor = factor
 
     def updateUp(self):
+        if cfg.scale >= 80: 
+            cfg.error.updateText("[Grid] Cannot scale up any further", "orange")
+            return
         cfg.scale += self.factor
+        print("lol: " + str(cfg.scale))
         refresh = cfg.grid.refresh()
         
 
     def updateDown(self):
         
         if (cfg.scale - self.factor) <= 0 or int(cfg.canvas_w/(cfg.scale - self.factor)) > cfg.max_step:
-            cfg.error.updateText("Cannot scale down any further", "orange")
+            cfg.error.updateText("[Grid] Cannot scale down any further", "orange")
             return
 
         cfg.scale -= self.factor
@@ -572,15 +579,13 @@ class img_xyshift(object):
         cfg.myCanvas.canvas.move(cfg.myCanvas.floorplan_obj, 0, self.factor)
     
     def s_up(self):
-        if cfg.img.padding == 0: 
+        if cfg.img_padding == 0: 
             cfg.error.updateText("<Floor Plan> Cannot scale down further", "orange")
             return
-        cfg.img.padding -= self.factor
-        cfg.imgpadding = cfg.img.padding
+        cfg.img_padding -= self.factor
         cfg.img.resize()
     def s_down(self):
-        cfg.img.padding += self.factor
-        cfg.imgpadding = cfg.img.padding
+        cfg.img_padding += self.factor
         cfg.img.resize()
 
 class img_scaleshift(object):
@@ -597,15 +602,13 @@ class img_scaleshift(object):
         self.factor = factor
 
     def up(self):
-        if cfg.img.padding == 0: 
+        if cfg.img_padding == 0: 
             cfg.error.updateText("<Floor Plan> Cannot scale down further", "orange")
             return
-        cfg.img.padding -= self.factor
-        cfg.imgpadding = cfg.img.padding
+        cfg.padding -= self.factor
         cfg.img.resize()
     def down(self):
-        cfg.img.padding += self.factor
-        cfg.imgpadding = cfg.img.padding
+        cfg.img_padding += self.factor
         cfg.img.resize()
         
 
@@ -668,7 +671,7 @@ class json_viewer(object):
         #self.obj.update()
 
     def upload(self):
-        cfg.filename = filedialog.asksaveasfilename(initialdir = "../", title = "Select File", filetypes = [("Json File", "*.json")])
+        cfg.filename = filedialog.asksaveasfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json File", "*.json")])
         cfg.img.save()
         cfg.filename = cfg.filename + ".json"
         str1 = cfg.compile(cfg.filename)
@@ -677,7 +680,7 @@ class json_viewer(object):
         cfg.error.updateText("JSON Updated successfully", "pale green")
     
     def download(self):
-        filename = filedialog.askopenfilename(initialdir = "../", title = "Select File", filetypes = [("Json File", "*.json")])
+        filename = filedialog.askopenfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json File", "*.json")])
         str1 = cfg.decompile(filename)
         self.updateText(str1+"\n", "p")
         self.updateText(">>>"+"+"*15+"\n", "b")

@@ -45,11 +45,13 @@ def focus_toggle(event, widget):
     else: 
         widget.focus_set()
 
-def focus_toggle(widget, mode):
+def focus_toggle(mode, widget = None):
     if mode:
         cfg.myCanvas.canvas.focus_set()
     else: 
         widget.focus_set()
+def focus_canvas():
+    focus_toggle(mode = True)
 
 
 
@@ -106,12 +108,13 @@ def setup():
     # Set callbacks for cursor
     cursor.setCallback(status.updateText)
     cursor.setCallback(dev_info.highlightDeviceInfo)
-    cursor.setCallback(lambda i: focus_toggle(dev_info.keyEntry, i))
+    cursor.setCallback(lambda i: focus_toggle(i, dev_info.keyEntry))
 
     # Set callbacks for dev_info
     dev_info.setCallback(cursor.deposit)
     dev_info.setCallback(cursor.nodeDetectCallback)
-    dev_info.setCallback(lambda i: focus_toggle(dev_info.keyEntry, i))
+    dev_info.setCallback(lambda i: focus_toggle(i, dev_info.keyEntry))
+    dev_info.setCallback(focus_canvas)
     
 
 

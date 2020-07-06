@@ -3,12 +3,14 @@
 from PIL import Image, ImageDraw, ImageFilter
 import os
 import p_config as cfg
+from os.path import basename, splitext, dirname
 
-cfg.decompile("lol1.json")
-path = os.getcwd()
-path = os.path.join(path, "images")
-nodeOff_path = os.path.join(path, "unoccupied_nodes.png")
-nodeOn_path = os.path.join(path, "occupied_nodes.png")
+path = os.path.dirname(os.path.dirname(__file__))
+json_path = os.path.join(path, "json_files", "lol.json")
+save_path = os.path.join(path, "Image Processor", "images", "output graphic", "output_"+str(splitext(basename(json_path))[0])+".png")
+cfg.decompile(json_path)
+nodeOff_path = os.path.join(path, "Image Processor", "images", "assets","unoccupied_nodes.png")
+nodeOn_path = os.path.join(path, "Image Processor", "images", "assets", "occupied_nodes.png")
 floorplan_path = cfg.postimgpath
 
 node_off = Image.open(nodeOff_path)
@@ -46,5 +48,6 @@ for i in cfg.res.idxList:
 #bg.paste(node_off,(0, 0))
 #bg.paste(node_off,(100, 500))
 bg.show()
-bg.save('test.png', quality=95, format = "PNG")
+
+bg.save(save_path, quality=95, format = "PNG")
 

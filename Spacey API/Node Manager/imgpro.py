@@ -17,7 +17,6 @@ class floorPlan(object):
         #assign backwards
         cfg.prepimgpath = path
         self.img = self.preprocess(mode)
-        self.padding = 0
         self.resize()
         self.x_mid = int(cfg.x_bb1 + (cfg.x_bb2 - cfg.x_bb1)/2)
         self.y_mid = int(cfg.y_bb1 + (cfg.y_bb2 - cfg.y_bb1)/2)
@@ -51,8 +50,8 @@ class floorPlan(object):
 
         self.x_mid = int(cfg.x_bb1 + (cfg.x_bb2 - cfg.x_bb1)/2)
         self.y_mid = int(cfg.y_bb1 + (cfg.y_bb2 - cfg.y_bb1)/2)
-        width_r = cfg.x_bb2 - cfg.x_bb1 - self.padding
-        height_r = cfg.y_bb2 - cfg.y_bb1 - self.padding
+        width_r = cfg.x_bb2 - cfg.x_bb1 - cfg.img_padding
+        height_r = cfg.y_bb2 - cfg.y_bb1 - cfg.img_padding
 
         factor_w = width_r / float(self.img.size[0])
         factor_h = height_r / float(self.img.size[1])
@@ -60,15 +59,14 @@ class floorPlan(object):
         else                  : factor = factor_w
         height_r = int((float(self.img.size[1])) * float(factor))
         self.img = self.img.resize((width_r, height_r), p_Image.ANTIALIAS)
+        print("resized, padding is {n}".format(n = cfg.img_padding))
         self.photoimg = p_ImageTk.PhotoImage(self.img)
-        print(cfg.img_x_bb1)
-        print(cfg.img_y_bb1)
         cfg.myCanvas.floorplan_obj = self.canvas.create_image(cfg.img_x_bb1,cfg.img_y_bb1, anchor = "nw", image = self.photoimg)
         for i in cfg.myCanvas.rec_obj:
             cfg.myCanvas.canvas.tag_raise(i)
 
     def save(self):
-        path = os.path.dirname(self.path)
-        cfg.postimgpath = os.path.join(path, "processed_img_"+cfg.base(cfg.filename)+".png")
+        print("boink")
+        cfg.postimgpath = os.path.join(cfg.floorplan_folder_output, "processed_img_"+cfg.base(cfg.filename)+".png")
         self.img.save(cfg.postimgpath, "PNG")
     
