@@ -17,7 +17,7 @@ Load JSON procedure:
 - Node information              x
 """
 
-root = dir(os.path.dirname(sys.executable))
+root = dir(dir(dir(sys.executable)))
 #root = dir(dir(__file__))
 
 icon_path = os.path.join(root, "images", "assets", "spacey_icon.ico")

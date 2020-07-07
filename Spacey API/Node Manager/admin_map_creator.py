@@ -62,18 +62,20 @@ def setup():
     #root.geometry('1200x1200')  #size of w
 
     ### Creation of GUI map ###
-
-    cfg.canvas_w, cfg.canvas_h = 1200, 1000
-    w, h = 1200, 1000
+    print(cfg.root.winfo_screenheight())
+    print(cfg.root.winfo_screenwidth())
+    cfg.canvas_w, cfg.canvas_h = cfg.root.winfo_screenwidth()/8*5, cfg.root.winfo_screenheight()
+    #cfg.canvas_w, cfg.canvas_h = 1200, 1000
+    w, h = cfg.root.winfo_screenwidth()/8*5, cfg.root.winfo_screenheight()
     print("from main: " + str(cfg.canvas_w))
-    frame_canvas = LabelFrame(cfg.root, text = "Map", width = w, height = h, bg = "gray40") # Set frame to embed canvas
-    frame_canvas.pack(padx = 20, pady = 20, side = RIGHT) # Align right with padding
-    frame_canvas.pack_propagate(False) # Fix frame size to dimensions
+    frame_canvas = LabelFrame(cfg.root, text = "Map", width = w, height = w, bg = "gray40") # Set frame to embed canvas
+    #frame_canvas.pack(padx = 20, pady = 20, side = RIGHT) # Align right with padding
+    #frame_canvas.pack_propagate(False) # Fix frame size to dimensions
 
 
-    cfg.myCanvas = spc.myCanvasObject(frame_canvas, width = w, height = h) # Set canvas within frame
-    cfg.myCanvas.canvas.pack(fill = "both", expand = 1, padx = 10, pady = 10) # Set padding
-    #cfg.myCanvas.canvas.pack()
+    cfg.myCanvas = spc.myCanvasObject(frame_canvas, width = w, height = w) # Set canvas within frame
+    #cfg.myCanvas.canvas.pack(padx = 10, pady = 10) # Set padding
+  
 
 
     cfg.res = RestaurantSpace(cfg.myCanvas.canvas)
@@ -83,11 +85,11 @@ def setup():
    
     ### Creation of Config menu ###
     
-    frame_menu = frame_menu1 = LabelFrame(cfg.root, text = "Configurations", width = w/2, height = h, bg = "gray40")
-    frame_menu.pack(padx = 20, pady = 20, side = LEFT, expand = 1)
+    frame_menu = LabelFrame(cfg.root, text = "Configurations", width = int(w/2.5), height = h, bg = "gray40")
+    frame_menu.pack(padx = 20, pady = 20, side = LEFT, expand = 1, anchor = "w")
     frame_menu.pack_propagate(False)
 
-    frame_menu1 = LabelFrame(frame_menu, text = "Menu 1", width = w/4, height = h, bg = "gray40")
+    frame_menu1 = LabelFrame(frame_menu, text = "Menu 1", width = w/5, height = h, bg = "gray40")
     frame_menu1.pack(side = LEFT, expand = 1, fill = X)
     frame_menu1.pack_propagate(False)
 
@@ -111,7 +113,7 @@ def setup():
     
 
 
-    frame_menu2 = LabelFrame(frame_menu, text = "Menu 2", width = w/4, height = h, bg = "gray40")
+    frame_menu2 = LabelFrame(frame_menu, text = "Menu 2", width = w/5, height = h, bg = "gray40")
     frame_menu2.pack(side = LEFT, expand = 1)
     frame_menu2.pack_propagate(False)
 
@@ -120,6 +122,11 @@ def setup():
     dev_info2 = spc.img_xyshift(frame_menu2, 10)
     maprefresh2 = spc.map_refresh(frame_menu2, 10)
     jsonview = spc.json_viewer(frame_menu2)
+
+    
+    frame_canvas.pack(padx = 20, pady = 20, side = RIGHT) # Align right with padding
+    frame_canvas.pack_propagate(False) # Fix frame size to dimensions
+    cfg.myCanvas.canvas.pack(padx = 10, pady = 10) # Set padding
 
     cfg.root.bind('<Escape>', lambda event: destroy(event, cfg.root))
     cfg.root.bind('<Control-z>', lambda event: focus_toggle1(event, dev_info.keyEntry))

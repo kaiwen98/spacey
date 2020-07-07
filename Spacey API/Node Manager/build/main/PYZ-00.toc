@@ -912,21 +912,33 @@
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\__init__.py',
    'PYMODULE'),
+  ('pkg_resources._vendor.packaging.utils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\utils.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\__init__.py',
+   'PYMODULE'),
   ('pkg_resources._vendor.packaging._compat',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_compat.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.specifiers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\specifiers.py',
    'PYMODULE'),
   ('pkg_resources._vendor.packaging.markers',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\markers.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging.utils',
+  ('pkg_resources._vendor.packaging._structures',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\utils.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_structures.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging.specifiers',
+  ('pkg_resources._vendor.packaging',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\specifiers.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__init__.py',
    'PYMODULE'),
   ('pkg_resources._vendor.appdirs',
    'c:\\users\\looi kai '
@@ -939,30 +951,6 @@
   ('win32com.shell',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32comext\\shell\\__init__.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.six',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\six.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\__init__.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.version',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\version.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.requirements',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\requirements.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.__about__',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__about__.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging._structures',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_structures.py',
    'PYMODULE'),
   ('pkg_resources._vendor.pyparsing',
    'c:\\users\\looi kai '
@@ -1000,9 +988,21 @@
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\lib\\netbios.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging',
+  ('pkg_resources._vendor.packaging.version',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__init__.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\version.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.six',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\six.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.requirements',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\requirements.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.__about__',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__about__.py',
    'PYMODULE'),
   ('sysconfig',
    'c:\\users\\looi kai '
@@ -1016,13 +1016,13 @@
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\extern\\__init__.py',
    'PYMODULE'),
-  ('_py_abc',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_py_abc.py',
-   'PYMODULE'),
   ('stringprep',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\stringprep.py',
+   'PYMODULE'),
+  ('_py_abc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_py_abc.py',
    'PYMODULE'),
   ('tracemalloc',
    'c:\\users\\looi kai '
@@ -1256,53 +1256,53 @@
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\__init__.py',
    'PYMODULE'),
-  ('setuptools._vendor',
+  ('setuptools._vendor.packaging.specifiers',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\__init__.py',
-   'PYMODULE'),
-  ('setuptools._vendor.six',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\six.py',
-   'PYMODULE'),
-  ('setuptools._vendor.packaging.__about__',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\__about__.py',
-   'PYMODULE'),
-  ('setuptools._vendor.pyparsing',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\pyparsing.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\specifiers.py',
    'PYMODULE'),
   ('setuptools._vendor.packaging._compat',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\_compat.py',
    'PYMODULE'),
+  ('setuptools._vendor.packaging',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\__init__.py',
+   'PYMODULE'),
   ('setuptools._vendor.packaging.requirements',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\requirements.py',
+   'PYMODULE'),
+  ('setuptools._vendor.six',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\six.py',
    'PYMODULE'),
   ('setuptools._vendor.packaging._structures',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\_structures.py',
    'PYMODULE'),
-  ('setuptools._vendor.packaging.specifiers',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\specifiers.py',
-   'PYMODULE'),
-  ('setuptools._vendor.packaging',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\__init__.py',
-   'PYMODULE'),
-  ('setuptools._vendor.packaging.version',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\version.py',
-   'PYMODULE'),
   ('setuptools._vendor.packaging.utils',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\utils.py',
    'PYMODULE'),
+  ('setuptools._vendor.packaging.__about__',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\__about__.py',
+   'PYMODULE'),
+  ('setuptools._vendor',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\__init__.py',
+   'PYMODULE'),
+  ('setuptools._vendor.pyparsing',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\pyparsing.py',
+   'PYMODULE'),
   ('setuptools._vendor.packaging.markers',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\markers.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging.version',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\version.py',
    'PYMODULE'),
   ('setuptools.msvc',
    'c:\\users\\looi kai '
@@ -2104,37 +2104,21 @@
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\Image.py',
    'PYMODULE'),
-  ('PIL.MspImagePlugin',
+  ('PIL.PsdImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MspImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PsdImagePlugin.py',
    'PYMODULE'),
   ('PIL.ImageFile',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageFile.py',
    'PYMODULE'),
-  ('PIL.SunImagePlugin',
+  ('PIL.TgaImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\SunImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\TgaImagePlugin.py',
    'PYMODULE'),
-  ('PIL.DdsImagePlugin',
+  ('PIL.FpxImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\DdsImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.PsdImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PsdImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.PcxImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PcxImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.IcnsImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\IcnsImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.ImImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FpxImagePlugin.py',
    'PYMODULE'),
   ('PIL.PdfImagePlugin',
    'c:\\users\\looi kai '
@@ -2148,81 +2132,89 @@
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageSequence.py',
    'PYMODULE'),
-  ('PIL.PcdImagePlugin',
+  ('PIL.IcoImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PcdImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\IcoImagePlugin.py',
    'PYMODULE'),
-  ('PIL.GribStubImagePlugin',
+  ('PIL.DcxImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\GribStubImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\DcxImagePlugin.py',
    'PYMODULE'),
-  ('PIL.FtexImagePlugin',
+  ('PIL.BlpImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FtexImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\BlpImagePlugin.py',
    'PYMODULE'),
-  ('PIL.BufrStubImagePlugin',
+  ('PIL.IcnsImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\BufrStubImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.FitsStubImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FitsStubImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.TgaImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\TgaImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.XVThumbImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\XVThumbImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.WebPImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\WebPImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.WmfImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\WmfImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.Jpeg2KImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\Jpeg2KImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.Hdf5StubImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\Hdf5StubImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.SgiImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\SgiImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.ImtImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImtImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.FliImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FliImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\IcnsImagePlugin.py',
    'PYMODULE'),
   ('PIL.CurImagePlugin',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\CurImagePlugin.py',
    'PYMODULE'),
+  ('PIL.XbmImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\XbmImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MpoImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MpoImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.GribStubImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\GribStubImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.WebPImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\WebPImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MspImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MspImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MicImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MicImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PcxImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PcxImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.XVThumbImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\XVThumbImagePlugin.py',
+   'PYMODULE'),
   ('PIL.XpmImagePlugin',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\XpmImagePlugin.py',
    'PYMODULE'),
-  ('PIL.MpegImagePlugin',
+  ('PIL.ImImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MpegImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImImagePlugin.py',
    'PYMODULE'),
-  ('PIL.IcoImagePlugin',
+  ('PIL.WmfImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\IcoImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\WmfImagePlugin.py',
    'PYMODULE'),
-  ('PIL.EpsImagePlugin',
+  ('PIL.GbrImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\EpsImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\GbrImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.SgiImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\SgiImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.SpiderImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\SpiderImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.McIdasImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\McIdasImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.Jpeg2KImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\Jpeg2KImagePlugin.py',
    'PYMODULE'),
   ('PIL.PalmImagePlugin',
    'c:\\users\\looi kai '
@@ -2232,45 +2224,53 @@
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PixarImagePlugin.py',
    'PYMODULE'),
-  ('PIL.McIdasImagePlugin',
+  ('PIL.FtexImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\McIdasImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FtexImagePlugin.py',
    'PYMODULE'),
-  ('PIL.GbrImagePlugin',
+  ('PIL.MpegImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\GbrImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MpegImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PcdImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PcdImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FliImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FliImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FitsStubImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FitsStubImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.BufrStubImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\BufrStubImagePlugin.py',
    'PYMODULE'),
   ('PIL.IptcImagePlugin',
    'c:\\users\\looi kai '
    'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\IptcImagePlugin.py',
    'PYMODULE'),
-  ('PIL.BlpImagePlugin',
+  ('PIL.EpsImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\BlpImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\EpsImagePlugin.py',
    'PYMODULE'),
-  ('PIL.FpxImagePlugin',
+  ('PIL.Hdf5StubImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FpxImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\Hdf5StubImagePlugin.py',
    'PYMODULE'),
-  ('PIL.XbmImagePlugin',
+  ('PIL.SunImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\XbmImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\SunImagePlugin.py',
    'PYMODULE'),
-  ('PIL.DcxImagePlugin',
+  ('PIL.ImtImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\DcxImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImtImagePlugin.py',
    'PYMODULE'),
-  ('PIL.MpoImagePlugin',
+  ('PIL.DdsImagePlugin',
    'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MpoImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.MicImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MicImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.SpiderImagePlugin',
-   'c:\\users\\looi kai '
-   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\SpiderImagePlugin.py',
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\DdsImagePlugin.py',
    'PYMODULE'),
   ('PIL.TiffImagePlugin',
    'c:\\users\\looi kai '

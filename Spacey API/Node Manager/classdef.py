@@ -21,13 +21,29 @@ import imgpro
 
 class myCanvasObject(object):
     def __init__(self,frame, width, height):
-        self.canvas = Canvas(frame, width = width, height = height, highlightcolor = cfg.hlcolor, highlightthickness = 5)
+        self.canvas = Canvas(frame, width = width, height = height, highlightcolor = cfg.hlcolor, highlightthickness = 5, bg="SteelBlue1")
         self.line_obj = []
         self.rec_obj = {}
         self.border_obj = []
         self.floorplan_obj = None
-        self.xlen = 0
-        self.ylen = 0
+        self.xlen = width
+        self.ylen = height
+        self.canvas.bind('<Configure>' , self.resize)
+
+    def resize(self, event):
+        cfg.canvas_w = event.width
+        cfg.canvas_h = event.height
+        wscale = float(event.width)/self.xlen
+        hscale = float(event.height)/self.ylen
+        self.xlen = event.width
+        self.ylen = event.height
+        # resize the canvas 
+        self.canvas.config(width=self.xlen, height=self.xlen)
+        # rescale all the objects tagged with the "all" tag
+        self.canvas.scale("all",0,0,wscale,wscale)
+        self.resetCursorLocation()
+        cfg.step = cfg.canvas_w/cfg.scale
+
     
     def resetCursorLocation(self):
         
@@ -128,10 +144,10 @@ class CanvasGridFrame(object):
         print("_y1: " + str(_y1))
         print("_y2: " + str(_y2))
         """
-        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,y1,_x1+step,y2, fill = "gray10"))    #north    
-        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,_y2,_x1+step,_y1+step*2, fill = "gray10")) #south
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,y1,_x1+step*2,y2, fill = "gray10"))    #north    
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,_y2,_x1+step*2,_y1+step*10, fill = "gray10")) #south
         cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(x1,y2,x2,_y2, fill = "gray10")) #west
-        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(_x2,y2,_x1+step,_y2, fill = "gray10")) #east
+        cfg.myCanvas.border_obj.append(self.canvas.create_rectangle(_x2,y2,_x1+step*2,_y2, fill = "gray10")) #east
 
 
     def refresh(self, delete = True, resize = True):
@@ -162,6 +178,7 @@ class CursorNode(object):
         canvas.tag_bind(cfg.cursor, '<B1-Motion>', self.move)
         canvas.bind('<ButtonRelease-1>', self.release)
         canvas.bind('<Button-3>', self.deleteNode)
+        
 
         canvas.bind('<Up>', lambda event: self.move_unit(event, 'W') )
         canvas.bind('<Left>', lambda event: self.move_unit(event, 'A') )
@@ -521,7 +538,7 @@ class menu_help(object):
 
     def displayHelpMenu(self, root):
         helpMenu = Toplevel(root)
-        helpMenu.geometry('500x1000')
+        helpMenu.geometry('500x'+ str(cfg.canvas_h))
         helpMenu.title("Help Menu")
         helpMenu.iconbitmap(cfg.icon_path)
         #x,y = self.findCentralize(helpMenu)
@@ -562,7 +579,7 @@ class menu_help(object):
 
         text.insert(END, "\n\nControls:", "h1")
         text.insert(END, "\n\t>> Quit from Node Manager\t\t\t\t", "h3a")
-        text.insert(END, "<CTRL-X>", "h3b")
+        text.insert(END, "<ESCAPE>", "h3b")
 
         text.insert(END, "\n\t>> Toggle Control to Grid\t\t\t\t", "h3a")
         text.insert(END, "<CTRL-Z>", "h3b")
@@ -583,7 +600,7 @@ class menu_help(object):
         text.insert(END, "\nCursors and Nodes", "h3a")
         text.insert(END, "\nThe Cursor is red in color.", "h_red")
         text.insert(END, " The Nodes are blue in color.", "h_blue")
-        text.insert(END, " You may use the cursor to navigate the grid. You can navigate to an empty grid point to insert a Node, while navigate to an existing node to delete it off. Refer on the previous section above on the relevant controls.", "h2")
+        text.insert(END, " You may use the cursor to navigate the grid. You can navigate to an empty grid point to insert a Node, or navigate to an existing node to delete it off. Refer to the previous section above on the relevant controls.", "h2")
 
         text.insert(END, "\nClear Floor plan", "h3a")
         text.insert(END, "\nUnder menu 1. Click to clear the canvas of the contents.", "h2")
@@ -598,7 +615,7 @@ class menu_help(object):
         text.insert(END, "\n\tGREEN:\t\t\t" + "Valid Entry, node already placed here", "h_green")
         text.insert(END, "\n\tPURPLE:\t\t\t" + "No Entry yet, node can be placed here", "h_purple")
         text.insert(END, "\n\tYELLOW:\t\t\t" + "Awaiting Entry, fill in text field", "h_yellow")
-
+        text.insert(END, "\n\nYou can use the \"hold\" radio button to set your own value/freeze previous value, in case you are placing nodes with the same cluster id/ level.","h2")
         text.insert(END, "\n\nStatus Bar", "h3a")
         text.insert(END, "\nUnder menu 1. You may use it to track the node information on an existing node.", "h2")
 

@@ -4,8 +4,8 @@
 #define MyAppName "Spacey API Trial"
 #define MyAppVersion "1.0"   
 #define MyIcoName "images\assets\spacey_icon.ico"
-#define NodeManagerDir "Node Manager\main.exe"
-#define ImageProcessorDir "Image Processor\main.exe"
+#define NodeManagerDir "Node Manager\dist\main.exe"
+#define ImageProcessorDir "Image Processor\dist\main.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -18,7 +18,7 @@ DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=C:\Users\Looi Kai Wen\Desktop
+OutputDir=C:\Users\Looi Kai Wen\Desktop\Spacey Code\Spacey API
 OutputBaseFilename=Spacey API Trial test
 SetupIconFile=C:\Users\Looi Kai Wen\Desktop\Spacey Code\Spacey API\images\assets\spacey_icon.ico
 Compression=lzma
@@ -56,8 +56,8 @@ Source: "C:\Users\Looi Kai Wen\Desktop\Spacey Code\Spacey API\*"; DestDir: "{app
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{userdesktop}\Spacey Node Manager"; Filename: "{app}\{#NodeManagerDir}"; WorkingDir: "{app}\Node Manager"; Tasks: desktopicon;IconFilename: "{app}\{#MyIcoName}"
-Name: "{userdesktop}\Spacey Image Processor"; Filename: "{app}\{#ImageProcessorDir}"; WorkingDir: "{app}\Image Processor"; Tasks: desktopicon;IconFilename: "{app}\{#MyIcoName}"
+Name: "{userdesktop}\Spacey Node Manager"; Filename: "{app}\{#NodeManagerDir}"; WorkingDir: "{app}\Node Manager\dist"; Tasks: desktopicon;IconFilename: "{app}\{#MyIcoName}"
+Name: "{userdesktop}\Spacey Image Processor"; Filename: "{app}\{#ImageProcessorDir}"; WorkingDir: "{app}\Image Processor\dist"; Tasks: desktopicon;IconFilename: "{app}\{#MyIcoName}"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked

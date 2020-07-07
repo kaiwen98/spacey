@@ -28,7 +28,7 @@ img_padding = 0
 help_font = None
 
 #path = dir(dir(__file__))
-path = dir(os.path.dirname(sys.executable))
+path = dir(dir(dir(sys.executable)))
 res = RestaurantSpace()
 
 
