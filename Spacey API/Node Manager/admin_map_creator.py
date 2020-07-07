@@ -1,6 +1,6 @@
 ################################################# SPACEY Initiation GUI Wizard #############################################
 # Author: Looi Kai Wen                                                                                                     #
-# Last edited: 28/06/2020                                                                                                  #
+# Last edited: 07/07/2020                                                                                                  #
 # Summary:                                                                                                                 #
 #   For use by BLE network administrators to configure their database with invariant information,                          #
 #   eg. relative coordinates of the sensor mote, cluster level, etc.                                                       #
@@ -17,28 +17,20 @@ from sensor_data import *
 from functools import partial
 from queue import Queue
 import imgpro
+import sys
+from os.path import dirname as dir
 
 from PIL import Image as p_Image, ImageEnhance as p_ImageEnhance, ImageOps as p_ImageOp, ImageTk as p_ImageTk
 import os
 
-path = os.path.dirname(os.getcwd())
-
-image_path = os.path.join(path, "images")
-print(image_path)
-
-image_file = os.path.join(image_path, "image_edited.png")
-
-
-def uploadimage(filename):
-    filename = filedialog.askopenfilename(initialdir = "/", title = "Select File", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
 
 def track(event):
     print("x: "+ str(event.x) + "\ny: " + str(event.y))
 
 def quit(event):
-    exit()
+    cfg.root.destroy()
 
-def focus_toggle(event, widget):
+def focus_toggle1(event, widget):
     cfg.toggle = 1- cfg.toggle
     if cfg.toggle:
         cfg.myCanvas.canvas.focus_set()
@@ -66,7 +58,7 @@ def setup():
     cfg.root.title('Spacey Node Manager') # Set title name
     cfg.root.configure(bg = "gray22") #Bg colour
     # Icon of the window
-    # root.iconbitmap('')
+    cfg.root.iconbitmap(cfg.icon_path)
     #root.geometry('1200x1200')  #size of w
 
     ### Creation of GUI map ###
@@ -95,7 +87,7 @@ def setup():
     frame_menu.pack(padx = 20, pady = 20, side = LEFT, expand = 1)
     frame_menu.pack_propagate(False)
 
-    frame_menu1 = LabelFrame(frame_menu, text = "Configurations", width = w/4, height = h, bg = "gray40")
+    frame_menu1 = LabelFrame(frame_menu, text = "Menu 1", width = w/4, height = h, bg = "gray40")
     frame_menu1.pack(side = LEFT, expand = 1, fill = X)
     frame_menu1.pack_propagate(False)
 
@@ -119,7 +111,7 @@ def setup():
     
 
 
-    frame_menu2 = LabelFrame(frame_menu, text = "Configurations", width = w/4, height = h, bg = "gray40")
+    frame_menu2 = LabelFrame(frame_menu, text = "Menu 2", width = w/4, height = h, bg = "gray40")
     frame_menu2.pack(side = LEFT, expand = 1)
     frame_menu2.pack_propagate(False)
 
@@ -129,13 +121,18 @@ def setup():
     maprefresh2 = spc.map_refresh(frame_menu2, 10)
     jsonview = spc.json_viewer(frame_menu2)
 
-    cfg.root.bind('<Escape>', quit)
-    cfg.root.bind('<Control-z>', lambda event: focus_toggle(event, dev_info.keyEntry))
+    cfg.root.bind('<Escape>', lambda event: destroy(event, cfg.root))
+    cfg.root.bind('<Control-z>', lambda event: focus_toggle1(event, dev_info.keyEntry))
     ##############################################################################
     #cfg.res.decompile('mc.bin')
 
     cfg.root.mainloop()
-if __name__ == "__main__":
+
+def destroy(event, root):
+    root.destroy()
+
+
+def main():
     setup()
     
 

@@ -30,18 +30,28 @@ class myCanvasObject(object):
         self.ylen = 0
     
     def resetCursorLocation(self):
-        self.canvas.move(cfg.cursor, cfg.x_list[int(cfg.scale/2)] - cfg.x, cfg.x_list[int(cfg.scale/2)] - cfg.y)
+        
+        self.canvas.move(cfg.cursor, cfg.x_list[int(cfg.scale/2)] - cfg.x, cfg.y_list[int(cfg.scale/2)] - cfg.y)
         cfg.x = cfg.x_list[int(cfg.scale/2)]
         cfg.y = cfg.y_list[int(cfg.scale/2)]
-    
+        
+        if cfg.error is not None: 
+            cfg.error.updateText("Cursor location reset.","yellow")
     def deleteImage(self):
+        cfg.image_flag = False
         self.canvas.delete(self.floorplan_obj)
+
+    def clearAllNodes(self):
+        for i in self.rec_obj.values():
+            self.canvas.delete(i)
+        self.rec_obj.clear()
 
     def deleteNode(self, idx):
         print("before ", self.rec_obj.keys())
         self.canvas.delete(self.rec_obj[idx])
         del self.rec_obj[idx]
         print("after ", self.rec_obj.keys())
+    
 
     def deleteAllGrids(self):
         for i in self.line_obj:
@@ -51,17 +61,17 @@ class myCanvasObject(object):
     def restoreTagOrder(self):
         for i in self.line_obj:
             self.canvas.tag_raise(i)
-        self.canvas.tag_raise(self.floorplan_obj)
+        if cfg.image_flag: self.canvas.tag_raise(self.floorplan_obj)
         for i in self.rec_obj.values():
             self.canvas.tag_raise(i)
         self.canvas.tag_raise(cfg.cursor)
         for i in self.border_obj:
             self.canvas.tag_raise(i)
 
-    def placeNode(self, idx):
+    def placeNode(self, idx, x, y):
         self.xlen, self.ylen = cfg.box_len, cfg.box_len #size of node
         #cfg.node = canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "blue")
-        self.rec_obj[idx] = self.canvas.create_rectangle(cfg.x-self.xlen, cfg.y-self.ylen,cfg.x+self.xlen, cfg.y+self.ylen, fill = "blue")
+        self.rec_obj[idx] = self.canvas.create_rectangle(x-self.xlen, y-self.ylen,x+self.xlen, y+self.ylen, fill = "blue")
 
 class CanvasGridFrame(object):
     def __init__(self,canvas, num):
@@ -128,7 +138,7 @@ class CanvasGridFrame(object):
         if delete: cfg.res.deleteAllNodes()
         cfg.myCanvas.deleteAllGrids()
         self.grid = self.createGrid()
-        if resize: cfg.img.resize()
+        if resize and cfg.image_flag: cfg.img.resize()
         cfg.myCanvas.canvas.tag_raise(cfg.cursor)
         
 """
@@ -147,9 +157,9 @@ class CursorNode(object):
         self.xpos, self.ypos = xpos, ypos
         self.xlen, self.ylen = 10, 10 #size of node
         cfg.x, cfg.y = int(self.xpos + self.xlen/2), int(self.ypos + self.ylen/2)
-        self.obj= canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "red")
-        cfg.cursor = self.obj
-        canvas.tag_bind(self.obj, '<B1-Motion>', self.move)
+        cfg.cursor = canvas.create_rectangle(xpos, ypos,xpos+self.xlen, ypos+self.ylen, fill = "red")
+       
+        canvas.tag_bind(cfg.cursor, '<B1-Motion>', self.move)
         canvas.bind('<ButtonRelease-1>', self.release)
         canvas.bind('<Button-3>', self.deleteNode)
 
@@ -220,14 +230,14 @@ class CursorNode(object):
     def move(self, event):
         if self.move_flag:
             new_xpos, new_ypos = event.x, event.y
-            self.canvas.move(self.obj, new_xpos-self.mouse_xpos ,new_ypos-self.mouse_ypos)
+            self.canvas.move(cfg.cursor, new_xpos-self.mouse_xpos ,new_ypos-self.mouse_ypos)
             cfg.x += new_xpos-self.mouse_xpos
             cfg.y += new_ypos-self.mouse_ypos
             self.mouse_xpos = new_xpos
             self.mouse_ypos = new_ypos
         else:
             self.move_flag = True
-            self.canvas.tag_raise(self.obj)
+            self.canvas.tag_raise(cfg.cursor)
             self.mouse_xpos = event.x
             self.mouse_ypos = event.y
 
@@ -235,22 +245,22 @@ class CursorNode(object):
         self.move_flag = True
         print("lol")
         if dir is "W":
-            self.canvas.move(self.obj, 0 , -cfg.step)
+            self.canvas.move(cfg.cursor, 0 , -cfg.step)
             cfg.y -= cfg.step
         elif dir is "A":
-            self.canvas.move(self.obj, -cfg.step, 0)
+            self.canvas.move(cfg.cursor, -cfg.step, 0)
             cfg.x -= cfg.step
         elif dir is "S":
-            self.canvas.move(self.obj, 0 , cfg.step)
+            self.canvas.move(cfg.cursor, 0 , cfg.step)
             cfg.y += cfg.step
         elif dir is "D":
-            self.canvas.move(self.obj, cfg.step, 0)
+            self.canvas.move(cfg.cursor, cfg.step, 0)
             cfg.x += cfg.step
-        self.canvas.tag_raise(self.obj)
+        self.canvas.tag_raise(cfg.cursor)
 
     def release(self, event):
         new_xpos, new_ypos = self.estimate(event.x,cfg.x_list), self.estimate(event.y,cfg.y_list)
-        self.canvas.move(self.obj, new_xpos-cfg.x ,new_ypos-cfg.y)
+        self.canvas.move(cfg.cursor, new_xpos-cfg.x ,new_ypos-cfg.y)
         self.mouse_xpos = new_xpos
         self.mouse_ypos = new_ypos
         self.move_flag = False
@@ -258,13 +268,13 @@ class CursorNode(object):
         cfg.y = new_ypos
         cfg.initflag = True
         self.nodeDetectCallback()
-        self.canvas.tag_raise(self.obj)
+        self.canvas.tag_raise(cfg.cursor)
         
 
     def release_unit(self, event):
         self.move_flag = False
         self.nodeDetectCallback()
-        self.canvas.tag_raise(self.obj)
+        self.canvas.tag_raise(cfg.cursor)
     
     def enter(self, event):
         cfg.initflag = True
@@ -503,11 +513,117 @@ class menu_help(object):
         self.labelFrame = LabelFrame(self.frame, text = "Help", bg = "gray55", height = 117, width = 550)
         self.labelFrame.pack(fill = X, padx = cfg.padx, pady = cfg.pady, side = TOP)
         self.labelFrame.pack_propagate(0)
-        self.obj = Button(self.labelFrame,text = "Press me for help!", command = self.newWindow, width = 550, height = 105, bg = "khaki")
+        self.obj = Button(self.labelFrame,text = "Press me for help!", command = self.newWindow, width = 550, height = 105, bg = "sky blue")
         self.obj.pack(padx = 10, pady = 10, fill = Y)
     
-    def newWindow():
-        newWindow = Toplevel(app)
+    def newWindow(self):
+        self.displayHelpMenu(cfg.root)
+
+    def displayHelpMenu(self, root):
+        helpMenu = Toplevel(root)
+        helpMenu.geometry('500x1000')
+        helpMenu.title("Help Menu")
+        helpMenu.iconbitmap(cfg.icon_path)
+        #x,y = self.findCentralize(helpMenu)
+        #helpMenu.geometry("+{}+{}".format(x, y))
+        frame = Frame(helpMenu, bg = "gray10")
+        frame.pack(padx = 15, pady = 15, fill = tk.BOTH, expand = 1)
+        help = self.helpMessage(frame)
+        helpMenu.configure(bg = "sky blue")
+        helpMenu.bind('<Escape>', lambda event: self.quitTop(event, helpMenu))
+    
+  
+
+
+    def helpMessage(self, frame):
+        cfg.help_font = font.Font(family="Arial", size=8, weight = "bold")
+        text = Text(frame,  bg = "white", font = cfg.help_font, bd = 10, wrap = WORD)
+        yscroll = Scrollbar(frame, orient = "vertical", command = text.yview)
+        yscroll.pack(padx = 2, pady = 2, side = LEFT, fill = Y)
+        text.pack(pady = 2, ipadx = 2, ipady = 2, side = LEFT, fill = tk.BOTH, expand = 1)
+        text.configure(yscrollcommand = yscroll.set)
+
+
+        text.tag_config("h1", foreground = "deepskyblue2", )
+        text.tag_config("h2", foreground = "black")
+        text.tag_config("h3a", foreground = "DarkOrange1", justify = LEFT)
+        text.tag_config("h3b", foreground = "blue4", justify = LEFT)
+
+        ##color##
+        text.tag_config("h_red", foreground = "red")
+        text.tag_config("h_green", foreground = "green")
+        text.tag_config("h_purple", foreground = "purple")
+        text.tag_config("h_yellow", foreground = "darkorange")
+        text.tag_config("h_blue", foreground = "blue")
+
+        text.insert(END, "Info:", "h1")
+        text.insert(END, "\nThis Node Manager allows network administrators to synchronise the location of the sensor motes with the graphic to be generated, as well as the communication of location-specific information between the sensor motes and the database."+ 
+                        "\n\nThe interface controls are easy to use and intuitive, allowing the user to quickly form a composition of the sensor mote network without much delay. Click on a grid point on the map to get started! \n\nThe Node Manager comes embedded with an image processing functionality, which edits your floorplan image down to size and color requirement to fit on the canvas.", "h2")
+
+        text.insert(END, "\n\nControls:", "h1")
+        text.insert(END, "\n\t>> Quit from Node Manager\t\t\t\t", "h3a")
+        text.insert(END, "<CTRL-X>", "h3b")
+
+        text.insert(END, "\n\t>> Toggle Control to Grid\t\t\t\t", "h3a")
+        text.insert(END, "<CTRL-Z>", "h3b")
+
+        text.insert(END, "\n\t>> Place Node\t\t\t\t", "h3a")
+        text.insert(END, "<MOUSE-L>\t", "h3b")
+        text.insert(END, "<ENTER>", "h3b")
+
+        text.insert(END, "\n\t>> Delete Node\t\t\t\t", "h3a")
+        text.insert(END, "<MOUSE-R>\t", "h3b")
+        text.insert(END, "<CTRL-X>", "h3b")
+
+        text.insert(END, "\n\t>> Move Node\t\t\t\t", "h3a")
+        text.insert(END, "<MOUSE-DRAG>\t", "h3b")
+        text.insert(END, "<ARROW KEYS>", "h3b")
+
+        text.insert(END, "\n\nFeatures:", "h1")
+        text.insert(END, "\nCursors and Nodes", "h3a")
+        text.insert(END, "\nThe Cursor is red in color.", "h_red")
+        text.insert(END, " The Nodes are blue in color.", "h_blue")
+        text.insert(END, " You may use the cursor to navigate the grid. You can navigate to an empty grid point to insert a Node, while navigate to an existing node to delete it off. Refer on the previous section above on the relevant controls.", "h2")
+
+        text.insert(END, "\nClear Floor plan", "h3a")
+        text.insert(END, "\nUnder menu 1. Click to clear the canvas of the contents.", "h2")
+
+        text.insert(END, "\nFloor Plan upload", "h3a")
+        text.insert(END, "\nUnder menu 1. You may upload your floor plan image using the upload button, preferably in PNG format.", "h2")
+
+        
+        text.insert(END, "\nSet Sensor ID", "h3a")
+        text.insert(END, "\nUnder menu 1. You may use the entry boxes to enter the sensor information, after you place the cursor on the grid and place a node. The entry boxes only accept integer inputs, and will not proceed upon an invalid input. The color of the entry boxes denote its status to advise you on your next course of action:","h2")
+        text.insert(END, "\n\n\tRED:\t\t\t" + "Needs correction to text field", "h_red")
+        text.insert(END, "\n\tGREEN:\t\t\t" + "Valid Entry, node already placed here", "h_green")
+        text.insert(END, "\n\tPURPLE:\t\t\t" + "No Entry yet, node can be placed here", "h_purple")
+        text.insert(END, "\n\tYELLOW:\t\t\t" + "Awaiting Entry, fill in text field", "h_yellow")
+
+        text.insert(END, "\n\nStatus Bar", "h3a")
+        text.insert(END, "\nUnder menu 1. You may use it to track the node information on an existing node.", "h2")
+
+        text.insert(END, "\nDebugger", "h3a")
+        text.insert(END, "\nUnder menu 1. Alerts you of any status updates/ errors encountered", "h2")
+
+        text.insert(END, "\nDimension adjustments", "h3a")
+        text.insert(END, "\nUnder menu 2. You may adjust the node size, grid partition size and floor plan size via the top menu 2 controls. You can also move the floorplan linearly. This is to allow you to find the best graphical configuration where the grid points best coincide with the seats on your floor plan to place the sensor nodes.", "h2")
+        
+        text.insert(END, "\nJSON Viewer", "h3a")
+        text.insert(END, "\nUnder menu 2. You can save your work into a JSON file by clicking the \"Upload JSON\" button. Conversely, you can load a previous save file by clicking the \"Download JSON\" button. You can use the viewer below to check the JSON file contents for debugging purposes.", "h2")
+
+        
+        
+        text.configure(state = "disabled")
+
+
+    def quitTop(self, event, top):
+        top.destroy()
+        top.update()
+
+
+
+
+
 
 
 
@@ -686,7 +802,7 @@ class json_viewer(object):
 
     def upload(self):
         cfg.filename = filedialog.asksaveasfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json File", "*.json")])
-        cfg.img.save()
+        if cfg.img is not None: cfg.img.save()
         cfg.filename = cfg.filename + ".json"
         str1 = cfg.compile(cfg.filename)
         self.updateText(str1+"\n", "p")

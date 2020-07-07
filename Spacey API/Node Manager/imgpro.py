@@ -24,6 +24,7 @@ class floorPlan(object):
 
 
     def preprocess(self, mode):
+        cfg.image_flag = True
         img = p_Image.open(self.path)
         if mode:
             img = img.convert("RGBA")

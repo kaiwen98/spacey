@@ -6,7 +6,8 @@ from sensor_data import *
 import imgpro
 import os
 from os.path import dirname as dir
-
+import sys
+#
 # step -> box_len 
 
 """
@@ -16,13 +17,16 @@ Load JSON procedure:
 - Node information              x
 """
 
-root = dir(dir(__file__))
+root = dir(os.path.dirname(sys.executable))
+#root = dir(dir(__file__))
+
+icon_path = os.path.join(root, "images", "assets", "spacey_icon.ico")
 floorplan_folder_input = os.path.join(root, "floorplan_images", "input floorplan")
 floorplan_folder_output = os.path.join(root, "floorplan_images", "output floorplan")
 json_folder = os.path.join(root, "json_files")
 
 
-
+_root = None
 x_list = [] #list of all possible coordinates
 y_list = []
 img = None #image file 
@@ -53,11 +57,12 @@ padx = 10
 grid = None
 filename = ""
 img_padding = 0
+image_flag = False
 
 img_x_bb1 = 0 #img bb box corner
 img_y_bb1 = 0
 
-config_op = ["x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "box_len", "postimgpath", "img_padding"]
+config_op = ["image_flag", "x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "box_len", "postimgpath", "img_padding"]
 
 devinfo = {} #json purpose
 configinfo = {}
@@ -83,6 +88,8 @@ def compile(path):
 
 
 def decompile(path):
+    if cfg.res.size: cfg.res.deleteAllNodes()
+    if cfg.image_flag: cfg.myCanvas.deleteImage()
     with open(path, 'r') as outfile:
         zipinfo = json.load(outfile)
     configinfo = zipinfo.get("configinfo")
@@ -100,7 +107,8 @@ def decompile(path):
 
 def unpackFromJson():
     global img
-    img = imgpro.floorPlan(postimgpath, cfg.myCanvas.canvas, False)
+  
+    if cfg.image_flag is True: img = imgpro.floorPlan(postimgpath, cfg.myCanvas.canvas, False)
     grid.refresh(delete = False, resize = False)
     cfg.myCanvas.restoreTagOrder()
 

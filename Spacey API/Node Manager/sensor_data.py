@@ -34,7 +34,7 @@ class RestaurantSpace(object):
         self.space_id[newMote.idx] = space
         self.device_cluster_level[newMote.idx] = level
         self.device_cluster_id[newMote.idx] = id 
-        cfg.myCanvas.placeNode(newMote.idx)
+        cfg.myCanvas.placeNode(newMote.idx, x, y)
         self.dict_sensor_motes[(x,y)] = newMote
         self.size += 1
         """
@@ -91,9 +91,9 @@ class RestaurantSpace(object):
 
         for i in self.idxList:
             print("xcoord: " + str(self.x_coord.get(i)))
-            cfg.x = self.x_coord.get(i)
-            cfg.y = self.y_coord.get(i)
-            cfg.myCanvas.placeNode(i)
+            x = self.x_coord.get(i)
+            y = self.y_coord.get(i)
+            cfg.myCanvas.placeNode(i, x, y)
     
     def printMoteAt(self,x, y):
         if (x,y) in self.dict_sensor_motes.keys():
