@@ -63,8 +63,7 @@ class floorPlan(object):
         print("resized, padding is {n}".format(n = cfg.img_padding))
         self.photoimg = p_ImageTk.PhotoImage(self.img)
         cfg.myCanvas.floorplan_obj = self.canvas.create_image(cfg.img_x_bb1,cfg.img_y_bb1, anchor = "nw", image = self.photoimg)
-        for i in cfg.myCanvas.rec_obj:
-            cfg.myCanvas.canvas.tag_raise(i)
+        cfg.myCanvas.restoreTagOrder()
 
     def save(self):
         print("boink")

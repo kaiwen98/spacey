@@ -48,23 +48,32 @@ class RestaurantSpace(object):
     
     def deleteNode(self,x,y):
         idx = self.dict_sensor_motes[(x,y)].idx
-        print(idx)
-        del self.x_coord[idx]
-        del self.y_coord[idx]
-        del self.space_id[idx]
-        del self.device_cluster_level[idx]
-        del self.device_cluster_id[idx]
-        del self.idxList[int(idx)]
-        self.size -= 1
-
-        cfg.myCanvas.deleteNode(idx)
-
-        del self.dict_sensor_motes[(x,y)]
+        print("idx: " + str(idx))
+        print("---before---")
         print(self.device_cluster_id)
         print(self.device_cluster_level)
         print(self.space_id)
         print(self.x_coord)
         print(self.y_coord)
+        print(self.idxList)
+        del self.x_coord[idx]
+        del self.y_coord[idx]
+        del self.space_id[idx]
+        del self.device_cluster_level[idx]
+        del self.device_cluster_id[idx]
+        self.idxList.remove(idx)
+        self.size -= 1
+
+        cfg.myCanvas.deleteNode(idx)
+
+        del self.dict_sensor_motes[(x,y)]
+        print("---after---")
+        print(self.device_cluster_id)
+        print(self.device_cluster_level)
+        print(self.space_id)
+        print(self.x_coord)
+        print(self.y_coord)
+        print(self.idxList)
 
     def deleteAllNodes(self):
         self.x_coord.clear()

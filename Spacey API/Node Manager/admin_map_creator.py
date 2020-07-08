@@ -23,6 +23,9 @@ from os.path import dirname as dir
 from PIL import Image as p_Image, ImageEnhance as p_ImageEnhance, ImageOps as p_ImageOp, ImageTk as p_ImageTk
 import os
 
+def onFrameConfigure(canvas):
+    '''Reset the scroll region to encompass the inner frame'''
+    canvas.configure(scrollregion=canvas.bbox("all"))
 
 def track(event):
     print("x: "+ str(event.x) + "\ny: " + str(event.y))
@@ -54,50 +57,77 @@ def focus_canvas():
 def setup():
     cfg.root = Tk()
     global canvas_w, canvas_h, image_file
-    cfg.root.state('zoomed') # Full window view
+    #cfg.root.state('zoomed') # Full window view
     cfg.root.title('Spacey Node Manager') # Set title name
     cfg.root.configure(bg = "gray22") #Bg colour
     # Icon of the window
     cfg.root.iconbitmap(cfg.icon_path)
-    #root.geometry('1200x1200')  #size of w
+    #cfg.root.geometry('1280x720')  #size of w
+    cfg.root.update_idletasks()
+    factor = 1
+    cfg.root.geometry(str(int(1366*factor)) + "x" + str(int(768*factor)))  #size of w
+    cfg.root.resizable(0, 0)
+    
 
     ### Creation of GUI map ###
+    print(cfg.root.winfo_height())
+    print(cfg.root.winfo_width())
+    print(cfg.root.winfo_geometry())
     print(cfg.root.winfo_screenheight())
     print(cfg.root.winfo_screenwidth())
-    cfg.canvas_w, cfg.canvas_h = cfg.root.winfo_screenwidth()/8*5, cfg.root.winfo_screenheight()
+
+   
+
+    ### Creation of GUI map ###
+    min_screenwidth = 1366
+    min_screenheight = 768
+    cfg.canvas_w, cfg.canvas_h = 768, 768
     #cfg.canvas_w, cfg.canvas_h = 1200, 1000
-    w, h = cfg.root.winfo_screenwidth()/8*5, cfg.root.winfo_screenheight()
-    print("from main: " + str(cfg.canvas_w))
-    frame_canvas = LabelFrame(cfg.root, text = "Map", width = w, height = w, bg = "gray40") # Set frame to embed canvas
+    w, h = 1366/8*5, 1000
+    
+    frame_canvas = LabelFrame(cfg.root, text = "Map", width = cfg.canvas_w, height = cfg.canvas_h, bg = "gray40") # Set frame to embed canvas
     #frame_canvas.pack(padx = 20, pady = 20, side = RIGHT) # Align right with padding
     #frame_canvas.pack_propagate(False) # Fix frame size to dimensions
 
 
-    cfg.myCanvas = spc.myCanvasObject(frame_canvas, width = w, height = w) # Set canvas within frame
+    cfg.myCanvas = spc.myCanvasObject(frame_canvas, cfg.canvas_w, cfg.canvas_h) # Set canvas within frame
     #cfg.myCanvas.canvas.pack(padx = 10, pady = 10) # Set padding
   
-
-
     cfg.res = RestaurantSpace(cfg.myCanvas.canvas)
-    
-    cursor = spc.CursorNode(cfg.myCanvas.canvas , xpos = 0 , ypos = 0)  # Creates rectangle cursor (in red)
+    cursor = spc.CursorNode(cfg.myCanvas.canvas)  # Creates rectangle cursor (in red)
     cfg.grid = spc.CanvasGridFrame(cfg.myCanvas.canvas, cfg.scale) # Creates gridlines so that the boxes inserted will appear more organised
+    
+    
+    
    
     ### Creation of Config menu ###
     
-    frame_menu = LabelFrame(cfg.root, text = "Configurations", width = int(w/2.5), height = h, bg = "gray40")
-    frame_menu.pack(padx = 20, pady = 20, side = LEFT, expand = 1, anchor = "w")
-    frame_menu.pack_propagate(False)
+    _frame_menu = LabelFrame(cfg.root, text = "Configurations", width = int(w/1.8), height = h, bg = "gray40")
+    _frame_menu.pack(padx = 20, pady = 20, side = LEFT, expand = 1, anchor = "w")
+    _frame_menu.pack_propagate(False)
+    
+    menu_canvas = Canvas(_frame_menu, borderwidth=0, bg = "gray40", highlightbackground = "gray40")
+    yscroll = Scrollbar(_frame_menu, orient = "vertical", command = menu_canvas.yview)
 
-    frame_menu1 = LabelFrame(frame_menu, text = "Menu 1", width = w/5, height = h, bg = "gray40")
+    yscroll.pack(padx = 2, pady = 2, side = LEFT, fill = Y)
+    menu_canvas.pack(side = LEFT, expand = True, fill = "both")
+    menu_canvas.configure(yscrollcommand = yscroll.set)
+    frame_menu = Frame(menu_canvas, borderwidth=0, bg = "gray40")
+    frame_menu.pack()
+    menu_canvas.create_window((0,0), window=frame_menu, anchor="nw")
+    frame_menu.bind("<Configure>", lambda event, canvas=menu_canvas: onFrameConfigure(canvas))
+
+
+    frame_menu1 = LabelFrame(frame_menu, text = "Menu 1", width = w/4, height = h, bg = "gray40")
     frame_menu1.pack(side = LEFT, expand = 1, fill = X)
     frame_menu1.pack_propagate(False)
 
-    upload = spc.menu_upload(frame_menu1)
-    dev_info = spc.menu_devinfo(frame_menu1)
-    status = spc.menu_status(frame_menu1)
-    cfg.error = spc.menu_debug(frame_menu1)
-    help = spc.menu_help(frame_menu1)
+    help = spc.menu_help(frame_menu1, w, h)
+    upload = spc.menu_upload(frame_menu1, w, h)
+    dev_info = spc.menu_devinfo(frame_menu1, w, h)
+    status = spc.menu_status(frame_menu1, w, h)
+    cfg.error = spc.menu_debug(frame_menu1, w, h)
+    
     
     
     # Set callbacks for cursor
@@ -113,15 +143,15 @@ def setup():
     
 
 
-    frame_menu2 = LabelFrame(frame_menu, text = "Menu 2", width = w/5, height = h, bg = "gray40")
+    frame_menu2 = LabelFrame(frame_menu, text = "Menu 2", width = w/4, height = h, bg = "gray40")
     frame_menu2.pack(side = LEFT, expand = 1)
     frame_menu2.pack_propagate(False)
 
-    nodescale = spc.node_scaleshift(frame_menu2, 3)
+    nodescale = spc.node_scaleshift(frame_menu2, 3, w, h)
     #upload2 = spc.img_scaleshift(frame_menu2, 10)
-    dev_info2 = spc.img_xyshift(frame_menu2, 10)
-    maprefresh2 = spc.map_refresh(frame_menu2, 10)
-    jsonview = spc.json_viewer(frame_menu2)
+    dev_info2 = spc.img_xyshift(frame_menu2, 10, w, h)
+    maprefresh2 = spc.map_refresh(frame_menu2, 10, w, h)
+    jsonview = spc.json_viewer(frame_menu2, w, h)
 
     
     frame_canvas.pack(padx = 20, pady = 20, side = RIGHT) # Align right with padding
@@ -132,6 +162,7 @@ def setup():
     cfg.root.bind('<Control-z>', lambda event: focus_toggle1(event, dev_info.keyEntry))
     ##############################################################################
     #cfg.res.decompile('mc.bin')
+    cfg.myCanvas.canvas.focus_set()
 
     cfg.root.mainloop()
 
@@ -143,3 +174,4 @@ def main():
     setup()
     
 
+main()
