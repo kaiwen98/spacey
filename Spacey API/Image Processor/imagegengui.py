@@ -5,6 +5,7 @@ from imagegen import imagegen
 import p_config as cfg
 from functools import partial
 from tkinter import font
+from platform import system as platf
 
 class menu_upload(object):
     def __init__(self, frame):
@@ -21,16 +22,16 @@ class menu_upload(object):
     def fileupload(self):
         self.label.configure(text = "Generating image...", bg = "yellow")
         self.label.update()
-        try:
-            cfg.json_path = filedialog.askopenfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json file","*.json*")])
-            imagegen()
-            self.label.configure(text = "Done! Awaiting next upload.", bg = "pale green")
-            self.label.update()
-        
+        #try:
+        cfg.json_path = filedialog.askopenfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json file","*.json*")])
+        imagegen()
+        self.label.configure(text = "Done! Awaiting next upload.", bg = "pale green")
+        self.label.update()
+        """
         except:
             self.label.configure(text = "Failed... Error with JSON file. Try again", bg = "IndianRed1")
             self.label.update()
-            
+        """   
 
 def findCentralize(root):
     width = root.winfo_reqwidth()/2
@@ -42,7 +43,11 @@ def displayHelpMenu(event, root):
     helpMenu = Toplevel(root)
     helpMenu.geometry('300x300')
     helpMenu.title("Help Menu")
-    helpMenu.iconbitmap(cfg.icon_path)
+    if platf() == 'Linux':
+        img = PhotoImage(file= cfg.gif_path)
+        helpMenu.tk.call('wm', 'iconphoto', helpMenu._w, img)
+    elif platf() == 'Windows':
+        helpmenu.iconbitmap('/home/kaiwen98/Desktop/spacey/Spacey API/images/assets/spacey_icon.ico')
     x,y = findCentralize(helpMenu)
     helpMenu.geometry("+{}+{}".format(x, y))
     frame = Frame(helpMenu, bg = "gray10")
@@ -90,13 +95,17 @@ def main():
     _root.title("Image generator")
     _root.configure(bg = "gray22")
     upload = menu_upload(_root)
-    _root.iconbitmap(cfg.icon_path)
+    if platf() == 'Linux':
+        img = PhotoImage(file= cfg.gif_path)
+        _root.tk.call('wm', 'iconphoto', _root._w, img)
+    elif platf() == 'Windows':
+        _root.iconbitmap('/home/kaiwen98/Desktop/spacey/Spacey API/images/assets/spacey_icon.ico')
     _root.bind('<Escape>', lambda event: destroy(event, _root))
     _root.bind('<Control-z>', lambda event: displayHelpMenu(event, _root))
 
     _root.mainloop()
 
 
-
+main()
 
 

@@ -10,15 +10,16 @@
 
 
 from tkinter import *
+from tkinter import font
 import classdef as spc
 from tkinter import filedialog
 import config as cfg
 from sensor_data import *
 from functools import partial
-from queue import Queue
 import imgpro
 import sys
 from os.path import dirname as dir
+from platform import system as platf
 
 from PIL import Image as p_Image, ImageEnhance as p_ImageEnhance, ImageOps as p_ImageOp, ImageTk as p_ImageTk
 import os
@@ -56,12 +57,19 @@ def focus_canvas():
 
 def setup():
     cfg.root = Tk()
+    default_font = font.nametofont("TkDefaultFont")
+    default_font.configure(size=6)
     global canvas_w, canvas_h, image_file
     #cfg.root.state('zoomed') # Full window view
     cfg.root.title('Spacey Node Manager') # Set title name
     cfg.root.configure(bg = "gray22") #Bg colour
     # Icon of the window
-    cfg.root.iconbitmap(cfg.icon_path)
+    if platf() == 'Linux':
+        img = PhotoImage(file= cfg.gif_path)
+        cfg.root.tk.call('wm', 'iconphoto', cfg.root._w, img)
+    elif platf() == 'Windows':
+        cfg.root.iconbitmap('/home/kaiwen98/Desktop/spacey/Spacey API/images/assets/spacey_icon.ico')
+    #cfg.root.iconbitmap(cfg.icon_path)
     #cfg.root.geometry('1280x720')  #size of w
     cfg.root.update_idletasks()
     factor = 1

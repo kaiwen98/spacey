@@ -27,18 +27,25 @@ img_padding = 0
 
 help_font = None
 
-#path = dir(dir(__file__))
-path = dir(dir(dir(sys.executable)))
+path = dir(dir(__file__))
+#path = dir(dir(dir(sys.executable)))
 res = RestaurantSpace()
 
 
 json_folder = os.path.join(path, "json_files")
 json_path = os.path.join(json_folder, "lol.json")
-save_path = os.path.join(path, "images", "output graphic", "output_"+str(splitext(basename(json_path))[0])+".png")
+
+def shorten_path(json_path):
+    return "output_"+str(splitext(basename(json_path))[0])+".png"
+
+def save_path():
+    return os.path.join(path, "images", "output graphic", shorten_path(cfg.json_path))
+
+
 nodeOff_path = os.path.join(path, "images", "assets","unoccupied_nodes.png")
 nodeOn_path = os.path.join(path, "images", "assets", "occupied_nodes.png")
 icon_path = os.path.join(path, "images", "assets", "spacey_icon.ico")
-
+gif_path = os.path.join(path, "images", "assets", "spacey_icon.gif")
 
 config_op = ["x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "box_len", "postimgpath", "img_padding"]
 

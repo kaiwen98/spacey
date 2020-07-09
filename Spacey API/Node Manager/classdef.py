@@ -16,7 +16,8 @@ from functools import partial
 from queue import Queue
 from tkinter import font
 import imgpro
-
+from platform import system as platf
+from imagegen import imagegen
 
 
 class myCanvasObject(object):
@@ -60,10 +61,9 @@ class myCanvasObject(object):
         cfg.x = cfg.x_list[int(cfg.scale/2)]
         cfg.y = cfg.y_list[int(cfg.scale/2)]
         
-
-        
         if cfg.error is not None: 
             cfg.error.updateText("Cursor location reset.","yellow")
+
     def deleteImage(self):
         cfg.image_flag = False
         self.canvas.delete(self.floorplan_obj)
@@ -109,8 +109,6 @@ class CanvasGridFrame(object):
         self.deviceID = 0
         cfg.bg = canvas.create_rectangle(self.xpos, self.ypos, self.xpos + self.xlen, self.ypos+self.ylen, fill="SteelBlue1", width = 0)
         self.grid = self.createGrid()
-      
-
 
     def createGrid(self):
         print("Create grid")
@@ -327,7 +325,7 @@ class CursorNode(object):
 class menu_upload(object):
     def __init__(self, frame, width, height):
         self.frame = frame
-        self.labelFrame = LabelFrame(self.frame, text = "Floor Plan Manager"+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
+        self.labelFrame = LabelFrame(self.frame, text = "Floor Plan Manager", height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
         self.obj = Button(self.labelFrame, text = "Import Floor plan", command = self.fileupload)
         self.obj.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
@@ -352,7 +350,7 @@ class map_refresh(object):
         self.frame = frame
         #self.frame = Frame(frame)
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
-        self.labelFrame = LabelFrame(self.frame, text = "Grid scale... "+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
+        self.labelFrame = LabelFrame(self.frame, text = "Grid scale... ", height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
         self.but1 = Button(self.labelFrame, text = "Scale up", command = self.updateUp)
         self.but1.pack(ipadx = 10, ipady = 10, fill = X)
@@ -559,7 +557,12 @@ class menu_help(object):
         helpMenu = Toplevel(root)
         helpMenu.geometry('500x'+ str(cfg.canvas_h))
         helpMenu.title("Help Menu")
-        helpMenu.iconbitmap(cfg.icon_path)
+            # Icon of the window
+        if platf() == 'Linux':
+            img = PhotoImage(file= cfg.gif_path)
+            helpMenu.tk.call('wm', 'iconphoto', helpMenu._w, img)
+        elif platf() == 'Windows':
+            helpMenu.iconbitmap('/home/kaiwen98/Desktop/spacey/Spacey API/images/assets/spacey_icon.ico')
         #x,y = self.findCentralize(helpMenu)
         #helpMenu.geometry("+{}+{}".format(x, y))
         frame = Frame(helpMenu, bg = "gray10")
@@ -696,7 +699,7 @@ class img_xyshift(object):
         self.frame = frame
         #self.frame = Frame(frame)
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
-        self.labelFrame = LabelFrame(self.frame, text = "Floorplan shifts..."+ str(cfg.filename), height = 140, width = 550, bg = "gray55")
+        self.labelFrame = LabelFrame(self.frame, text = "Floorplan shifts...", height = 140, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
         self.parentFrame1 = Frame(self.labelFrame, height = 140)
         self.parentFrame2 = Frame(self.labelFrame, height = 140)
@@ -759,7 +762,7 @@ class img_scaleshift(object):
         self.frame = frame
         #self.frame = Frame(frame)
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
-        self.labelFrame = LabelFrame(self.frame, text = "Floorplan scales..."+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
+        self.labelFrame = LabelFrame(self.frame, text = "Floorplan scales...", height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
         self.but1 = Button(self.labelFrame, text = "Size +", command = self.up, width = 4)
         self.but1.pack(ipadx = 10, ipady = 10, side = LEFT)
@@ -783,7 +786,7 @@ class node_scaleshift(object):
         self.frame = frame
         #self.frame = Frame(frame)
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
-        self.labelFrame = LabelFrame(self.frame, text = "Node scales..."+ str(cfg.filename), height = 150, width = 550, bg = "gray55")
+        self.labelFrame = LabelFrame(self.frame, text = "Node scales...", height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
         self.but1 = Button(self.labelFrame, text = "Up", command = self.up, width = 4)
         self.but1.pack(ipadx = 10, ipady = 10, side = LEFT, padx = 25)
@@ -838,13 +841,14 @@ class json_viewer(object):
         #self.obj.update()
 
     def upload(self):
-        cfg.filename = filedialog.asksaveasfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json File", "*.json")])
+        cfg.json_path = filedialog.asksaveasfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json File", "*.json")])
         if cfg.img is not None: cfg.img.save()
-        cfg.filename = cfg.filename + ".json"
-        str1 = cfg.compile(cfg.filename)
+        cfg.json_path = cfg.json_path + ".json"
+        str1 = cfg.compile(cfg.json_path)
         self.updateText(str1+"\n", "p")
         self.updateText(">>>"+"-"*15+"\n", "b")
         cfg.error.updateText("JSON Updated successfully", "pale green")
+        imagegen()
     
     def download(self):
         filename = filedialog.askopenfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json File", "*.json")])

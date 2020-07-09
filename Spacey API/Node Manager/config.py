@@ -5,7 +5,7 @@ import config as cfg
 from sensor_data import *
 import imgpro
 import os
-from os.path import dirname as dir
+from os.path import dirname as dir, splitext, basename
 import sys
 #
 # step -> box_len 
@@ -17,16 +17,27 @@ Load JSON procedure:
 - Node information              x
 """
 
-root = dir(dir(dir(sys.executable)))
-#root = dir(dir(__file__))
+#root = dir(dir(dir(sys.executable)))
+_root = dir(dir(__file__))
 
-icon_path = os.path.join(root, "images", "assets", "spacey_icon.ico")
-floorplan_folder_input = os.path.join(root, "floorplan_images", "input floorplan")
-floorplan_folder_output = os.path.join(root, "floorplan_images", "output floorplan")
-json_folder = os.path.join(root, "json_files")
+icon_path = os.path.join(_root, "images", "assets", "spacey_icon.ico")
+gif_path = os.path.join(_root, "images", "assets", "spacey_icon.gif")
+floorplan_folder_input = os.path.join(_root, "floorplan_images", "input floorplan")
+floorplan_folder_output = os.path.join(_root, "floorplan_images", "output floorplan")
+json_folder = os.path.join(_root, "json_files")
+
+nodeOff_path = os.path.join(_root, "images", "assets","unoccupied_nodes.png")
+nodeOn_path = os.path.join(_root, "images", "assets", "occupied_nodes.png")
+
+def shorten_path(json_path):
+    return "output_"+str(splitext(basename(json_path))[0])+".png"
+
+def save_path():
+    result = os.path.join(_root, "images", "output graphic", shorten_path(cfg.json_path))
+    return result
 
 
-_root = None
+root = None
 x_list = [] #list of all possible coordinates
 y_list = []
 img = None #image file 

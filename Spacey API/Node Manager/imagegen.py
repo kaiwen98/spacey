@@ -2,11 +2,11 @@
 
 from PIL import Image, ImageDraw, ImageFilter
 import os
-import p_config as cfg
+import config as cfg
 
 
 def imagegen():
-    cfg.decompile(cfg.json_path)
+    #cfg.decompile(cfg.json_path)
 
     floorplan_path = cfg.postimgpath
 
@@ -14,6 +14,11 @@ def imagegen():
     node_off = node_off.resize((int(cfg.box_len*2.5), cfg.box_len*2))
     node_on = Image.open(cfg.nodeOn_path)
     node_on = node_on.resize((int(cfg.box_len*2.5), cfg.box_len*2))
+
+    cfg.canvas_xlen = cfg.x_bb2 - cfg.x_bb1
+    cfg.canvas_ylen = cfg.y_bb2 - cfg.y_bb1
+    cfg.img_x_bb1 -= cfg.x_bb1
+    cfg.img_y_bb1 -= cfg.y_bb1
 
     bg = Image.new('RGBA', (cfg.canvas_xlen, cfg.canvas_ylen), (92, 152, 226, 255))
     floorplan = Image.open(floorplan_path)
@@ -34,17 +39,15 @@ def imagegen():
 
 
     for i in cfg.res.idxList:
+        x = cfg.res.x_coord[i]- (cfg.x_bb1 + cfg.box_len)
+        y = cfg.res.y_coord[i] - (cfg.y_bb1 + cfg.box_len)
 
-        x = cfg.res.x_coord[i]
-        y = cfg.res.y_coord[i]
-
-        if cfg.res.occupied[i]: node = node_on
+        if cfg.res.occupancy[i]: node = node_on
         else: node = node_off
         bg.paste(node, (int(x),int(y)))
 
     #bg.paste(node_off,(0, 0))
     #bg.paste(node_off,(100, 500))
-    #bg.show()
-
+    bg.show()
     bg.save(cfg.save_path(), quality=95, format = "PNG")
 

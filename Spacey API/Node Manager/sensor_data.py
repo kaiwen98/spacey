@@ -16,7 +16,23 @@ class RestaurantSpace(object):
         self.size = 0
         self.dict_sensor_motes = {}
         self.canvas = canvas
-        self.devinfo = ["x_coord", "y_coord", "space_id", "device_cluster_level", "device_cluster_id", "idxList"]
+        self.devinfo = ["x_coord", "y_coord", "space_id", "device_cluster_level", "device_cluster_id", "idxList", "tuple_idx", "occupancy"]
+        self.tuple_idx = {}
+        self.occupancy = {}
+    
+    def tuple_to_str(self, space, level, id):
+        arg = locals()
+        result = ""
+        for i in locals().values():
+            if not str(i).isnumeric(): continue
+            add = str(i) + ','
+            result += add
+        return result.rstrip(',')
+
+    def str_to_tuple(self, strg):
+        result = strg.rsplit(',')
+        return tuple(result)
+
     
     def changeNodeSize(self):
         for i in self.idxList:
@@ -28,12 +44,15 @@ class RestaurantSpace(object):
     def registerNode(self,x,y,space,level,id, obj):
         
         newMote = sensor_mote_data(self)
+        index = self.tuple_to_str(space, level, id)
+        self.tuple_idx[index] = newMote.idx
         self.idxList.append(newMote.idx)
         self.x_coord[newMote.idx] = x
         self.y_coord[newMote.idx] = y
         self.space_id[newMote.idx] = space
         self.device_cluster_level[newMote.idx] = level
         self.device_cluster_id[newMote.idx] = id 
+        self.occupancy[newMote.idx] = False
         cfg.myCanvas.placeNode(newMote.idx, x, y)
         self.dict_sensor_motes[(x,y)] = newMote
         self.size += 1
@@ -56,11 +75,16 @@ class RestaurantSpace(object):
         print(self.x_coord)
         print(self.y_coord)
         print(self.idxList)
+        space = self.space_id[idx]
+        level = self.device_cluster_level[idx]
+        id = self.device_cluster_id[idx]
+        self.tuple_idx.pop(self.tuple_to_str(space, level, id))
         del self.x_coord[idx]
         del self.y_coord[idx]
         del self.space_id[idx]
         del self.device_cluster_level[idx]
         del self.device_cluster_id[idx]
+        del self.occupancy[idx]
         self.idxList.remove(idx)
         self.size -= 1
 
