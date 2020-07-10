@@ -12,3 +12,8 @@ tornado==6.0.3
 urllib3==1.25.6
 telegram==0.0.1
 matplotlib==3.2.2
+pyparsing==2.4.7
+kiwisolver==1.2.0
+python-dateutil==2.8.1
+numpy==1.18.5
+cycler==0.10.0
