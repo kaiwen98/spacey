@@ -67,6 +67,9 @@ class myCanvasObject(object):
     def deleteImage(self):
         cfg.image_flag = False
         self.canvas.delete(self.floorplan_obj)
+        cfg.img_x_bb1 = -1
+        cfg.img_y_bb1 = -1
+
 
     def clearAllNodes(self):
         for i in self.rec_obj.values():
@@ -145,7 +148,7 @@ class CanvasGridFrame(object):
         _y2 = cfg.y_list[int(cfg.canvas_h/step)-2]
 
         cfg.x_bb1, cfg.y_bb1, cfg.x_bb2, cfg.y_bb2 = x2,y2,_x2, _y2
-        cfg.img_x_bb1, cfg.img_y_bb1 = cfg.x_bb1, cfg.y_bb1
+        if cfg.img_x_bb1 is -1:  cfg.img_x_bb1, cfg.img_y_bb1 = cfg.x_bb1, cfg.y_bb1
         
         
         """
@@ -165,10 +168,12 @@ class CanvasGridFrame(object):
 
 
     def refresh(self, delete = True, resize = True):
+        cfg.load_flag = not resize
         if delete: cfg.res.deleteAllNodes()
         cfg.myCanvas.deleteAllGrids()
         self.grid = self.createGrid()
         if resize and cfg.image_flag: cfg.img.resize()
+        
         cfg.myCanvas.canvas.tag_raise(cfg.cursor)
         
 
@@ -840,7 +845,7 @@ class json_viewer(object):
         #self.obj.update()
 
     def upload(self):
-        cfg.json_path = filedialog.asksaveasfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json File", "*.json")])
+        cfg.json_path = filedialog.asksaveasfilename(initialdir = cfg.json_folder_config, title = "Select File", filetypes = [("Json File", "*.json")])
         cfg.sessionName = cfg.getbasename(cfg.json_path)
         if cfg.img is not None: cfg.img.save()
         #cfg.json_path = cfg.json_path + ".json"
@@ -852,7 +857,7 @@ class json_viewer(object):
         
     
     def download(self):
-        filename = filedialog.askopenfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json File", "*.json")])
+        filename = filedialog.askopenfilename(initialdir = cfg.json_folder_config, title = "Select File", filetypes = [("Json File", "*.json")])
         cfg.sessionName = cfg.getbasename(filename)
         if cfg.res.size: cfg.res.deleteAllNodes()
         if cfg.image_flag: cfg.myCanvas.deleteImage()

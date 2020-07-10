@@ -6,6 +6,7 @@ import p_config as cfg
 from functools import partial
 from tkinter import font
 from platform import system as platf
+import os
 
 class menu_upload(object):
     def __init__(self, frame):
@@ -23,7 +24,10 @@ class menu_upload(object):
         self.label.configure(text = "Generating image...", bg = "yellow")
         self.label.update()
         #try:
-        cfg.json_path = filedialog.askopenfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json file","*.json*")])
+        path = os.path.join(cfg.json_folder, "config")
+        cfg.json_path = filedialog.askopenfilename(initialdir = path, title = "Select File", filetypes = [("Json file","*.json*")])
+        cfg.sessionName = cfg.getbasename(cfg.json_path)
+        cfg.decompile(cfg.json_folder)
         imagegen()
         self.label.configure(text = "Done! Awaiting next upload.", bg = "pale green")
         self.label.update()

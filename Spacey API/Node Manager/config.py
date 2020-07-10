@@ -28,6 +28,7 @@ gif_path = os.path.join(_root, "images", "assets", "spacey_icon.gif")
 floorplan_folder_input = os.path.join(_root, "floorplan_images", "input floorplan")
 floorplan_folder_output = os.path.join(_root, "floorplan_images", "output floorplan")
 json_folder = os.path.join(_root, "json_files")
+json_folder_config = os.path.join(json_folder, "config")
 
 nodeOff_path = os.path.join(_root, "images", "assets","unoccupied_nodes.png")
 nodeOn_path = os.path.join(_root, "images", "assets", "occupied_nodes.png")
@@ -77,11 +78,11 @@ grid = None
 filename = ""
 img_padding = 0
 image_flag = False
+load_flag = False
+img_x_bb1 = -1 #img bb box corner
+img_y_bb1 = -1
 
-img_x_bb1 = 0 #img bb box corner
-img_y_bb1 = 0
-
-config_op = ["image_flag", "x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "box_len", "postimgpath", "img_padding"]
+config_op = ["image_flag", "x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "postimgpath", "img_padding"]
 
 configinfo = {}
 devinfo = {}
@@ -89,6 +90,8 @@ devinfo = {}
 json_zipinfo = {}
 json_occupancy = {}
 json_hash = {}
+json_coord = {}
+output_graphic_coord = {}
 
 def json_serialize_image(image_file):
     with open(image_file, mode='rb') as file:
@@ -104,9 +107,10 @@ def json_deserialize_image(encoded_str,image_file):
 
 
 def compile(root):
-    zipinfo_path = os.path.join(root, cfg.sessionName+".json")
+    zipinfo_path = os.path.join(root, "config", cfg.sessionName+".json")
     occupancy_path = os.path.join(root, "occupancy", cfg.sessionName+".json")
     hash_path = os.path.join(root, "hash", cfg.sessionName+".json")
+    coord_path = os.path.join(root, "coord", cfg.sessionName+".json")
 
     for i in config_op:
         configinfo[i] = globals()[i] 
@@ -116,9 +120,13 @@ def compile(root):
 
     json_zipinfo["configinfo"] = json.dumps(configinfo)
     json_zipinfo["devinfo"] = json.dumps(devinfo)
-    json_zipinfo["processed_img"] = json_serialize_image(cfg.save_path())
     json_occupancy = cfg.res.occupancy
     json_hash = cfg.res.tuple_idx
+    json_coord = cfg.output_graphic_coord
+    json_coord["processed_img"] = json_serialize_image(cfg.save_path())
+
+    with open(coord_path, 'w') as outfile:
+        json.dump(json_coord, outfile)
 
     with open(zipinfo_path, 'w') as outfile:
         json.dump(json_zipinfo, outfile)
@@ -128,6 +136,8 @@ def compile(root):
 
     with open(hash_path, 'w') as outfile:
         json.dump(json_hash, outfile)
+    
+
 
     # Confirms the json file's existence and prints contents on console.
     with open(zipinfo_path) as infile:
@@ -136,12 +146,15 @@ def compile(root):
     json_zipinfo.clear()
     json_occupancy.clear()
     json_hash.clear()
+    json_coord.clear()
+    output_graphic_coord.clear()
 
 
 def decompile(root):
-    zipinfo_path = os.path.join(root, cfg.sessionName+".json")
+    zipinfo_path = os.path.join(root, "config", cfg.sessionName+".json")
     occupancy_path = os.path.join(root, "occupancy", cfg.sessionName+".json")
     hash_path = os.path.join(root, "hash", cfg.sessionName+".json")
+    coord_path = os.path.join(root, "coord", cfg.sessionName+".json")
     
 
     with open(zipinfo_path, 'r') as outfile:
@@ -152,10 +165,17 @@ def decompile(root):
     
     with open(hash_path, 'r') as outfile:
         json_hash = json.load(outfile)
+        
+    with open(coord_path, 'r') as outfile:
+        json_coord = json.load(outfile)
 
     configinfo = json.loads(json_zipinfo.get("configinfo"))
     devinfo = json.loads(json_zipinfo.get("devinfo"))
-    processed_img = json_zipinfo.get("processed_img")
+    processed_img = json_coord.get("processed_img")
+
+    output_graphic_coord = json_coord
+    cfg.box_len = json_coord['box_len']
+    json_coord.pop('box_len')
     temp_path = os.path.join(dir(root), 'images', 'output graphic', 'test1.png')
     json_deserialize_image(processed_img, temp_path)
     devinfo["tuple_idx"] = json_hash

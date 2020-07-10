@@ -56,7 +56,7 @@ class RestaurantSpace(object):
         self.space_id[newMote.idx] = space
         self.device_cluster_level[newMote.idx] = level
         self.device_cluster_id[newMote.idx] = id 
-        self.occupancy[newMote.idx] = False
+        self.occupancy[newMote.idx] = 0
         cfg.myCanvas.placeNode(newMote.idx, x, y)
         self.dict_sensor_motes[(x,y)] = newMote
         self.size += 1

@@ -1,2 +1,2 @@
-def boo():
-    print("bee")
+stri = "pen_is"
+print(stri.lstrip("pen_"))
