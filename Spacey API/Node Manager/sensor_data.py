@@ -43,10 +43,14 @@ class RestaurantSpace(object):
 
     def registerNode(self,x,y,space,level,id, obj):
         
-        newMote = sensor_mote_data(self)
+        
         index = self.tuple_to_str(space, level, id)
+        if index in self.tuple_idx.keys():
+            cfg.error.updateText("[KeyError] Cannot hash with same key", "red")
+            return
+        newMote = sensor_mote_data(self)
         self.tuple_idx[index] = newMote.idx
-        self.idxList.append(newMote.idx)
+        if newMote.idx not in self.idxList: self.idxList.append(newMote.idx)
         self.x_coord[newMote.idx] = x
         self.y_coord[newMote.idx] = y
         self.space_id[newMote.idx] = space
@@ -56,6 +60,7 @@ class RestaurantSpace(object):
         cfg.myCanvas.placeNode(newMote.idx, x, y)
         self.dict_sensor_motes[(x,y)] = newMote
         self.size += 1
+        cfg.error.updateText("Node inserted at x:{x} and y:{y}".format(x = cfg.x, y = cfg.y), "deep pink")
         """
         print("added")
         print(len(self.device_cluster_id))
@@ -126,6 +131,7 @@ class RestaurantSpace(object):
             print("xcoord: " + str(self.x_coord.get(i)))
             x = self.x_coord.get(i)
             y = self.y_coord.get(i)
+
             cfg.myCanvas.placeNode(i, x, y)
     
     def printMoteAt(self,x, y):

@@ -7,6 +7,9 @@ import imgpro
 import os
 from os.path import dirname as dir, splitext, basename
 import sys
+import base64
+
+
 #
 # step -> box_len 
 
@@ -29,8 +32,11 @@ json_folder = os.path.join(_root, "json_files")
 nodeOff_path = os.path.join(_root, "images", "assets","unoccupied_nodes.png")
 nodeOn_path = os.path.join(_root, "images", "assets", "occupied_nodes.png")
 
+def getbasename(path):
+    return str(splitext(basename(path))[0])
+
 def shorten_path(json_path):
-    return "output_"+str(splitext(basename(json_path))[0])+".png"
+    return "output_"+cfg.sessionName+".png"
 
 def save_path():
     result = os.path.join(_root, "images", "output graphic", shorten_path(cfg.json_path))
@@ -77,36 +83,84 @@ img_y_bb1 = 0
 
 config_op = ["image_flag", "x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "box_len", "postimgpath", "img_padding"]
 
-devinfo = {} #json purpose
 configinfo = {}
-zipinfo = {}
+devinfo = {}
+
+json_zipinfo = {}
+json_occupancy = {}
+json_hash = {}
+
+def json_serialize_image(image_file):
+    with open(image_file, mode='rb') as file:
+        img = file.read()
+    return base64.b64encode(img).decode("utf-8") #picture to bytes, then to string 
 
 
-def compile(path):
+def json_deserialize_image(encoded_str,image_file):
+    result = encoded_str.encode("utf-8")
+    result = base64.b64decode(result)
+    image_result = open(image_file, 'wb') # create a writable image and write the decoding result
+    image_result.write(result)
+
+
+def compile(root):
+    zipinfo_path = os.path.join(root, cfg.sessionName+".json")
+    occupancy_path = os.path.join(root, "occupancy", cfg.sessionName+".json")
+    hash_path = os.path.join(root, "hash", cfg.sessionName+".json")
+
     for i in config_op:
         configinfo[i] = globals()[i] 
   
     for i in res.devinfo:
         devinfo[i] = getattr(res, i) 
 
-    zipinfo["configinfo"] = configinfo
-    zipinfo["devinfo"] = devinfo
+    json_zipinfo["configinfo"] = json.dumps(configinfo)
+    json_zipinfo["devinfo"] = json.dumps(devinfo)
+    json_zipinfo["processed_img"] = json_serialize_image(cfg.save_path())
+    json_occupancy = cfg.res.occupancy
+    json_hash = cfg.res.tuple_idx
 
-    with open(path, 'w') as outfile:
-        json.dump(zipinfo, outfile)
+    with open(zipinfo_path, 'w') as outfile:
+        json.dump(json_zipinfo, outfile)
 
-    with open(path) as infile:
+    with open(occupancy_path, 'w') as outfile:
+        json.dump(json_occupancy, outfile)
+
+    with open(hash_path, 'w') as outfile:
+        json.dump(json_hash, outfile)
+
+    # Confirms the json file's existence and prints contents on console.
+    with open(zipinfo_path) as infile:
         data = json.loads(infile.read())
-    return json.dumps(data, indent=1)
+    return str(json.dumps(data["configinfo"], indent=1)) 
+    json_zipinfo.clear()
+    json_occupancy.clear()
+    json_hash.clear()
 
 
-def decompile(path):
-    if cfg.res.size: cfg.res.deleteAllNodes()
-    if cfg.image_flag: cfg.myCanvas.deleteImage()
-    with open(path, 'r') as outfile:
-        zipinfo = json.load(outfile)
-    configinfo = zipinfo.get("configinfo")
-    devinfo = zipinfo.get("devinfo")
+def decompile(root):
+    zipinfo_path = os.path.join(root, cfg.sessionName+".json")
+    occupancy_path = os.path.join(root, "occupancy", cfg.sessionName+".json")
+    hash_path = os.path.join(root, "hash", cfg.sessionName+".json")
+    
+
+    with open(zipinfo_path, 'r') as outfile:
+        json_zipinfo = json.load(outfile)
+
+    with open(occupancy_path, 'r') as outfile:
+        json_occupancy = json.load(outfile)
+    
+    with open(hash_path, 'r') as outfile:
+        json_hash = json.load(outfile)
+
+    configinfo = json.loads(json_zipinfo.get("configinfo"))
+    devinfo = json.loads(json_zipinfo.get("devinfo"))
+    processed_img = json_zipinfo.get("processed_img")
+    temp_path = os.path.join(dir(root), 'images', 'output graphic', 'test1.png')
+    json_deserialize_image(processed_img, temp_path)
+    devinfo["tuple_idx"] = json_hash
+    devinfo["occupancy"] = json_occupancy
+
     for i in config_op:
         globals()[i] = configinfo[i]
     
@@ -116,7 +170,7 @@ def decompile(path):
     unpackFromJson()
     res.unpackFromJson()
 
-    return json.dumps(zipinfo, indent=1)
+    return json.dumps(json_zipinfo["configinfo"], indent=1)
 
 def unpackFromJson():
     global img

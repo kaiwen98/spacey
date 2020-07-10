@@ -526,7 +526,6 @@ class menu_devinfo(object):
         self.nodeEntry = [-1,-1,-1]
 
         self.callBack[1]()  # Callback to deposit sensor node
-        cfg.error.updateText("Node inserted at x:{x} and y:{y}".format(x = cfg.x, y = cfg.y), "deep pink")
         self.callBack[2](1) # Callback to give up focus back to canvas
 
 class menu_status(object):
@@ -842,16 +841,21 @@ class json_viewer(object):
 
     def upload(self):
         cfg.json_path = filedialog.asksaveasfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json File", "*.json")])
+        cfg.sessionName = cfg.getbasename(cfg.json_path)
         if cfg.img is not None: cfg.img.save()
-        cfg.json_path = cfg.json_path + ".json"
-        str1 = cfg.compile(cfg.json_path)
+        #cfg.json_path = cfg.json_path + ".json"
+        imagegen() # Generates template
+        str1 = cfg.compile(cfg.json_folder)
         self.updateText(str1+"\n", "p")
         self.updateText(">>>"+"-"*15+"\n", "b")
         cfg.error.updateText("JSON Updated successfully", "pale green")
-        imagegen()
+        
     
     def download(self):
         filename = filedialog.askopenfilename(initialdir = cfg.json_folder, title = "Select File", filetypes = [("Json File", "*.json")])
-        str1 = cfg.decompile(filename)
+        cfg.sessionName = cfg.getbasename(filename)
+        if cfg.res.size: cfg.res.deleteAllNodes()
+        if cfg.image_flag: cfg.myCanvas.deleteImage()
+        str1 = cfg.decompile(cfg.json_folder)
         self.updateText(str1+"\n", "p")
         self.updateText(">>>"+"+"*15+"\n", "b")

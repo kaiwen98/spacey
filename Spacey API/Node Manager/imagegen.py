@@ -17,8 +17,8 @@ def imagegen():
 
     cfg.canvas_xlen = cfg.x_bb2 - cfg.x_bb1
     cfg.canvas_ylen = cfg.y_bb2 - cfg.y_bb1
-    cfg.img_x_bb1 -= cfg.x_bb1
-    cfg.img_y_bb1 -= cfg.y_bb1
+    output_img_x_bb1 = cfg.img_x_bb1 - cfg.x_bb1
+    output_img_y_bb1 = cfg.img_y_bb1 - cfg.y_bb1
 
     bg = Image.new('RGBA', (cfg.canvas_xlen, cfg.canvas_ylen), (92, 152, 226, 255))
     floorplan = Image.open(floorplan_path)
@@ -33,7 +33,7 @@ def imagegen():
             newData.append((0, 0, 0, 0))
     floorplan.putdata(newData)
 
-    bg.paste(floorplan, (cfg.img_x_bb1, cfg.img_y_bb1), mask = floorplan)
+    bg.paste(floorplan, (output_img_x_bb1, output_img_y_bb1), mask = floorplan)
     #bg.paste(floorplan, (0,0), mask = floorplan)
 
 
