@@ -67,6 +67,6 @@ class floorPlan(object):
 
     def save(self):
         print("boink")
-        cfg.postimgpath = os.path.join(cfg.floorplan_folder_output, "processed_img_"+cfg.sessionName+".png")
+        cfg.postimgpath = os.path.join(cfg.floorplan_folder_output, "processed_img_"+cfg.session_name+".png")
         self.img.save(cfg.postimgpath, "PNG")
     

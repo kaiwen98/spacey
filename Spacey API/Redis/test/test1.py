@@ -1,2 +1,2 @@
-stri = "pen_is"
-print(stri.lstrip("pen_"))
+s = "w_o"
+print(s.rsplit('_')[1])

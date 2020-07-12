@@ -18,6 +18,11 @@ from tkinter import font
 import imgpro
 from platform import system as platf
 from imagegen import imagegen
+import redisDB as redisDB
+import time
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+
 
 
 class myCanvasObject(object):
@@ -692,9 +697,11 @@ class menu_debug(object):
         self.obj.itemconfig(0, foreground="sky blue")
 
     def updateText(self, _text, _bg):
+        cfg.updateTextDone = False
         self.obj.insert(END, _text)
         self.obj.itemconfig(END, foreground = _bg)
         self.obj.see("end")
+        cfg.updateTextDone = False
         #self.obj.update()
 
 
@@ -818,12 +825,33 @@ class json_viewer(object):
         self.frame2.pack(fill = X, side = TOP)
         self.frame1 = Frame(self.labelFrame, bg = "gray55")
         self.frame1.pack(fill = X, side = TOP)
-       
+
         self.butt1 = Button(self.frame2, text = "Import JSON", command = self.download, width = 550)
         self.butt1.pack()
         self.butt = Button(self.frame2, text = "Export JSON", command = self.upload, width = 550)
         self.butt.pack()
+        self.dbframe = LabelFrame(self.frame2, text = "RedisDB Operations: ", bg = "gray55")
+        self.dbframe.pack(expand = True, fill = X, ipadx = 2, ipady = 2)
+        
+        self.refreshbutt = Button(self.dbframe, text = "Connect to RedisDB", command = self.refreshDB, width = 550, bg = "IndianRed2", activebackground= "salmon")
+        self.refreshbutt.pack()
+        self.dbselect = tk.StringVar(cfg.root)
+        self.dbselect.set(cfg.db_options[0]) # default value
+        self.dbselect.trace("w", self.callback)
+        self.optionmenu = OptionMenu(self.dbframe, self.dbselect, *cfg.db_options)
+        self.optionmenu.pack(expand = 1, fill = X)
 
+        
+        self.butt2 = Button(self.dbframe, text = "Import from DB", command = self.downloadDB, width = 550, bg = "RosyBrown1")
+        self.butt2.pack_forget()
+        self.butt3 = Button(self.dbframe, text = "Export to DB", command = partial(self.displayUploadMenu, cfg.root), width = 550, bg = "RosyBrown1")
+        self.butt3.pack_forget()
+
+        self.buttdel1 = Button(self.dbframe, text = "Delete Selected Restaurant", command = self.DBclearDB, width = 550, bg = "RosyBrown1")
+        self.buttdel1.pack_forget()
+        self.buttdel2 = Button(self.dbframe, text = "Delete Account", command = self.DBclearUser, width = 550, bg = "RosyBrown1")
+        self.buttdel2.pack_forget()
+    
         #self.butt.pack(ipadx = 30, ipady = 30, fill = X)
         self.obj = Text(self.frame1,  width = 550, height = 190, bg = "gray10", font = cfg.json_font)
         self.yscroll = Scrollbar(self.frame1, orient = "vertical", command = self.obj.yview)
@@ -837,16 +865,87 @@ class json_viewer(object):
         self.obj.tag_config("p", foreground = "deep pink")
         self.obj.tag_config("y", foreground = "yellow")
         self.obj.insert(END, "Wait for JSON to be \nuploaded...\n\n", "b")
-        
 
+    def refreshDB(self):
+        cfg.error.updateText("[DB] Connecting...", "yellow")
+        err = cfg.database.timeout()
+        if err == 0: cfg.error.updateText("[DB] Time out... cannot connect to database", "red")
+        else:
+            cfg.error.updateText("[DB] Connected to database", "pale green")
+            cfg.db_options.clear()
+            #cfg.db_options += cfg.database.get_registered_restaurants()
+            self.displayLoginMenu(cfg.root)
+    
+    def DBclearUser(self):
+        cfg.database.clearUser(cfg.userid)
+        cfg.error.updateText("Acc Del: {}. See you!".format(cfg.userid), "yellow")
+        cfg.userid = ""
+        self.refresh()
+
+    def DBclearDB(self):
+        res = self.dbselect.get()
+        cfg.database.clearDB(res)
+        self.refresh()
+
+    def refresh(self):
+        # Reset var and delete all old options
+        self.dbselect.set('')
+        self.optionmenu['menu'].delete(0, 'end')
+
+        # Insert list of new options (tk._setit hooks them up to var)
+        if not len(cfg.userid): 
+            cfg.db_options.clear()
+            cfg.db_options = ["No Database Selected"] 
+            return
+
+        new_choices = ["Enter New Restaurant"] + cfg.database.get_registered_restaurants()
+        for choice in new_choices:
+            self.optionmenu['menu'].add_command(label=choice, command = tk._setit(self.dbselect, choice))
+        self.dbselect.set(new_choices[0])
+        
+    def callback(self, *args):
+        if self.dbselect.get() == "No Database Selected":
+            self.butt2.pack_forget()
+            self.butt3.pack_forget()
+            self.buttdel1.pack_forget()
+            self.buttdel2.pack_forget()
+            self.session_name_set = False
+        elif self.dbselect.get() == "Enter New Restaurant":
+            self.butt2.pack_forget()
+            self.butt3.pack()
+            self.buttdel1.pack_forget()
+            self.buttdel2.pack()
+            self.session_name_set = False
+        else:
+            self.butt2.pack()
+            self.butt3.pack()
+            self.buttdel1.pack()
+            self.buttdel2.pack()
+            cfg.session_name = (self.dbselect.get()).rsplit("_")[1]
+            self.session_name_set = True
     def updateText(self, _text, _bg):
+        
         self.obj.insert(END, _text, _bg)
         self.obj.see("end")
-        #self.obj.update()
+
+    def downloadDB(self): 
+        if self.dbselect.get() in ["No Database Selected", "No restaurants stored"]: return
+        cfg.export_to_local = False
+        cfg.session_name = (self.dbselect.get()).rsplit("_")[1]
+        if cfg.res.size: cfg.res.deleteAllNodes()
+        if cfg.image_flag: cfg.myCanvas.deleteImage()
+        str1 = cfg.decompile(cfg.json_folder, import_from_local = False)
+        self.updateText(str1+"\n", "p")
+        self.updateText(">>>"+"+"*15+"\n", "b")
 
     def upload(self):
+        if cfg.res.size == 0:
+            cfg.error.updateText("[ERR] Need at least 1 node", "red")
+            return
+        cfg.import_from_local = True
         cfg.json_path = filedialog.asksaveasfilename(initialdir = cfg.json_folder_config, title = "Select File", filetypes = [("Json File", "*.json")])
-        cfg.sessionName = cfg.getbasename(cfg.json_path)
+        cfg.session_name = cfg.getbasename(cfg.json_path)
+        
         if cfg.img is not None: cfg.img.save()
         #cfg.json_path = cfg.json_path + ".json"
         imagegen() # Generates template
@@ -854,11 +953,153 @@ class json_viewer(object):
         self.updateText(str1+"\n", "p")
         self.updateText(">>>"+"-"*15+"\n", "b")
         cfg.error.updateText("JSON Updated successfully", "pale green")
+        self.refresh()
+    
+    def displayUploadMenu(self, root):
+        if cfg.res.size == 0:
+            cfg.error.updateText("[ERR] Need at least 1 node", "red")
+            return
+        if self.dbselect.get() not in ["No Database Selected", "No restaurants stored", "Enter New Restaurant"]: 
+            self.uploadDB()
+            return
+        self.helpMenu = Toplevel(root)
+        self.helpMenu.geometry('300x55')
+        self.helpMenu.configure(bg = "tomato2")
+        self.helpMenu.title("Enter Restaurant Name!")
+            # Icon of the window
+        if platf() == 'Linux':
+            img = PhotoImage(file= cfg.gif_path)
+            self.helpMenu.tk.call('wm', 'iconphoto', self.helpMenu._w, img)
+        elif platf() == 'Windows':
+            self.helpMenu.iconbitmap(cfg.icon_path)
+        frame = Frame(self.helpMenu, bg = "gray10")
+        frame.pack(expand = 1)
+        self.text_input = StringVar()
+        text = Entry(frame, textvariable = self.text_input)
+        text.pack(expand = 1, padx = 10, pady = 10)
+        text.bind('<Return>', self.uploadDB)
+
+    def displayLoginMenu(self, root):
+        self.helpMenu = Toplevel(root)
+        self.helpMenu.geometry('300x150')
+        self.helpMenu.configure(bg = "tomato2")
+        self.helpMenu.title("Enter Login Details")
+        
+            # Icon of the window
+        if platf() == 'Linux':
+            img = PhotoImage(file= cfg.gif_path)
+            self.helpMenu.tk.call('wm', 'iconphoto', self.helpMenu._w, img)
+        elif platf() == 'Windows':
+            self.helpMenu.iconbitmap(cfg.icon_path)
+        frame = Frame(self.helpMenu, bg = "gray10")
+        frame.pack(expand = 1, padx = 15, pady = 10, fill = X)
+    
+        self.text = [None, None]
+
+        self.text_input_uid = StringVar()
+        self.text_input_pw = StringVar()
+        
+        frame_but = Frame(frame, bg = "gray10")
+        frame_but.pack(side = TOP)
+        frame_but1 = Frame(frame, bg = "gray10")
+        frame_but1.pack(side = TOP)
+
+        text_label = Label(frame_but, text = "User ID", width = 10, foreground = "white", bg = "gray10")
+        text_label.config(font=("Courier", 8))
+        text_label.pack(side = LEFT)
+        self.text[0] = Entry(frame_but, textvariable = self.text_input_uid, highlightcolor = "white")
+        self.text[0].pack(expand = 1, padx = 10, pady = 10, side = LEFT)
+
+        text_label = Label(frame_but1, text = "Password", width = 10, foreground = "white", bg = "gray10")
+        text_label.pack(side = LEFT)
+        text_label.config(font=("Courier", 8))
+        self.text[1] = Entry(frame_but1, textvariable = self.text_input_pw, show = "*", highlightcolor = "white")
+        self.text[1].pack(expand = 1, padx = 10, pady = 10, side = LEFT)
+        
+        bottomframe = Frame(frame, bg = "gray10")
+        bottomframe.pack(side = TOP, fill = X, expand = 1, ipady = 10)
+        but = Button(bottomframe, text = "Login", command = self.login)
+        but.pack(side = LEFT, padx = 20)
+        but1 = Button(bottomframe, text = "Register", command = self.register)
+        but1.pack(side = RIGHT, padx = 20)
+
+        self.text_input_uid.trace(mode="w", callback=self.entryfocus)
+        self.text_input_pw.trace(mode="w", callback=self.entryfocus1)
+        self.canIclear = False
+
+    def entryfocus(self, *args):
+        if self.canIclear: 
+            self.text_input_uid.set("")
+            self.canIclear = False
+        self.text[0].config(bg = "white")
+    def entryfocus1(self, *args):
+        if self.canIclear: 
+            self.text_input_pw.set("")
+            self.canIclear = False
+        self.text[1].config(bg = "white")
+
+    def login(self): 
+        name = self.text_input_uid.get()
+        user_acc = self.text_input_uid.get() + "_" + self.text_input_pw.get()
+        digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+        digest.update(bytes(user_acc, 'utf-8'))
+        encrypted_key = digest.finalize()
+        if not cfg.database.login_user(name, encrypted_key): 
+            self.text_input_uid.set("Incorrect login details. Try again.")
+            self.canIclear = True
+            self.text[0].config(bg = "red")
+            self.text[1].config(bg = "red")
+        else:
+            cfg.userid = name
+            cfg.error.updateText("Welcome: {}".format(cfg.userid), "pale green")
+            self.helpMenu.destroy()
+            self.refresh()
+ 
+
+    def register(self): 
+        name = self.text_input_uid.get()
+        user_acc = self.text_input_uid.get() + "_" + self.text_input_pw.get()
+        digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+        digest.update(bytes(user_acc, 'utf-8'))
+
+        encrypted_key = bytes(str(digest.finalize()), 'utf-8')
+
+        if not cfg.database.register_user(name, encrypted_key):
+            self.text_input_uid.set("Username already taken.")
+            self.canIclear = True
+            self.text[0].config(bg = "red")
+        else:
+            cfg.userid = name
+            cfg.error.updateText("Account created: {}".format(cfg.userid), "pale green")
+            self.helpMenu.destroy()
+            self.refresh()
+
+
+        #encrypted_user_acc = 
+
+    def uploadDB(self, event = None):
+        if self.session_name_set is False:
+            if self.text_input.get() is "": return
+            cfg.session_name = self.text_input.get()
+            self.helpMenu.destroy()
+        self.session_name_set = False
+        cfg.error.updateText("[DB] Created new session: "+ str(cfg.session_name), "pale green")
+        cfg.import_from_local = False
+        if cfg.img is not None: cfg.img.save()
+        #cfg.json_path = cfg.json_path + ".json"
+        imagegen() # Generates template
+        str1 = cfg.compile(cfg.json_folder, export_to_local = False)
+        self.updateText(str1+"\n", "p")
+        self.updateText(">>>"+"-"*15+"\n", "b")
+        cfg.error.updateText("JSON Updated successfully", "pale green")
+        self.refresh()
+
         
     
     def download(self):
+        cfg.export_to_local = True
         filename = filedialog.askopenfilename(initialdir = cfg.json_folder_config, title = "Select File", filetypes = [("Json File", "*.json")])
-        cfg.sessionName = cfg.getbasename(filename)
+        cfg.session_name = cfg.getbasename(filename)
         if cfg.res.size: cfg.res.deleteAllNodes()
         if cfg.image_flag: cfg.myCanvas.deleteImage()
         str1 = cfg.decompile(cfg.json_folder)

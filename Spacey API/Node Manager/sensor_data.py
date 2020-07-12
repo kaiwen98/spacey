@@ -110,6 +110,7 @@ class RestaurantSpace(object):
         self.space_id.clear()
         self.device_cluster_level.clear()
         self.device_cluster_id.clear()
+        self.tuple_idx.clear()
 
         for i in self.idxList:
             cfg.myCanvas.deleteNode(i)

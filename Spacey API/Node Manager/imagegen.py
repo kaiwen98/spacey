@@ -49,12 +49,12 @@ def imagegen():
         y = cfg.output_graphic_coord.get(i).rsplit(',')[1]
         print(x, type(x))
 
-        if cfg.res.occupancy[i]: node = node_on
+        if cfg.res.occupancy[i] == 0: node = node_on
         else: node = node_off
         bg.paste(node, (int(x),int(y)))
 
     #bg.paste(node_off,(0, 0))
     #bg.paste(node_off,(100, 500))
     bg.show()
-    bg.save(cfg.save_path(), quality=95, format = "PNG")
+    bg.save(cfg.get_output_graphic_path(), quality=95, format = "PNG")
 
