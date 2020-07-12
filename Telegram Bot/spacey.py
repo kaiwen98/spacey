@@ -8,7 +8,7 @@ import logging
 import time
 import datetime 
 import csv
-
+import json
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
@@ -19,7 +19,6 @@ def error_callback(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
     # logger.info("User {user} sent {message}".format(user=update.message.from_user.username, message=update.message.text))
 
-bot = telegram.Bot(token=TOKEN)
 LOCATION, CHECKWHAT, SUBSCRIBE_MAIN, SUBSCRIBE_TYPE, SUBSCRIBE_LOCATION, UNSUBSCRIBE_TYPE= range(6)
 
 def start(update, context):
@@ -37,7 +36,7 @@ def start(update, context):
             results.append(i)
             user_id_list.append(i[2])
     if user_id not in user_id_list:
-        results.append([name,username,user_id,date,0,0])
+        results.append([name,username,user_id,date,0,0,0])
         with open("C:\\Users\chuanan\Documents\grambots\spacey\\users_info.csv", 'w', newline='') as csvfile:
             spamwriter = csv.writer(csvfile, delimiter = ",") 
             for i in results:
@@ -116,16 +115,16 @@ def check_what(update, context):
         plt.title('Graph of seat occupancy at '+str(location)+'\nUpdated as of '+str(date)+" "+str(time_now))
         plt.savefig('C:\\Users\chuanan\Documents\grambots\spacey\\chart_'+str(location)+'.png')
         
-        bot.send_message(user_id, text="<b>Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)",parse_mode='HTML')
-        bot.send_photo(user_id, photo=open('C:\\Users\chuanan\Documents\grambots\spacey\\chart_'+str(location)+'.png', 'rb'))
+        context.bot.send_message(user_id, text="<b>Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)",parse_mode='HTML')
+        context.bot.send_photo(user_id, photo=open('C:\\Users\chuanan\Documents\grambots\spacey\\chart_'+str(location)+'.png', 'rb'))
     elif option == 'Operation Hours':
-        bot.send_message(user_id, text=location_data[location]["Operation Hours"])
+        context.bot.send_message(user_id, text=location_data[location]["Operation Hours"])
     else:
         latitude = location_data[location]['Latitude']
         longitude = location_data[location]['Longitude']
         address = location_data[location]['Address']
-        bot.send_venue(user_id, latitude=latitude, longitude=longitude, title=location, address=address)
-    # bot.send_message(user_id, text=location_data)
+        context.bot.send_venue(user_id, latitude=latitude, longitude=longitude, title=location, address=address)
+  
     return ConversationHandler.END
   
 def test_spacey_occupancy(update, context):
@@ -145,18 +144,38 @@ def test_spacey_occupancy(update, context):
     plt.title('Graph of seat occupancy at Spacey Cafe\nUpdated as of '+str(date)+" "+str(time_now))
     plt.savefig('C:\\Users\chuanan\Documents\grambots\spacey\\testchart.png')
     
-    bot.send_message(chat_id, text="<b>Seat Occupancy</b>: 350/500 ("+ str(350/500*100)+"%)",parse_mode='HTML')
-    bot.send_photo(chat_id, photo=open('C:\\Users\chuanan\Documents\grambots\spacey\\testchart.png', 'rb'))
+    context.bot.send_message(chat_id, text="<b>Seat Occupancy</b>: 350/500 ("+ str(350/500*100)+"%)",parse_mode='HTML')
+    context.bot.send_photo(chat_id, photo=open('C:\\Users\chuanan\Documents\grambots\spacey\\testchart.png', 'rb'))
 
 def test_spacey_details(update, context):
     chat_id = update.message.from_user.id
-    bot.send_venue(chat_id, latitude=1.298726, longitude=103.775113, title='Spacey Cafe', address='31 Lower Kent Ridge Rd, Singapore 119078')  
-    bot.send_message(chat_id, "<b><u>Operation Hours:</u></b>\n"+"Mon-Fri, 8.00am-8.00pm",parse_mode='HTML')
+    context.bot.send_venue(chat_id, latitude=1.298726, longitude=103.775113, title='Spacey Cafe', address='31 Lower Kent Ridge Rd, Singapore 119078')  
+    context.bot.send_message(chat_id, "<b><u>Operation Hours:</u></b>\n"+"Mon-Fri, 8.00am-8.00pm",parse_mode='HTML')
 
 def test(update, context):
-    chat_id = update.message.from_user.id
+    chatid = update.message.from_user.id
+    grpid = update.message.chat.id
     for ix in range(10):
-        context.bot.send_message(chat_id=chat_id, text='%s) %s' % (ix + 1, "msgt"))
+        context.bot.send_message(chat_id=grpid, text='%s) %s' % (ix + 1, "msgt"))
+    
+    for ix in range(3):
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        update.message.reply_text(text='%s) %s' % (ix + 1, "okokk"))
+        
+       
+        
+
+        
     
     #results = getcsv()
     #update.message.reply_text(results)
@@ -183,26 +202,26 @@ def notifications(update, context):
             if i[4]=='0' and i[5]=='0': #not subscribed to any notifications
                 keyboard=[[InlineKeyboardButton('Yes', callback_data='Subscribe')],[InlineKeyboardButton('Cancel', callback_data='Cancel')]]
                 reply_markup = InlineKeyboardMarkup(keyboard)
-                bot.send_message(user_id, text='You have not subscribed to notifications. Do you want to subscribe?',reply_markup=reply_markup)
+                context.bot.send_message(user_id, text='You have not subscribed to notifications. Do you want to subscribe?',reply_markup=reply_markup)
                 
             elif i[4]!='0' and i[5]=='0': #subscribed to daily only
                 keyboard=[[InlineKeyboardButton('Subscribe to notifications whenever occupancy >80%', callback_data='Subscribe>80%')],
                             [InlineKeyboardButton('Unsubscribe from daily notifications', callback_data='Unsubscribedaily')],
                             [InlineKeyboardButton('Cancel', callback_data='Cancel')]]
                 reply_markup = InlineKeyboardMarkup(keyboard)
-                bot.send_message(user_id, text='You are currently subscribed to daily notifications (<b>'+ str(i[4]) + '</b>). What would you like to do?',reply_markup=reply_markup, parse_mode='HTML')
+                context.bot.send_message(user_id, text='You are currently subscribed to daily notifications (<b>'+ str(i[4]) + '</b>). What would you like to do?',reply_markup=reply_markup, parse_mode='HTML')
         
             elif i[4]=='0' and i[5]!='0':     #subscribed to >80% only
                 keyboard=[[InlineKeyboardButton('Subscribe to daily notifications ', callback_data='Subscribedaily')],
                             [InlineKeyboardButton('Unsubscribe from >80% notifications', callback_data='Unsubscribe>80%')],
                             [InlineKeyboardButton('Cancel', callback_data='Cancel')]]
                 reply_markup = InlineKeyboardMarkup(keyboard)
-                bot.send_message(user_id, text='You are currently subscribed to >80% notifications (<b>' +str(i[5])+ '</b>). What would you like to do?',reply_markup=reply_markup, parse_mode='HTML')
+                context.bot.send_message(user_id, text='You are currently subscribed to >80% notifications (<b>' +str(i[5])+ '</b>). What would you like to do?',reply_markup=reply_markup, parse_mode='HTML')
         
             elif i[4]!='0' and i[5]!='0': #subscribed to both
                 keyboard=[[InlineKeyboardButton('Yes', callback_data='Unsubscribe')],[InlineKeyboardButton('Cancel', callback_data='Cancel')]]
                 reply_markup = InlineKeyboardMarkup(keyboard)
-                bot.send_message(user_id, text='You have subscribed to daily notifications (<b>'+ str(i[4]) + '</b>) and >80% notifications (<b>'+str(i[5])+ '</b>). Would you like to unsubscribe?',reply_markup=reply_markup, parse_mode='HTML')
+                context.bot.send_message(user_id, text='You have subscribed to daily notifications (<b>'+ str(i[4]) + '</b>) and >80% notifications (<b>'+str(i[5])+ '</b>). Would you like to unsubscribe?',reply_markup=reply_markup, parse_mode='HTML')
         
     return SUBSCRIBE_MAIN
 
@@ -217,7 +236,7 @@ def subscribe_main(update, context):
                     [InlineKeyboardButton('Both', callback_data='SubscribeBoth')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
-        bot.send_message(user_id, text="Which notification would you like to subscribe to?", reply_markup=reply_markup)
+        context.bot.send_message(user_id, text="Which notification would you like to subscribe to?", reply_markup=reply_markup)
         return SUBSCRIBE_TYPE
 
     elif query.data == 'Unsubscribe':
@@ -226,7 +245,7 @@ def subscribe_main(update, context):
                     [InlineKeyboardButton('Both', callback_data='UnsubscribeBoth')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
-        bot.send_message(user_id, text="Which notification would you like to unsubscribe from?", reply_markup=reply_markup)
+        context.bot.send_message(user_id, text="Which notification would you like to unsubscribe from?", reply_markup=reply_markup)
         return UNSUBSCRIBE_TYPE
 
     elif query.data == 'Unsubscribedaily':
@@ -234,7 +253,7 @@ def subscribe_main(update, context):
                     [InlineKeyboardButton('Cancel', callback_data='Cancel')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
-        bot.send_message(user_id, text="Are you sure to unsubscribe from daily notifications?", reply_markup=reply_markup)
+        context.bot.send_message(user_id, text="Are you sure to unsubscribe from daily notifications?", reply_markup=reply_markup)
         return UNSUBSCRIBE_TYPE
 
     elif query.data == 'Unsubscribe>80%':
@@ -242,11 +261,11 @@ def subscribe_main(update, context):
                     [InlineKeyboardButton('Cancel', callback_data='Cancel')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
-        bot.send_message(user_id, text="Are you sure to unsubscribe from >80% notifications?", reply_markup=reply_markup)
+        context.bot.send_message(user_id, text="Are you sure to unsubscribe from >80% notifications?", reply_markup=reply_markup)
         return UNSUBSCRIBE_TYPE
 
     elif query.data == 'Cancel':
-        bot.send_message(user_id, text="No changes were made")
+        context.bot.send_message(user_id, text="No changes were made")
         return ConversationHandler.END 
 
     else: #query.data == 'Subscribe>80%', 'Subscribedaily'
@@ -256,7 +275,7 @@ def subscribe_main(update, context):
         for location in locations_list:
             keyboard.append([InlineKeyboardButton(location, callback_data=location)])
         reply_markup = InlineKeyboardMarkup(keyboard)
-        bot.send_message(user_id, text="Which location would you like to be notified?", reply_markup=reply_markup)    
+        context.bot.send_message(user_id, text="Which location would you like to be notified?", reply_markup=reply_markup)    
         return SUBSCRIBE_LOCATION
     
 def subscribe_type(update,context):
@@ -269,7 +288,7 @@ def subscribe_type(update,context):
     for location in locations_list:
         keyboard.append([InlineKeyboardButton(location, callback_data=location)])
     reply_markup = InlineKeyboardMarkup(keyboard)
-    bot.send_message(user_id, text="Which location would you like to be notified?", reply_markup=reply_markup)
+    context.bot.send_message(user_id, text="Which location would you like to be notified?", reply_markup=reply_markup)
    
     return SUBSCRIBE_LOCATION
 
@@ -301,15 +320,15 @@ def subscribe_location(update,context):
         for i in users_info_list:
             spamwriter.writerow(i)
 
-    bot.send_message(user_id, notification_type + ' for <b>' +query.data+ '</b> set!',parse_mode='HTML')
-    
+    context.bot.send_message(user_id, notification_type + ' for <b>' +query.data+ '</b> set!',parse_mode='HTML')
+    context.bot.answer_callback_query(callback_query_id=query.id, text="You have subscribed to notiffications! \nTo unsubscribe, use /notifications command again.", show_alert=True)
     return ConversationHandler.END
 
 def unsubscribe_type(update,context):
     query = update.callback_query
     user_id = query.from_user.id
     query.edit_message_text(text="Selected option: {}".format(query.data))
-
+    
     with open("C:\\Users\chuanan\Documents\grambots\spacey\\users_info.csv") as csvfile:
         spamreader = csv.reader(csvfile, delimiter = ",") 
         users_info_list = []
@@ -329,14 +348,15 @@ def unsubscribe_type(update,context):
                 notification_type =  '>80% notifications'
                 
             elif query.data == 'UnsubscribeBoth':
-                location_removed = str(i[4]) + " and " + str(i[5])
+                location1_removed = str(i[4])
+                location2_removed = str(i[5])
                 i[4] = 0
                 i[5] = 0
                 notification_type =  'Both notifications'
                 
 
             elif query.data == 'Cancel':
-                bot.send_message(user_id, 'No changes were made!')
+                context.bot.send_message(user_id, 'No changes were made!')
                 return ConversationHandler.END
 
     with open("C:\\Users\chuanan\Documents\grambots\spacey\\users_info.csv", 'w', newline='') as csvfile:
@@ -345,24 +365,147 @@ def unsubscribe_type(update,context):
             spamwriter.writerow(i)
 
     if notification_type == 'Both notifications':
-        bot.send_message(user_id, notification_type+' for <b>'+location_removed+ '</b> removed!',parse_mode='HTML')
+        if location1_removed == location2_removed:
+            context.bot.send_message(user_id, notification_type+' for <b>'+location1_removed+ '</b> removed!',parse_mode='HTML')
+        else:
+            context.bot.send_message(user_id, notification_type+' for <b>'+location1_removed+'</b> and <b>'+ location2_removed + '</b> removed!',parse_mode='HTML')
     else: 
-        bot.send_message(user_id, notification_type + ' for <b>' +location_removed+ '</b> removed!',parse_mode='HTML')
+        context.bot.send_message(user_id, notification_type + ' for <b>' +location_removed+ '</b> removed!',parse_mode='HTML')
+    
     
     return ConversationHandler.END
 
 
-def callback_day(context):
-    chatid = '772520752'
-    # print(msgt, chatid)
-    for ix in range(10):
-        context.bot.send_message(chat_id=chatid, text='%s) %s' % (ix + 1, '123'))
+def daily_notifications(context):
+    with open("C:\\Users\chuanan\Documents\grambots\spacey\\users_info_copy.csv") as csvfile:
+        spamreader = csv.reader(csvfile, delimiter = ",") 
+        results = []
+        for i in spamreader:
+            results.append(i)
+    results.pop(0)
+    location_data = getcsv()
 
-def callback_minute(context):
-    chatid = '772520752'
-    # print(msgt, chatid)
-    for ix in range(10):
-        context.bot.send_message(chat_id=chatid, text='%s) %s' % (ix + 1, 'asd'))
+    for i in results:
+        if i[4] != '0':
+            name = i[0]
+            user_id = i[2]
+            location = i[4]
+            localtime = time.localtime(time.time())
+            date = str(localtime.tm_mday)+'/'+str(localtime.tm_mon)+'/'+str(localtime.tm_year)
+            time_now = str(localtime.tm_hour)+':'+str(localtime.tm_min)+':'+str(localtime.tm_sec)
+            seats_available = int(location_data[location]['Seats Available'])
+            seats_taken = int(location_data[location]['Seats Taken'])
+            seats_total = int(location_data[location]['Seats Total'])
+            seats_occupancy = seats_taken/seats_total*100
+            labels = ['Occupied','Free']
+            colors = ['Red','Green']
+            sizes = [seats_taken/seats_total*100, seats_available/seats_total*100]
+            explode = (0, 0.1)  # only "explode" the 2nd slice (i.e. 'Free')
+
+            fig1, ax1 = plt.subplots()
+            ax1.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%',
+                    shadow=True, startangle=90)
+            ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+            plt.title('Graph of seat occupancy at '+str(location)+'\nUpdated as of '+str(date)+" "+str(time_now))
+            plt.savefig('C:\\Users\chuanan\Documents\grambots\spacey\\chart_'+str(location)+'.png')
+            
+            context.bot.send_message(user_id, text="Hey "+ name +"! Here is your daily notification for <b><u>"+location+"</u></b>!\n\n<b>\ud83e\ude91Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)",parse_mode='HTML')
+            context.bot.send_photo(user_id, photo=open('C:\\Users\chuanan\Documents\grambots\spacey\\chart_'+str(location)+'.png', 'rb'))    
+        
+
+def full_notifications(context):
+    with open("C:\\Users\chuanan\Documents\grambots\spacey\\users_info_copy.csv") as csvfile:
+        spamreader = csv.reader(csvfile, delimiter = ",") 
+        results = []
+        for i in spamreader:
+            results.append(i)
+    
+    location_data = getcsv()
+
+    for i in results[1:]:
+        if i[5] != '0' and i[6] == '0':
+            name = i[0]
+            user_id = i[2]
+            location = i[5]
+            seats_available = int(location_data[location]['Seats Available'])
+            seats_taken = int(location_data[location]['Seats Taken'])
+            seats_total = int(location_data[location]['Seats Total'])
+            seats_occupancy = seats_taken/seats_total*100
+            if seats_occupancy >= 80:
+                localtime = time.localtime(time.time())
+                date = str(localtime.tm_mday)+'/'+str(localtime.tm_mon)+'/'+str(localtime.tm_year)
+                time_now = str(localtime.tm_hour)+':'+str(localtime.tm_min)+':'+str(localtime.tm_sec)
+                labels = ['Occupied','Free']
+                colors = ['Red','Green']
+                sizes = [seats_taken/seats_total*100, seats_available/seats_total*100]
+                explode = (0, 0.1)  # only "explode" the 2nd slice (i.e. 'Free')
+
+                fig1, ax1 = plt.subplots()
+                ax1.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%',
+                        shadow=True, startangle=90)
+                ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+                plt.title('Graph of seat occupancy at '+str(location)+'\nUpdated as of '+str(date)+" "+str(time_now))
+                plt.savefig('C:\\Users\chuanan\Documents\grambots\spacey\\chart_'+str(location)+'.png')
+                
+                context.bot.send_message(user_id, text="Hey "+ name +"! Occupancy for <b><u>"+location+"</u></b> has reached >=80%!\n\n<b>\ud83e\ude91Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)",parse_mode='HTML')
+                context.bot.send_photo(user_id, photo=open('C:\\Users\chuanan\Documents\grambots\spacey\\chart_'+str(location)+'.png', 'rb'))    
+                i[6] = '1'
+                with open("C:\\Users\chuanan\Documents\grambots\spacey\\users_info_copy.csv", 'w', newline='') as csvfile:
+                    spamwriter = csv.writer(csvfile, delimiter = ",") 
+                    for i in results:
+                        spamwriter.writerow(i)
+        elif i[5] != '0' and i[6] == '1':
+            location = i[5]
+            seats_available = int(location_data[location]['Seats Available'])
+            seats_taken = int(location_data[location]['Seats Taken'])
+            seats_total = int(location_data[location]['Seats Total'])
+            seats_occupancy = seats_taken/seats_total*100
+            if seats_occupancy < 80:
+                i[6] = '0'
+                with open("C:\\Users\chuanan\Documents\grambots\spacey\\users_info_copy.csv", 'w', newline='') as csvfile:
+                    spamwriter = csv.writer(csvfile, delimiter = ",") 
+                    for i in results:
+                        spamwriter.writerow(i)
+
+def update_seats(context):
+    with open("C:\\Users\chuanan\Documents\grambots\spacey\\locations.csv") as csvfile:
+        spamreader = csv.DictReader(csvfile, delimiter = ",")
+        results = []
+        for i in spamreader:
+            results.append(dict(i))
+    csv_columns = list(results[0].keys())
+    location_data = getcsv()
+   
+    # context.bot.send_message(chat_id=chatid, text='B')
+    for i in results:
+        location = i["Location"]
+        try:
+            with open("C:\\Users\chuanan\Documents\grambots\spacey\\seats_"+ location +".json") as f:
+                seats_data = json.load(f)
+            seats_available = 0
+            seats_taken = 0
+            for seats in seats_data.values():
+                if seats == 0:
+                    seats_available += 1
+                else:
+                    seats_taken += 1
+            seats_total = len(seats_data)
+            i['Seats Available'] = seats_available
+            i['Seats Taken'] = seats_taken
+            i['Seats Total'] = seats_total
+            context.bot.send_message(772520752, text=seats_available)
+        except: 
+            pass
+            
+    with open("C:\\Users\chuanan\Documents\grambots\spacey\\locations.csv", 'w', newline='') as csvfile:
+        spamwriter = csv.writer(csvfile, delimiter = ",") 
+        spamwriter.writerow(csv_columns)
+        spamwriter = csv.DictWriter(csvfile, fieldnames=csv_columns) 
+        spamwriter.writerows(results)
+    
+        
+        
+    
 
 class MQBot(telegram.bot.Bot):
     '''A subclass of Bot which delegates send method handling to MQ'''
@@ -386,29 +529,17 @@ class MQBot(telegram.bot.Bot):
 
 
 def main():
-    # for test purposes limit global throughput to 3 messages per 3 seconds
+    # limit global throughput to 3 messages per 3 seconds
     q = mq.MessageQueue(all_burst_limit=3, all_time_limit_ms=3000)
     request = Request(con_pool_size=8)
-    testbot = MQBot(TOKEN, request=request, mqueue=q)
+    spaceybot = MQBot('TOKENKKJ', request=request, mqueue=q)
     
     # Create the Updater and pass in bot's token.
-    updater = Updater(bot=testbot, use_context = True)
+    updater = Updater(bot=spaceybot, use_context = True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
-    # Get job queue
-    j = updater.job_queue
-    # Set daily notifications
-    t = datetime.time(17,8,00,000000)
-
-    job_daily = j.run_daily(callback_day,t)
-    # Set >80% notifications
-  
     
-
-    
-    dp.add_handler(CallbackQueryHandler(callback_minute))
-    job_minute = j.run_repeating(callback_minute, interval=900, first=0) #run every 15mins
 
     # Create command handlers
     # dp.add_handler(CommandHandler("start", start))
@@ -438,11 +569,24 @@ def main():
 
         fallbacks=[CommandHandler('start', start),CommandHandler('notifications', notifications)]
     )
-
     dp.add_handler(conv_handler)
     
+    # Get job queue
+    j = updater.job_queue
+
+    # Set daily notifications
+    t = datetime.time(2,27,00,000000)
+    dp.add_handler(CallbackQueryHandler(daily_notifications))
+    job_daily = j.run_daily(daily_notifications,t)
+
+    # Set >80% notifications
+    dp.add_handler(CallbackQueryHandler(full_notifications))
+    job_minute1 = j.run_repeating(full_notifications, interval=600, first=0) #check and alert every 10 mins
+
+    # Update seats occupancy
+    dp.add_handler(CallbackQueryHandler(update_seats))
+    job_minute2 = j.run_repeating(update_seats, interval=300, first=0) #run every 3 mins
     
-    #updater.dispatcher.add_handler(CallbackQueryHandler(location))
     # Start the Bot
     updater.start_polling()
     updater.idle()
@@ -450,5 +594,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
