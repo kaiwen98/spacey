@@ -68,7 +68,7 @@ def setup():
         img = PhotoImage(file= cfg.gif_path)
         cfg.root.tk.call('wm', 'iconphoto', cfg.root._w, img)
     elif platf() == 'Windows':
-        cfg.root.iconbitmap('/home/kaiwen98/Desktop/spacey/Spacey API/images/assets/spacey_icon.ico')
+        cfg.root.iconbitmap(cfg.icon_path)
     #cfg.root.iconbitmap(cfg.icon_path)
     #cfg.root.geometry('1280x720')  #size of w
     cfg.root.update_idletasks()

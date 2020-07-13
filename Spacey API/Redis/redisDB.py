@@ -44,6 +44,7 @@ class redis_database(object):
         self.user = ""
     
     def timeout(self):
+        """
         p = multiprocessing.Process(target = self.beginConnection)
         p.start()
         p.join(10)
@@ -51,9 +52,11 @@ class redis_database(object):
             p.terminate()
             p.join()
             return False
-        
-        self.client = redis.Redis(host = self.remote_host, port = self.port, db = 0, password = self.password, decode_responses= True)
-    
+        """
+        try: 
+            self.client = redis.Redis(host = self.remote_host, port = self.port, db = 0, password = self.password, decode_responses= True, socket_timeout = 10)
+        except:
+            return False
     def login_user(self, name, key):
         if self.client.sismember("registered_users", name) is False: 
             print(self.client.sismember("registered_users", name))

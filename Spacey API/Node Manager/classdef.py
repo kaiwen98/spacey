@@ -22,6 +22,7 @@ import redisDB as redisDB
 import time
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
+import hashlib
 
 
 
@@ -1044,9 +1045,13 @@ class json_viewer(object):
     def login(self): 
         name = self.text_input_uid.get()
         user_acc = self.text_input_uid.get() + "_" + self.text_input_pw.get()
+        """
         digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
         digest.update(bytes(user_acc, 'utf-8'))
         encrypted_key = digest.finalize()
+        """
+        hashvalue = hashlib.sha256(user_acc.encode())
+        encrypted_key = hashvalue.hexdigest()
         if not cfg.database.login_user(name, encrypted_key): 
             self.text_input_uid.set("Incorrect login details. Try again.")
             self.canIclear = True
@@ -1062,11 +1067,14 @@ class json_viewer(object):
     def register(self): 
         name = self.text_input_uid.get()
         user_acc = self.text_input_uid.get() + "_" + self.text_input_pw.get()
+        hashvalue = hashlib.sha256(user_acc.encode())
+        encrypted_key = hashvalue.hexdigest()
+        """
         digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
         digest.update(bytes(user_acc, 'utf-8'))
-
+        
         encrypted_key = bytes(str(digest.finalize()), 'utf-8')
-
+        """
         if not cfg.database.register_user(name, encrypted_key):
             self.text_input_uid.set("Username already taken.")
             self.canIclear = True
