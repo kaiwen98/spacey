@@ -42,8 +42,8 @@ def imageupdate(res_info, occupancy_new):
     for i in res_info.occupancy.keys():
         if not i.isnumeric(): continue
         if res_info.occupancy[i] != occupancy_new[i]:
-            if int(occupancy_new[i]): node = node_on
-            else                         : node = node_off
+            if int(occupancy_new[i]): node = node_off
+            else                    : node = node_on
             x = res_info.coord[i].rsplit(',')[0]
             y = res_info.coord[i].rsplit(',')[1]
             res_info.temp.paste(node, (int(x), int(y)))

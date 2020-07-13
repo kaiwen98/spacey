@@ -89,7 +89,7 @@ class redis_database(object):
         return splitext(basename(path))[0]
     
     def get_registered_restaurants(self):
-        self.res_list.clear()
+        if len(self.res_list): self.res_list.clear()
         for i in range(0, self.client.llen("{}_registered_restaurants".format(self.user))):
             self.res_list.append(self.client.lindex("{}_registered_restaurants".format(self.user), i))
         #if not len(self.res_list): self.res_list.append("No restaurants stored")
@@ -198,8 +198,8 @@ if __name__ == "__main__":
     print(r.client.hgetall('users_private_key'))
     print(r.client.smembers('registered_users'))
     print(r.get_registered_restaurants())
-    #print(r.client.hgetall('NUS_Macdonalds_coord'))
-    r.client.hdel('NUS_Macdonalds_occupancy', '')
+    print(r.client.hgetall('NUS_Macdonalds_hash'))
+    #r.client.hdel('NUS_Macdonalds_occupancy', '')
     print(r.client.hgetall('NUS_Macdonalds_occupancy'))
 
     
