@@ -116,7 +116,7 @@ class ResServer(object):
         while(True):
             for i in range(len(self.available_restaurants_name)):
 
-                #print("checking...", self.available_restaurants_name[i])
+                print("checking...", self.available_restaurants_name[i])
                 
                 occupancy = {}
                 full_name = self.userID + "_" + self.available_restaurants_name[i]

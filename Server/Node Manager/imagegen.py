@@ -40,6 +40,7 @@ def imageupdate(res_info, occupancy_new):
 
     res_info.temp = Image.open(res_info.image)
     for i in res_info.occupancy.keys():
+        if not i.isnumeric(): continue
         if res_info.occupancy[i] != occupancy_new[i]:
             if int(occupancy_new[i]): node = node_on
             else                         : node = node_off

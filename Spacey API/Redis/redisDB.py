@@ -198,8 +198,11 @@ if __name__ == "__main__":
     print(r.client.hgetall('users_private_key'))
     print(r.client.smembers('registered_users'))
     print(r.get_registered_restaurants())
-    print(r.client.hgetall('NUS_Macdonalds_coord'))
+    #print(r.client.hgetall('NUS_Macdonalds_coord'))
+    r.client.hdel('NUS_Macdonalds_occupancy', '')
     print(r.client.hgetall('NUS_Macdonalds_occupancy'))
+
+    
     # Life Hax
     #r.client.hmset('users_private_key',{'NUS': 'ec9193f8f25777fc0dbd511fdd617feee807ca9c4de6b51045b9cf98c535bcac'})
     #r.client.flushdb()
