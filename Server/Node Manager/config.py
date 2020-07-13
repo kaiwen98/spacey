@@ -111,9 +111,8 @@ class ResServer(object):
     def scan_update(self):
         """
         print(self.userID)
-        #client = redis.Redis(host = self.remote_host, port = self.port, db = 0, password = self.password, decode_responses= True)
-        while(True):
         """
+        client = redis.Redis(host = self.remote_host, port = self.port, db = 0, password = self.password, decode_responses= True)
         while(True):
             for i in range(len(self.available_restaurants_name)):
 
@@ -123,8 +122,8 @@ class ResServer(object):
                 full_name = self.userID + "_" + self.available_restaurants_name[i]
                 full_name_occupancy = full_name + "_occupancy"
 
-                occupancy = cfg.database.client.hgetall(full_name_occupancy)
-                #occupancy = client.hgetall(full_name_occupancy)
+                #occupancy = cfg.database.client.hgetall(full_name_occupancy)
+                occupancy = client.hgetall(full_name_occupancy)
                 if self.restaurants[i].occupancy != occupancy:
                     imageupdate(self.restaurants[i], occupancy)
                 # You can change update frequency from here. The scan is asynchronous
