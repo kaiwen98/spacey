@@ -884,7 +884,9 @@ class json_viewer(object):
 
     def DBclearDB(self):
         res = self.dbselect.get()
-        cfg.database.clearDB(res)
+        name = cfg.userid + "_" + res
+        cfg.database.clearDB(name)
+        cfg.error.updateText("Restaurant deleted: {}".format(name), "yellow")
         self.refresh()
 
     def refresh(self):
@@ -893,9 +895,10 @@ class json_viewer(object):
         self.optionmenu['menu'].delete(0, 'end')
 
         # Insert list of new options (tk._setit hooks them up to var)
-        if not len(cfg.userid): 
+        if cfg.userid == "": 
             cfg.db_options.clear()
             cfg.db_options = ["No Database Selected"] 
+            self.dbselect.set(cfg.db_options[0])
             return
 
         new_choices = ["Enter New Restaurant"] + cfg.database.get_registered_restaurants()
@@ -921,7 +924,7 @@ class json_viewer(object):
             self.butt3.pack()
             self.buttdel1.pack()
             self.buttdel2.pack()
-            cfg.session_name = (self.dbselect.get()).rsplit("_")[1]
+            cfg.session_name = self.dbselect.get()
             self.session_name_set = True
     def updateText(self, _text, _bg):
         
@@ -931,7 +934,7 @@ class json_viewer(object):
     def downloadDB(self): 
         if self.dbselect.get() in ["No Database Selected", "No restaurants stored"]: return
         cfg.export_to_local = False
-        cfg.session_name = (self.dbselect.get()).rsplit("_")[1]
+        cfg.session_name = self.dbselect.get()
         if cfg.res.size: cfg.res.deleteAllNodes()
         if cfg.image_flag: cfg.myCanvas.deleteImage()
         str1 = cfg.decompile(cfg.json_folder, import_from_local = False)

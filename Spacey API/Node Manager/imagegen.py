@@ -13,6 +13,8 @@ def imagegen():
     node_off = node_off.resize((int(cfg.box_len*2.5), cfg.box_len*2))
     node_on = Image.open(cfg.nodeOn_path)
     node_on = node_on.resize((int(cfg.box_len*2.5), cfg.box_len*2))
+    print("box_len: ", cfg.box_len)
+
     cfg.output_graphic_coord['box_len'] = cfg.box_len
 
     cfg.canvas_xlen = cfg.x_bb2 - cfg.x_bb1
@@ -21,6 +23,7 @@ def imagegen():
     output_img_y_bb1 = cfg.img_y_bb1 - cfg.y_bb1
 
     bg = Image.new('RGBA', (cfg.canvas_xlen, cfg.canvas_ylen), (92, 152, 226, 255))
+    #bg = Image.open(cfg.get_output_graphic_path())
     try:
         floorplan = Image.open(floorplan_path)
         datas = floorplan.getdata()
@@ -49,12 +52,14 @@ def imagegen():
         y = cfg.output_graphic_coord.get(i).rsplit(',')[1]
         print(x, type(x))
 
-        if cfg.res.occupancy[i] == 0: node = node_on
+        if int(cfg.res.occupancy[i]) == 0: node = node_on
         else: node = node_off
         bg.paste(node, (int(x),int(y)))
 
     #bg.paste(node_off,(0, 0))
     #bg.paste(node_off,(100, 500))
     bg.show()
+    
+    print(bg.size)
     bg.save(cfg.get_output_graphic_path(), quality=95, format = "PNG")
 

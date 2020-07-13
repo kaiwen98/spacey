@@ -27,5 +27,6 @@ def imagegen():
     #bg.paste(node_off,(100, 500))
     bg.show()
 
-    bg.save(cfg.save_path(), quality=95, format = "PNG")
+    bg.save(cfg.get_output_graphic_path(), quality=95, format = "PNG")
+
 

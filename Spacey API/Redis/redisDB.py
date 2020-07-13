@@ -96,17 +96,20 @@ class redis_database(object):
         return self.res_list
 
     def clearDB(self, session_name):
-        session_name = self.user + "_" + session_name
+
         for i in ["_coord", "_config", "_hash", "_occupancy"]:
             name = str(session_name) + i
             self.client.delete(name)
-
-        if not self.client.lrem("registered_restaurants", 1, session_name):
+        
+        name = session_name.split('_')[1]
+        print("here:", name)
+        if not self.client.lrem("{}_registered_restaurants".format(self.user), 1, name):
             return "Restaurant do not exist in database"
         else:
             return "Deleted "+ str(session_name)
+       
         
-        self.client.lrem("registered_restaurants", 1,session_name)
+        self.client.lrem("{}_registered_restaurants".format(self.user), 1, name)
 
     def clearUser(self, user):
         while self.client.llen("{}_registered_restaurants".format(user)):
@@ -117,7 +120,7 @@ class redis_database(object):
 
 
     # set relevant file directories pointing to the json files
-    def configJsonDir(self):
+    def configJsonDir(self, mode = 'client'):
         json_folder = join(self.root, 'json_files')
         json_file_config = join(json_folder, 'config')
         json_file_occupancy = join(json_folder, 'occupancy')
@@ -126,12 +129,11 @@ class redis_database(object):
         return [json_file_config, json_file_occupancy, json_file_hash, json_file_coord]
 
     # connects to remote database and stores json information there
-    def exportToDB(self, res_name, import_from_script = None, reset = True):
+    def exportToDB(self, session_name, import_from_script = None, reset = True):
         
-        if res_name in self.get_registered_restaurants() and reset == True: 
-            self.clearDB(res_name)
+        if session_name in self.get_registered_restaurants() and reset == True: 
+            self.clearDB(session_name)
 
-        session_name = self.user + "_" + res_name
         json_list = self.configJsonDir()
         # Each restaurant will have 4 json files associated with it. 
         # Iterate over every instance and store into database.
@@ -147,13 +149,13 @@ class redis_database(object):
                 data = import_from_script[json_list.index(i)]
                 
             self.client.hmset(name, data)
+            res_name = session_name.split('_')[1]
         self.client.lpush('{}_registered_restaurants'.format(self.user), res_name)
   
 
     # extracts information from database
     # export_to_local -> list passed as arg, export directly to script without referencing any files on hard drive
-    def importFromDB(self, res_name, export_to_script = None):
-        session_name = self.user + "_" + res_name
+    def importFromDB(self, session_name, export_to_script = None, mode = 'client'):
         json_list = self.configJsonDir()
         export_limit = 0
         if export_to_script is not None: export_limit = len(export_to_script)
@@ -172,78 +174,27 @@ class redis_database(object):
                 export_limit -= 1
                 if not export_limit: return export_to_script
 
-
-    
-
-"""
-def json_deserialize_image(encoded_str,image_file):
-    result = encoded_str.encode("utf-8")
-    result = base64.b64decode(result)
-    image_result = open(image_file, 'wb') # create a writable image and write the decoding result
-    image_result.write(result)
-"""
-"""
-def updateToDB(session_name):
-    os.path.join(json_file_config, session_name+".json")
-    os.path.join(json_file_config, session_name+".json")
-    os.path.join(json_file_config, session_name+".json")
-    config_name = session_name
-    occupancy_name = session_name+"_occ"
-    hash_name = session_name+"_hash"
-    r = Client(host = remote_host, port = port, db = 0, password = password)
-    with open(json_file_config, 'r') as infile:
-        config = json.load(infile)
-    with open(json_file_occupancy, 'r') as infile:
-        occupancy = json.load(infile)
-    with open(json_file_hash, 'r') as infile:
-        hash = json.load(infile)
-    
-    r.hmset(config_name, config)
-    r.hmset(occupancy_name, occupancy)
-    r.hmset(hash_name, hash)
-    print('-------')
-
-    print(r.hmset('restaurant', _dump))
-    #delete all keys from database
-    r.flushdb()
-
-    #r.delete('restaurant')
-    #print(r.hget('restaurant', 'configinfo'))
-    print(r.keys())
-    print('-------')
-"""
-"""
-r = Client(host = remote_host, port = port, db = 0, password = password, decode_responses= True)
-#updateToDB('sample1')
-#r.delete('sample_config')
-test = {}
-test = r.hgetall('sample1_config')
-print(type(test.keys()))
-print(test)
-print(r.keys())
-encoded_str = test['processed_img']
-json_deserialize_image(encoded_str,"lol.png")
-
-"""
-
 if __name__ == "__main__":
-    #remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
-    #password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
-    password = None
-    #port = '13969'
+    remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
+    password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
+    port = '13969'
+    """
     remote_host = 'localhost'
+    password = None
     port = '6379'
-    #port = '3'
+    """
+
     r = redis_database(root,remote_host, port, password)
     r.timeout()
-    r.user = 'Macdonalds'
-    r.clearUser('Macdonalds')
+    r.user = 'NUS'
+    #r.clearUser('Macdonalds')
+    #print(r.clearDB('NUS_Wendy'))
     print(r.client.lindex("Macdonalds_registered_restaurants", 0))
     print(r.client.keys())
     print(r.client.hgetall('users_private_key'))
     print(r.client.smembers('registered_users'))
-    #print(r.get_registered_restaurants())
+    print(r.get_registered_restaurants())
     
-    #r.client.flushdb()
+    r.client.flushdb()
     #print(r.client.smembers('registered_users'))
     

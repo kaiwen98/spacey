@@ -41,12 +41,12 @@ image_asset_folder = os.path.join(image_folder, "assets")
 image_output_graphic_folder = os.path.join(image_folder, "output graphic")
 icon_path = os.path.join(image_asset_folder, "spacey_icon.ico")
 gif_path = os.path.join(image_asset_folder, "spacey_icon.gif")
-nodeOff_path = os.path.join(image_asset_folder,"unoccupied_nodes.png")
-nodeOn_path = os.path.join(image_asset_folder, "occupied_nodes.png")
+nodeOn_path = os.path.join(image_asset_folder,"unoccupied_nodes.png")
+nodeOff_path = os.path.join(image_asset_folder, "occupied_nodes.png")
 private_key_folder = os.path.join(_root, "private key")
 
 # Database information
-"""
+
 remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
 password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
 port = '13969'
@@ -54,7 +54,7 @@ port = '13969'
 remote_host = 'localhost'
 password = None
 port = '6379'
-
+"""
 
 database = redisDB.redis_database(_root, remote_host, port, password)
 
@@ -98,6 +98,8 @@ load_flag = False
 img_x_bb1 = -1 #img bb box corner
 img_y_bb1 = -1
 cfg.db_options = ["No Database Selected"] 
+userid = ""
+session_name = ""
 
 export_to_local = False
 import_from_local = False
@@ -115,22 +117,6 @@ json_hash = {}
 json_coord = {}
 output_graphic_coord = {}
 
-def save_private_key(key, name):
-    file_path = os.path.join(cfg.private_key_folder, name+".bin")
-    with open(file_path, "wb") as outfile:
-        outfile.write(key)
-    outfile.close()
-
-def load_private_key(name):
-    file_path = os.path.join(cfg.private_key_folder, name+".bin")
-    try:
-        with open(file_path, "rb") as infile:
-            key = infile.read()
-        return key
-    except:
-        return 0
-
-
 
 # File functions
 def getbasename(path):
@@ -139,11 +125,15 @@ def getbasename(path):
 
 # Return filename of the new output graphic
 def get_output_graphic_path():
-    result = os.path.join(image_output_graphic_folder, "output_"+cfg.session_name+".png")
+    name = cfg.userid + "_" + cfg.session_name
+    name = name.lstrip('_')
+    result = os.path.join(image_output_graphic_folder, "output_"+name+".png")
     return result
 
 def get_output_floor_plan_path():
-    result = os.path.join(floorplan_folder_output, "processed_img_"+cfg.session_name+".png")
+    name = cfg.userid + "_" + cfg.session_name
+    result = os.path.join(floorplan_folder_output, "processed_img_"+name+".png")
+    cfg.postimgpath = result
     return result
 
 
@@ -186,24 +176,28 @@ def compile(root, export_to_local = True):
 
     # List of dictionaries containing serialised information. We will now write it into a json file to store in database/ local disk
     json_dict_list = [json_zipinfo, json_occupancy, json_hash, json_coord]
-
+    name = cfg.userid + "_" + cfg.session_name
     if export_to_local:
+        name = session_name
         for i in range(len(json_dict_list)):
-            path = os.path.join(configJsonDir(cfg._root)[i], cfg.session_name+".json")
+            
+            path = os.path.join(configJsonDir(cfg._root)[i], name+".json")
             with open(path, 'w') as outfile:
                 json.dump(json_dict_list[i], outfile)
     else:  
-        cfg.database.exportToDB(cfg.session_name, import_from_script = json_dict_list)
+        cfg.database.exportToDB(name, import_from_script = json_dict_list)
 
     data = {}
     # Confirms the json file's existence and prints contents on console.
     if export_to_local:
-        path = os.path.join(configJsonDir(cfg._root)[0], cfg.session_name+".json")
+       
+        path = os.path.join(configJsonDir(cfg._root)[0], name+".json")
         with open(path, 'r') as infile:
             data = json.loads(infile.read())
         return str(json.dumps(data["configinfo"], indent=1)) 
     else:
-        data = cfg.database.importFromDB(cfg.session_name, export_to_script = [data])
+      
+        data = cfg.database.importFromDB(name, export_to_script = [data])
         print("-------")
         
         
@@ -222,16 +216,18 @@ def decompile(root, import_from_local = True):
     # List of dictionaries containing serialised information. We will now write it into a json file to store in database/ local disk
     json_dict_list_name = ["json_zipinfo", "json_occupancy", "json_hash", "json_coord"]
     data = []
+    name = cfg.userid + "_" + cfg.session_name
     for i in range(4):
         data.append({})
 
     if import_from_local:
+        name = cfg.session_name
         for i in range(len(configJsonDir(cfg._root))):
-            path = os.path.join(configJsonDir(cfg._root)[i], cfg.session_name+".json")
+            path = os.path.join(configJsonDir(cfg._root)[i], name+".json")
             with open(path, 'r') as outfile:
                 globals()[json_dict_list_name[i]] = json.load(outfile)
     else:
-        data = cfg.database.importFromDB(cfg.session_name, export_to_script = data)
+        data = cfg.database.importFromDB(name, export_to_script = data)
         print(data)
         for i in json_dict_list_name:
             globals()[i] = data[json_dict_list_name.index(i)]
