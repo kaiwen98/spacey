@@ -120,6 +120,7 @@ class RestaurantSpace(object):
         cfg.myCanvas.rec_obj.clear()
         if cfg.error is not None:
             cfg.error.updateText("Deleted all Nodes", "orange")
+        cfg.prev_node = None
 
     def unpackFromJson(self):
         for idx in self.idxList:

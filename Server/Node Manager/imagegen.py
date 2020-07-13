@@ -18,12 +18,14 @@ def imagegen(res_info):
 
     print("cfg.box_len: ", res_info.box_len)
     bg = Image.open(res_info.image)
-
-
-    for i in range(len(res_info.coord)):
+    print(res_info.name)
+    print(res_info.coord)
+    print(res_info.occupancy)
+    for i in res_info.coord.keys():
         x = res_info.coord[str(i)].rsplit(',')[0]
         y = res_info.coord[str(i)].rsplit(',')[1]
-        print(x, type(x))
+        #print(x, type(x))
+        #print("key: ", str(i))
 
         if int(res_info.occupancy[str(i)]) == 0: node = node_on
         else: node = node_off
@@ -38,13 +40,13 @@ def imageupdate(res_info, occupancy_new):
 
     res_info.temp = Image.open(res_info.image)
     for i in res_info.occupancy.keys():
-        if res_info.occupancy[str(i)] != occupancy_new[i]:
-            if int(occupancy_new[str(i)]): node = node_on
+        if res_info.occupancy[i] != occupancy_new[i]:
+            if int(occupancy_new[i]): node = node_on
             else                         : node = node_off
-            x = res_info.coord[str(i)].rsplit(',')[0]
-            y = res_info.coord[str(i)].rsplit(',')[1]
+            x = res_info.coord[i].rsplit(',')[0]
+            y = res_info.coord[i].rsplit(',')[1]
             res_info.temp.paste(node, (int(x), int(y)))
-            res_info.occupancy[str(i)] = occupancy_new[i]
+            res_info.occupancy[i] = occupancy_new[i]
     res_info.temp.show()
     #save_graphic(res_info)
     

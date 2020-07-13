@@ -44,7 +44,6 @@ class redis_database(object):
         self.user = ""
     
     def timeout(self):
-        """
         p = multiprocessing.Process(target = self.beginConnection)
         p.start()
         p.join(10)
@@ -52,11 +51,9 @@ class redis_database(object):
             p.terminate()
             p.join()
             return False
-        """
-        try: 
-            self.client = redis.Redis(host = self.remote_host, port = self.port, db = 0, password = self.password, decode_responses= True, socket_timeout = 10)
-        except:
-            return False
+        
+        self.client = redis.Redis(host = self.remote_host, port = self.port, db = 0, password = self.password, decode_responses= True)
+    
     def login_user(self, name, key):
         if self.client.sismember("registered_users", name) is False: 
             print(self.client.sismember("registered_users", name))
@@ -103,7 +100,7 @@ class redis_database(object):
         for i in ["_coord", "_config", "_hash", "_occupancy"]:
             name = str(session_name) + i
             self.client.delete(name)
-        
+        print("name: ", name)
         name = session_name.split('_')[1]
         print("here:", name)
         if not self.client.lrem("{}_registered_restaurants".format(self.user), 1, name):
@@ -116,7 +113,7 @@ class redis_database(object):
 
     def clearUser(self, user):
         while self.client.llen("{}_registered_restaurants".format(user)):
-            self.clearDB(self.client.lpop("{}_registered_restaurants".format(user)))
+            self.clearDB(self.user + '_' + self.client.lpop("{}_registered_restaurants".format(user)))
     
         self.client.srem("registered_users", user)
         self.client.hdel("users_private_key",user)
@@ -133,9 +130,13 @@ class redis_database(object):
 
     # connects to remote database and stores json information there
     def exportToDB(self, session_name, import_from_script = None, reset = True):
-        
-        if session_name in self.get_registered_restaurants() and reset == True: 
+
+        res_name = (session_name.split('_'))[1]
+        print(res_name)
+        if res_name in self.get_registered_restaurants() and reset == True: 
             self.clearDB(session_name)
+            print("Cleared duplicate")
+            print(self.client.keys())
 
         json_list = self.configJsonDir()
         # Each restaurant will have 4 json files associated with it. 
@@ -172,7 +173,7 @@ class redis_database(object):
                 with open(path, "w") as outfile:
                     json.dump(data, outfile)
             else: 
-                print(data)
+          
                 export_to_script[json_list.index(i)] = data
                 export_limit -= 1
                 if not export_limit: return export_to_script
@@ -191,13 +192,16 @@ if __name__ == "__main__":
     r.timeout()
     r.user = 'NUS'
     #r.clearUser('Macdonalds')
-    #print(r.clearDB('NUS_Wendy'))
+    #print(r.clearDB('NUS_Macdonalds'))
     print(r.client.lindex("Macdonalds_registered_restaurants", 0))
     print(r.client.keys())
     print(r.client.hgetall('users_private_key'))
     print(r.client.smembers('registered_users'))
     print(r.get_registered_restaurants())
-    
-    r.client.flushdb()
+    print(r.client.hgetall('NUS_Macdonalds_coord'))
+    print(r.client.hgetall('NUS_Macdonalds_occupancy'))
+    # Life Hax
+    #r.client.hmset('users_private_key',{'NUS': 'ec9193f8f25777fc0dbd511fdd617feee807ca9c4de6b51045b9cf98c535bcac'})
+    #r.client.flushdb()
     #print(r.client.smembers('registered_users'))
     

@@ -101,8 +101,7 @@ cfg.db_options = ["No Database Selected"]
 userid = ""
 session_name = ""
 
-export_to_local = False
-import_from_local = False
+local_disk = False
 
 # Variables that will be stored to restore save states with the Node Manager
 config_op = ["image_flag", "x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "postimgpath", "img_padding"]
@@ -125,15 +124,17 @@ def getbasename(path):
 
 # Return filename of the new output graphic
 def get_output_graphic_path():
-    name = cfg.userid + "_" + cfg.session_name
-    name = name.lstrip('_')
+    if local_disk: name = cfg.session_name
+    else         : name = (cfg.userid + "_" + cfg.session_name).lstrip('_')
+    
     result = os.path.join(image_output_graphic_folder, "output_"+name+".png")
     return result
 
 def get_output_floor_plan_path():
-    name = cfg.userid + "_" + cfg.session_name
+    if local_disk: name = cfg.session_name
+    else         : name = (cfg.userid + "_" + cfg.session_name).lstrip('_')
     result = os.path.join(floorplan_folder_output, "processed_img_"+name+".png")
-    cfg.postimgpath = result
+    cfg.postimgpath = name
     return result
 
 
@@ -158,7 +159,7 @@ def configJsonDir(root):
     json_file_coord = join(json_folder, 'coord')
     return [json_file_config, json_file_occupancy, json_file_hash, json_file_coord]
 
-def compile(root, export_to_local = True):
+def compile(root, local_disk = True):
     for i in config_op:
         configinfo[i] = globals()[i] 
   
@@ -177,7 +178,7 @@ def compile(root, export_to_local = True):
     # List of dictionaries containing serialised information. We will now write it into a json file to store in database/ local disk
     json_dict_list = [json_zipinfo, json_occupancy, json_hash, json_coord]
     name = cfg.userid + "_" + cfg.session_name
-    if export_to_local:
+    if local_disk:
         name = session_name
         for i in range(len(json_dict_list)):
             
@@ -189,7 +190,7 @@ def compile(root, export_to_local = True):
 
     data = {}
     # Confirms the json file's existence and prints contents on console.
-    if export_to_local:
+    if local_disk:
        
         path = os.path.join(configJsonDir(cfg._root)[0], name+".json")
         with open(path, 'r') as infile:
@@ -206,7 +207,7 @@ def compile(root, export_to_local = True):
 
 
 
-def decompile(root, import_from_local = True):
+def decompile(root, local_disk = True):
     global json_zipinfo, json_occupancy, json_hash, json_coord
     json_zipinfo.clear()
     json_occupancy.clear()
@@ -220,7 +221,7 @@ def decompile(root, import_from_local = True):
     for i in range(4):
         data.append({})
 
-    if import_from_local:
+    if local_disk:
         name = cfg.session_name
         for i in range(len(configJsonDir(cfg._root))):
             path = os.path.join(configJsonDir(cfg._root)[i], name+".json")
@@ -228,7 +229,6 @@ def decompile(root, import_from_local = True):
                 globals()[json_dict_list_name[i]] = json.load(outfile)
     else:
         data = cfg.database.importFromDB(name, export_to_script = data)
-        print(data)
         for i in json_dict_list_name:
             globals()[i] = data[json_dict_list_name.index(i)]
 
@@ -237,7 +237,7 @@ def decompile(root, import_from_local = True):
     devinfo = json.loads(json_zipinfo.get("devinfo"))
     processed_img = json_coord.get("processed_img")
     processed_floorplan = json_zipinfo.get("processed_floorplan")
-    if not import_from_local:
+    if not local_disk:
         cfg.json_deserialize_image(processed_img, cfg.get_output_graphic_path())
         cfg.json_deserialize_image(processed_floorplan, cfg.get_output_floor_plan_path())
 
@@ -261,7 +261,7 @@ def decompile(root, import_from_local = True):
 def unpackFromJson():
     global img
   
-    if cfg.image_flag is True: img = imgpro.floorPlan(postimgpath, cfg.myCanvas.canvas, False)
+    if cfg.image_flag is True: img = imgpro.floorPlan(cfg.get_output_floor_plan_path(), cfg.myCanvas.canvas, False)
     grid.refresh(delete = False, resize = False)
     cfg.myCanvas.restoreTagOrder()
 

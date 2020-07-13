@@ -15,7 +15,7 @@ from os.path import dirname as dir, splitext, basename, join
 import sys
 import base64
 import res_info as res
-from multiprocessing import Process, Pipe
+from multiprocessing import Process, Pipe, Lock
 import random
 import time
 import redis
@@ -54,8 +54,8 @@ available_restaurants_name = None
 nodeOn = None
 nodeOff = None
 restaurants = None
-
-
+cfg.database = redisDB.redis_database(_root, cfg.remote_host, cfg.port, cfg.password)
+interrupt = ""
 
 # Serializes image from png to string
 def json_serialize_image(image_file):
@@ -78,8 +78,7 @@ def get_output_graphic_path(name):
 
 class ResServer(object):
     def __init__(self, userID):
-        cfg.database = redisDB.redis_database(_root, cfg.remote_host, cfg.port, cfg.password)
-        cfg.database.timeout()
+
 
         print(cfg.database.client.keys())
 
@@ -110,23 +109,32 @@ class ResServer(object):
             print("ok!")
 
     def scan_update(self):
+        """
         print(self.userID)
-        client = redis.Redis(host = self.remote_host, port = self.port, db = 0, password = self.password, decode_responses= True)
+        #client = redis.Redis(host = self.remote_host, port = self.port, db = 0, password = self.password, decode_responses= True)
+        while(True):
+        """
         while(True):
             for i in range(len(self.available_restaurants_name)):
+
                 #print("checking...", self.available_restaurants_name[i])
+                
                 occupancy = {}
                 full_name = self.userID + "_" + self.available_restaurants_name[i]
                 full_name_occupancy = full_name + "_occupancy"
 
-                occupancy = client.hgetall(full_name_occupancy)
+                occupancy = cfg.database.client.hgetall(full_name_occupancy)
+                #occupancy = client.hgetall(full_name_occupancy)
                 if self.restaurants[i].occupancy != occupancy:
                     imageupdate(self.restaurants[i], occupancy)
                 # You can change update frequency from here. The scan is asynchronous
-                #time.sleep(1) 
+            time.sleep(5)
+      
+                
                 
     
     def randomize(self):
+        print("hi")
         for i in range(len(self.available_restaurants_name)):
             occupancy = {}
             new_occupancy = {}
@@ -136,24 +144,15 @@ class ResServer(object):
             occupancy = cfg.database.client.hgetall(full_name_occupancy)
             for i in occupancy.keys():
                 new_occupancy[i] = random.randint(0,1)
+            
             cfg.database.client.hmset(full_name_occupancy, new_occupancy)
-"""
-def main():
-    x = ResServer('NUS')
-    p = Process(target=x.scan_update)
-    p.start()
-    q = ""
-    while q != 'q':
-        q = input("Press x to randomize")
-        if q == 'x':
-            x.randomize()
-        elif q == 'q':
-            p.terminate()
-"""
+
+
 
 if __name__ == '__main__':
     userID = 'NUS'
-    x = ResServer('NUS')
+    cfg.database.timeout()
+    x = ResServer(userID)
     p = Process(target=x.scan_update)
     p.start()
 
@@ -164,3 +163,4 @@ if __name__ == '__main__':
             x.randomize()
         elif q == 'q':
             p.terminate()
+

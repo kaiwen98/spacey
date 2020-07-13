@@ -7,7 +7,7 @@ import config as cfg
 
 def imagegen():
     #cfg.decompile(cfg.json_path)
-    floorplan_path = cfg.postimgpath
+    floorplan_path = cfg.get_output_floor_plan_path()
 
     node_off = Image.open(cfg.nodeOff_path)
     node_off = node_off.resize((int(cfg.box_len*2.5), cfg.box_len*2))

@@ -934,11 +934,11 @@ class json_viewer(object):
 
     def downloadDB(self): 
         if self.dbselect.get() in ["No Database Selected", "No restaurants stored"]: return
-        cfg.export_to_local = False
+        cfg.local_disk = False
         cfg.session_name = self.dbselect.get()
         if cfg.res.size: cfg.res.deleteAllNodes()
         if cfg.image_flag: cfg.myCanvas.deleteImage()
-        str1 = cfg.decompile(cfg.json_folder, import_from_local = False)
+        str1 = cfg.decompile(cfg.json_folder, local_disk  = False)
         self.updateText(str1+"\n", "p")
         self.updateText(">>>"+"+"*15+"\n", "b")
 
@@ -946,7 +946,7 @@ class json_viewer(object):
         if cfg.res.size == 0:
             cfg.error.updateText("[ERR] Need at least 1 node", "red")
             return
-        cfg.import_from_local = True
+        cfg.local_disk = True
         cfg.json_path = filedialog.asksaveasfilename(initialdir = cfg.json_folder_config, title = "Select File", filetypes = [("Json File", "*.json")])
         cfg.session_name = cfg.getbasename(cfg.json_path)
         
@@ -1052,6 +1052,7 @@ class json_viewer(object):
         """
         hashvalue = hashlib.sha256(user_acc.encode())
         encrypted_key = hashvalue.hexdigest()
+        
         if not cfg.database.login_user(name, encrypted_key): 
             self.text_input_uid.set("Incorrect login details. Try again.")
             self.canIclear = True
@@ -1095,11 +1096,11 @@ class json_viewer(object):
             self.helpMenu.destroy()
         self.session_name_set = False
         cfg.error.updateText("[DB] Created new session: "+ str(cfg.session_name), "pale green")
-        cfg.import_from_local = False
+        cfg.local_disk  = False
         if cfg.img is not None: cfg.img.save()
         #cfg.json_path = cfg.json_path + ".json"
         imagegen() # Generates template
-        str1 = cfg.compile(cfg.json_folder, export_to_local = False)
+        str1 = cfg.compile(cfg.json_folder, local_disk = False)
         self.updateText(str1+"\n", "p")
         self.updateText(">>>"+"-"*15+"\n", "b")
         cfg.error.updateText("JSON Updated successfully", "pale green")
@@ -1108,7 +1109,7 @@ class json_viewer(object):
         
     
     def download(self):
-        cfg.export_to_local = True
+        cfg.local_disk = True
         filename = filedialog.askopenfilename(initialdir = cfg.json_folder_config, title = "Select File", filetypes = [("Json File", "*.json")])
         cfg.session_name = cfg.getbasename(filename)
         if cfg.res.size: cfg.res.deleteAllNodes()
