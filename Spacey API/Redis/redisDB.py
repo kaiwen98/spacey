@@ -26,6 +26,7 @@ import sys
 import base64
 import multiprocessing
 import time
+from redis.exceptions import TimeoutError
 # File directory
 root = dir(dir(realpath(__file__)))
 
@@ -43,33 +44,31 @@ class redis_database(object):
         self.test = 3
         self.user = ""
     
-    def timeout(self):
-        p = multiprocessing.Process(target = self.beginConnection)
-        p.start()
-        p.join(10)
-        if p.is_alive(): 
-            p.terminate()
-            p.join()
-            return False
-        
-        self.client = redis.Redis(host = self.remote_host, port = self.port, db = 0, password = self.password, decode_responses= True)
+    def timeout(self):      
+        self.client = redis.Redis(host = self.remote_host, port = self.port, db = 0, password = self.password, decode_responses= True, socket_timeout= 10)
+
     
     def login_user(self, name, key):
+        try: 
+            self.client.keys()
+        except TimeoutError as err:
+            return 2
+
         if self.client.sismember("registered_users", name) is False: 
             print(self.client.sismember("registered_users", name))
-            return False
+            return 0
         authenticate = self.client.hget("users_private_key", name)
         if str(authenticate) == str(key):
             print("yup")
             print("auth: ",str(authenticate))
             print("key: ",str(key))
             self.user = name
-            return True
+            return 1
         else:
             print("auth: ",str(authenticate))
             print("key: ",str(key))
             
-            return False
+            return 0
 
     def register_user(self, name, key):
         # if username exists, cannot register

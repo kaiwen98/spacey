@@ -20,7 +20,8 @@ import base64
 
 
 # Need to choose depending on running from exe or py. Should point to /Spacey API
-#root = dir(dir(dir(sys.executable)))
+#_root = dir(dir(dir(os.path.abspath(__file__))))
+#print(root)
 _root = dir(dir(__file__)) 
 
 # To extract database interface functions
@@ -49,7 +50,7 @@ private_key_folder = os.path.join(_root, "private key")
 
 remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
 password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
-port = '13969'
+port = '13969' #9
 """
 remote_host = 'localhost'
 password = None
