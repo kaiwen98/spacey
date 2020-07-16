@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['C:\\Users\\Looi Kai Wen\\Desktop\\Spacey Code\\Spacey API\\Node Manager'],
+             pathex=['C:\\Users\\Looi Kai Wen\\Desktop\\Spacey_Code\\spacey\\Spacey API\\Node Manager'],
              binaries=[],
              datas=[],
              hiddenimports=[],
