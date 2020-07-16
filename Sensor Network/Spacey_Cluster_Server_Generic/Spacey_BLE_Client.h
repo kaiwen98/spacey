@@ -1,13 +1,7 @@
-
-/**
- * A BLE client example that is rich in capabilities.
- * There is a lot new capabilities implemented.
- * author unknown
- * updated by chegewara
- */
+#ifndef __BLEC__
+#define __BLEC__
 
 #include "BLEDevice.h"
-#include "esp_system.h"
 
 // The remote service we wish to connect to.
 static BLEUUID serviceUUID("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
@@ -24,6 +18,15 @@ static BLEScanResults results;
 
 const int wdtTimeout = 20000;  //time in ms to trigger the watchdog
 hw_timer_t *timer = NULL;
+
+/*
+/**
+ * A BLE client example that is rich in capabilities.
+ * There is a lot new capabilities implemented.
+ * author unknown
+ * updated by chegewara
+ */
+
 
 
 static void notifyCallback(
@@ -52,11 +55,10 @@ class MyClientCallback : public BLEClientCallbacks {
 
 
 bool connectToServer() {
-    BLEClient*  pClient;
     Serial.print("Forming a connection to ");
     Serial.println(myDevice->getAddress().toString().c_str());
     
-    pClient  = BLEDevice::createClient();
+    BLEClient* pClient  = BLEDevice::createClient();
     pClient->setClientCallbacks(new MyClientCallback());
     Serial.println(" - Created client");
 
@@ -91,6 +93,7 @@ bool connectToServer() {
       std::string value = pRemoteCharacteristic->readValue();
       Serial.print("The characteristic value was: ");
       Serial.println(value.c_str());
+      pClient->disconnect();
     }
 
     if(pRemoteCharacteristic->canNotify()){
@@ -124,7 +127,7 @@ class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
   } // onResult
 }; // MyAdvertisedDeviceCallbacks
 
-BLEScan* initBLEClient(){
+BLEScan* setup_BLEClient(){
   BLEDevice::init("");
   BLEScan* pBLEScan = BLEDevice::getScan();
   // Retrieve a Scanner and set the callback we want to use to be informed when we
@@ -139,25 +142,8 @@ BLEScan* initBLEClient(){
   return  pBLEScan;
 }
 
-// Executed when the watchdog timer triggers a reboot
-void IRAM_ATTR resetModule() {
-  Serial.println("reboot");
-  ets_printf("reboot\n");
-  esp_restart();
-}
-
-void setup() {
-  Serial.begin(115200);
-  Serial.println("Starting Arduino BLE Client application...");
-  timer = timerBegin(0, 80, true);                  //timer 0, div 80
-  timerAttachInterrupt(timer, &resetModule, true);  //attach callback
-  timerAlarmWrite(timer, wdtTimeout * 1000, false); //set time in us
-  timerAlarmEnable(timer);                          //enable interrupt
-} // End of setup.
-
-void BLEClient() {
-  timerWrite(timer, 0); //reset timer (feed watchdog)
-  BLEScan* pBLEScan = initBLEClient();
+void task_BLE_client() {
+  BLEScan* pBLEScan = setup_BLEClient();
 
   // Gets a map of all detected advertised devices.
   results = pBLEScan->start(10, false);
@@ -191,10 +177,4 @@ void BLEClient() {
 
 
 
-
-void loop(){
-  BLEClient();
-}
-
-  
-
+#endif

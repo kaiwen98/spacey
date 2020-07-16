@@ -21,6 +21,12 @@
 #define REDIS_PASSWORD  "PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL"
 
 
+
+const int wdtTimeout = 10000;  //time in ms to trigger the watchdog
+hw_timer_t *timer = NULL;
+
+
+
 WiFiClient network_setup() {
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -42,18 +48,39 @@ WiFiClient network_setup() {
 }
 
 
+void IRAM_ATTR resetModule() {
+  Serial.println("reboot");
+  ets_printf("reboot\n");
+  esp_restart();
+}
 
-void setup()
+
+void task_update_BLE()
 {
   long a;
-  char number[1];
-  Serial.begin(115200);
+  timer = timerBegin(0, 80, true);                  //timer 0, div 80
+  timerAttachInterrupt(timer, &resetModule, true);  //attach callback
+  timerAlarmWrite(timer, wdtTimeout * 1000, false); //set time in us
+  timerAlarmEnable(timer);                          //enable interrupt
+  
   RedisUpdater myUpdater("NUS", "Macdonalds", network_setup());
+  timerWrite(timer, 0); //reset timer (feed watchdog)
   a = random(2);
-  myUpdater.store_value("20,2,2", a);
+  myUpdater.store_value("20,2,2", a); //Insert as a task
   myUpdater.close_conn();
+  WiFi.disconnect();
+}
+
+
+
+
+
+
+void setup(){
+  Serial.begin(115200);
 }
 
 void loop()
 {
+  task_update_BLE();
 }

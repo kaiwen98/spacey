@@ -572,7 +572,7 @@ class menu_help(object):
             img = PhotoImage(file= cfg.gif_path)
             helpMenu.tk.call('wm', 'iconphoto', helpMenu._w, img)
         elif platf() == 'Windows':
-            helpMenu.iconbitmap('/home/kaiwen98/Desktop/spacey/Spacey API/images/assets/spacey_icon.ico')
+            helpMenu.iconbitmap(cfg.icon_path)
         #x,y = self.findCentralize(helpMenu)
         #helpMenu.geometry("+{}+{}".format(x, y))
         frame = Frame(helpMenu, bg = "gray10")
