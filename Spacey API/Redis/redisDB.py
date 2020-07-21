@@ -199,7 +199,7 @@ if __name__ == "__main__":
     print(r.client.smembers('registered_users'))
     print(r.get_registered_restaurants())
     print(r.client.hgetall('NUS_Macdonalds_hash'))
-    #r.client.hdel('NUS_Macdonalds_occupancy', '')
+    #r.client.delete('NEWTEST1', 'NEWTEST', 'fool')
     print(r.client.hgetall('NUS_Macdonalds_occupancy'))
 
     

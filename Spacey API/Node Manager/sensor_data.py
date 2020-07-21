@@ -155,7 +155,7 @@ class sensor_mote_data(object):
         print(self.res.device_cluster_id)
         return ("Mote x: " + str(self.res.x_coord[self.idx])
         + "\nMote y: " + str(self.res.y_coord[self.idx])
-        + "\nMote space: " + str(self.res.space_id[self.idx])
+        + "\nMote space: " + str(self.res.space_id[self.idx]) 
         + "\nMote cluster level: " + str(self.res.device_cluster_level[self.idx])
         + "\nMote cluster id: " + str(self.res.device_cluster_id[self.idx]) 
         )
