@@ -534,7 +534,7 @@ class menu_devinfo(object):
         if cfg.res.registerNode(cfg.x, cfg.y, x[0], x[1], x[2], cfg.node) is False:
             cfg.err_inval_input = True
             self.highlightDeviceInfo("red")
-            cfg.error.updateText("[KeyError] Cannot hash with same key", "red")
+            cfg.error.updateText("[KeyError] Repeated cluster number! Key in a different combination of <cluster ID> <cluster level> <sensor ID>", "red")
             self.keyEntry = self.entryList[0]
             self.keyEntry.focus_set()
             return
@@ -628,7 +628,7 @@ class menu_help(object):
 
         text.insert(END, "Info:", "h1")
         text.insert(END, "\nThis Node Manager allows network administrators to synchronise the location of the sensor motes with the graphic to be generated, as well as the communication of location-specific information between the sensor motes and the database."+ 
-                        "\n\nThe interface controls are easy to use and intuitive, allowing the user to quickly form a composition of the sensor mote network without much delay. You can then use Spacey Image Processor to generate the graphic! \n\nThe Node Manager comes embedded with an image processing functionality, which edits your floorplan image down to size and color requirement to fit on the canvas. \n\nSpacey Node Manager is now integrated with RedisDB. You can now create floor plans and save them in the cloud! You can also choose to save your work on your local drive.", "h2")
+                        "\n\nThe interface controls are easy to use and intuitive, allowing the user to quickly form a map of the sensor mote network without much delay. The graphic is then generated automatically for you! \n\nThe Node Manager comes embedded with an image processing functionality, which edits your floorplan image down to size and color requirement to fit on the canvas. \n\nSpacey Node Manager is now integrated with RedisDB. You can now create floor plans and save them in the cloud! You can also choose to save your work on your local drive.", "h2")
 
         text.insert(END, "\n\nControls:", "h1")
         text.insert(END, "\n\t>> Quit from Node Manager\t\t\t\t", "h3a")
@@ -663,7 +663,7 @@ class menu_help(object):
 
         
         text.insert(END, "\nSet Sensor ID", "h3a")
-        text.insert(END, "\nUnder menu 1. You may use the entry boxes to enter the sensor information, after you place the cursor on the grid and place a node. The entry boxes only accept integer inputs, and will not proceed upon an invalid input. The color of the entry boxes denote its status to advise you on your next course of action:","h2")
+        text.insert(END, "\n Under menu 1. The Sensor ID is a unique string associated with each sensor node, and MUST CORRESPOND with the sensor ID you have set on the ground. You may use the entry boxes to enter the sensor information, after you place the cursor on the grid and place a node. The entry boxes only accept integer inputs, and will not proceed upon an invalid input. Repeated entries are also not allowed.\n The color of the entry boxes denote its status to advise you on your next course of action:","h2")
         text.insert(END, "\n\n\tRED:\t\t\t" + "Needs correction to text field", "h_red")
         text.insert(END, "\n\tGREEN:\t\t\t" + "Valid Entry, node already placed here", "h_green")
         text.insert(END, "\n\tPURPLE:\t\t\t" + "No Entry yet, node can be placed here", "h_purple")

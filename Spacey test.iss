@@ -18,9 +18,9 @@ DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=C:\Users\Looi Kai Wen\Desktop\Spacey Code\Spacey API
-OutputBaseFilename=Spacey API Trial test
-SetupIconFile=C:\Users\Looi Kai Wen\Desktop\Spacey Code\Spacey API\images\assets\spacey_icon.ico
+OutputDir=C:\Users\Looi Kai Wen\Desktop\Spacey_Code\spacey\Spacey API
+OutputBaseFilename=Spacey API Trial 
+SetupIconFile=C:\Users\Looi Kai Wen\Desktop\Spacey_Code\spacey\Spacey API\images\assets\spacey_icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -52,7 +52,7 @@ Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
 Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
 [Files]
-Source: "C:\Users\Looi Kai Wen\Desktop\Spacey Code\Spacey API\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Looi Kai Wen\Desktop\Spacey_Code\spacey\Spacey API\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

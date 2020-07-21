@@ -46,6 +46,7 @@ class RestaurantSpace(object):
         index = self.tuple_to_str(space, level, id)
         if index in self.tuple_idx.keys():
             return False
+
         if (x,y) in self.dict_sensor_motes:
             idx = (self.dict_sensor_motes[(x,y)]).idx
             
@@ -126,7 +127,7 @@ class RestaurantSpace(object):
         cfg.myCanvas.rec_obj.clear()
         if cfg.error is not None:
             cfg.error.updateText("Deleted all Nodes", "orange")
-        cfg.prev_node = None
+        cfg.prev_node_idx = None
 
     def unpackFromJson(self):
         for idx in self.idxList:
