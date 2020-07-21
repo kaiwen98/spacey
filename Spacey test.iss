@@ -57,7 +57,6 @@ Source: "C:\Users\Looi Kai Wen\Desktop\Spacey_Code\spacey\Spacey API\*"; DestDir
 
 [Icons]
 Name: "{userdesktop}\Spacey Node Manager"; Filename: "{app}\{#NodeManagerDir}"; WorkingDir: "{app}\Node Manager\dist"; Tasks: desktopicon;IconFilename: "{app}\{#MyIcoName}"
-Name: "{userdesktop}\Spacey Image Processor"; Filename: "{app}\{#ImageProcessorDir}"; WorkingDir: "{app}\Image Processor\dist"; Tasks: desktopicon;IconFilename: "{app}\{#MyIcoName}"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
