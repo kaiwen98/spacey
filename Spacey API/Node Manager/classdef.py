@@ -448,10 +448,13 @@ class menu_devinfo(object):
 
 
     def restorePreviousEntries(self, i):
-        
         if self.hold[i].get():  # If the user selects radio button 
+            
             if self.entryList[i].get() is "":   # If the user wants to recall and hold previous entry
+                if i == 2: self.prevEntry[i] += 1
                 self.text[i].set(self.prevEntry[i])
+                
+
             else:   # If the user typed a value to hold to 
                 self.text[i].set(self.entryList[i].get())
             self.entryList[i].config(state = DISABLED, disabledbackground= "sky blue")
@@ -478,7 +481,10 @@ class menu_devinfo(object):
         
         emptyCount = []
         # Performs a check throughout the inputs of all 3 entries
+
+     
         for i in range(len(self.entryList)):
+      
             if not len(self.entryList[i].get()): 
                 self.error_text.insert(i, ("<Entry [{num}]>: Empty".format(num = self.titleName[i]), "yellow"))
                 self.entryList[i].config(bg = "red")
@@ -486,7 +492,6 @@ class menu_devinfo(object):
             elif (self.entryList[i].get()).isnumeric():
                 if int(self.entryList[i].get()) >=0:
                     self.nodeEntry[i] = int(self.entryList[i].get())
-                    self.prevEntry[i] = self.nodeEntry[i]
                     self.entryList[i].config(bg = "lawn green")
                     self.needCorrect[i] = False
                     self.error_text.insert(i,None)
@@ -533,6 +538,13 @@ class menu_devinfo(object):
             self.keyEntry = self.entryList[0]
             self.keyEntry.focus_set()
             return
+
+        for i in range(3):
+            self.prevEntry[i] = self.nodeEntry[i]
+            if i == 2  and self.hold[i].get(): 
+                self.prevEntry[i] += 1
+                self.text[i].set(self.prevEntry[i])
+                
         # Deposit sensor node on map
         cfg.deposit_flag = True
         self.callBack[0]()
@@ -656,7 +668,7 @@ class menu_help(object):
         text.insert(END, "\n\tGREEN:\t\t\t" + "Valid Entry, node already placed here", "h_green")
         text.insert(END, "\n\tPURPLE:\t\t\t" + "No Entry yet, node can be placed here", "h_purple")
         text.insert(END, "\n\tYELLOW:\t\t\t" + "Awaiting Entry, fill in text field", "h_yellow")
-        text.insert(END, "\n\nYou can use the \"hold\" radio button to set your own value/freeze previous value, in case you are placing nodes with the same cluster id/ level.\n\nDo note that you are not allowed to enter the same combination more than once. As such, you should use the hold buttons to your advantage and spam away if you are only here to try the UI. Our interface is very keyboard-friendly! ","h2")
+        text.insert(END, "\n\nYou can use the \"hold\" radio button to set your own value/freeze previous value, in case you are placing nodes with the same cluster id/ level. For the last entry box, the hold button allows you to set incremental values without typing it yourself!\n\nDo note that you are not allowed to enter the same combination more than once. As such, you should use the hold buttons to your advantage and spam away if you are only here to try the UI. Our interface is very keyboard-friendly! ","h2")
         text.insert(END, "\n\nStatus Bar", "h3a")
         text.insert(END, "\nUnder menu 1. You may use it to track the node information on an existing node.", "h2")
 
@@ -667,7 +679,7 @@ class menu_help(object):
         text.insert(END, "\nUnder menu 2. You may adjust the node size, grid partition size and floor plan size via the top menu 2 controls. You can also move the floorplan linearly. This is to allow you to find the best graphical configuration where the grid points best coincide with the seats on your floor plan to place the sensor nodes. The configuration you view here will be reflected on the output graphic.", "h2")
         
         text.insert(END, "\nJSON Viewer", "h3a")
-        text.insert(END, "\nUnder menu 2. You can save your work into a JSON file by clicking the \"Upload JSON\" button. Conversely, you can load a previous save file by clicking the \"Download JSON\" button. You can use the viewer below to check the JSON file contents for debugging purposes.", "h2")
+        text.insert(END, "\nUnder menu 2. You can save your work into a JSON file by clicking the \"Upload JSON [Local]\" button. Conversely, you can load a previous save file by clicking the \"Download JSON [Local]\" button. You can use the viewer below to check the JSON file contents for debugging purposes.", "h2")
         text.insert(END, "\nDB Operations", "h3a")
         text.insert(END, "\nUnder menu 2. You can save your work to, or download an existing work from a running Redis Database!\n\n Users will need to register a new account, or use an existing account: \n\n\tUsername: NUS\n\tPassword: password\n\nYou can create a new restaurant under the account, then upload the restaurant information to the account on the cloud database. Once done, you can begin operation once you configured your sensor network properly!", "h2")
         
@@ -689,7 +701,7 @@ class menu_help(object):
 class menu_debug(object):
     def __init__(self, frame, width, height):
         #cfg.error_font = font.Font(family = "Times", font = "3", weight =  "BOLD")
-        cfg.error_font = font.Font(family="Courier New", size=10, weight = "bold")
+        cfg.error_font = font.Font(family="Courier New", size=8, weight = "bold")
         self.frame = frame
         self.labelFrame = LabelFrame(self.frame, text = "Debugger", bg = "gray55", height = 300, width = 550)
         self.labelFrame.pack(fill = X, padx = cfg.padx, pady = cfg.pady, side = TOP)
@@ -699,7 +711,7 @@ class menu_debug(object):
         self.xscroll = Scrollbar(self.labelFrame, orient = "horizontal", command = self.obj.xview)
 
         self.yscroll.pack(padx = 10, pady = 10, side = LEFT, fill = Y)
-        self.xscroll.pack(padx = 10, pady = 10, side = BOTTOM, fill = X)
+        self.xscroll.pack(padx = 0, pady = 10, side = TOP, fill = X)
         self.obj.pack(ipadx = 30, ipady = 30, side = LEFT, fill = Y)
         
 
@@ -709,11 +721,14 @@ class menu_debug(object):
 
     def updateText(self, _text, _bg):
         cfg.updateTextDone = False
-        self.obj.insert(END, _text)
-        self.obj.itemconfig(END, foreground = _bg)
-        self.obj.see("end")
+        self.obj.insert(0, _text)
+        self.obj.itemconfig(0, foreground = _bg)
+        #self.obj.insert(END, " ")
+        #self.obj.see(0)
         cfg.updateTextDone = False
+        cfg.root.update_idletasks()
         #self.obj.update()
+        return True
 
 
 class img_xyshift(object):
@@ -949,16 +964,22 @@ class json_viewer(object):
         self.obj.see("end")
 
     def downloadDB(self): 
+        while True: 
+            if cfg.error.updateText("Downloading, please wait...", "yellow") == True: break
+        
         if self.dbselect.get() in ["No Database Selected", "No restaurants stored"]: return
         cfg.local_disk = False
         cfg.session_name = self.dbselect.get()
         if cfg.res.size: cfg.res.deleteAllNodes()
         if cfg.image_flag: cfg.myCanvas.deleteImage()
         str1 = cfg.decompile(cfg.json_folder, local_disk  = False)
+        cfg.error.updateText("JSON Updated successfully", "pale green")
         self.updateText(str1+"\n", "p")
         self.updateText(">>>"+"+"*15+"\n", "b")
 
     def upload(self):
+        cfg.error.updateText("Uploading, please wait...", "yellow")
+        time.sleep(2)
         if cfg.res.size == 0:
             cfg.error.updateText("[ERR] Need at least 1 node", "red")
             return
@@ -980,6 +1001,7 @@ class json_viewer(object):
             cfg.error.updateText("[ERR] Need at least 1 node", "red")
             return
         if self.dbselect.get() not in ["No Database Selected", "No restaurants stored", "Enter New Restaurant"]: 
+            cfg.error.updateText("Uploading to DB, please wait", "yellow")
             self.uploadDB()
             return
         self.helpMenu = Toplevel(root)
@@ -1104,6 +1126,8 @@ class json_viewer(object):
         #encrypted_user_acc = 
 
     def uploadDB(self, event = None):
+        while True: 
+            if cfg.error.updateText("Uploading, please wait...", "yellow") == True: break
         if self.session_name_set is False:
             if self.text_input.get() is "": return
             cfg.session_name = self.text_input.get()

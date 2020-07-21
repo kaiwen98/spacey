@@ -88,11 +88,11 @@ def setup():
    
 
     ### Creation of GUI map ###
-    min_screenwidth = 1366
-    min_screenheight = 768
-    cfg.canvas_w, cfg.canvas_h = 768, 768
+    min_screenwidth = 1280
+    min_screenheight = 720
+    cfg.canvas_w, cfg.canvas_h = 720, 720
     #cfg.canvas_w, cfg.canvas_h = 1200, 1000
-    w, h = 1366/8*5, 1000
+    w, h = 1280/8*5, 1000
     
     frame_canvas = LabelFrame(cfg.root, text = "Map", width = cfg.canvas_w, height = cfg.canvas_h, bg = "gray40") # Set frame to embed canvas
     #frame_canvas.pack(padx = 20, pady = 20, side = RIGHT) # Align right with padding

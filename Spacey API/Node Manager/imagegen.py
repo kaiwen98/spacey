@@ -29,7 +29,7 @@ def imagegen():
         datas = floorplan.getdata()
         newData = []
         for item in datas:
-            if item[3] > 100:
+            if item[3] > 50:
                 #newData.append((51,82,133,255))
                 newData.append((50,50,50,255))
             else:

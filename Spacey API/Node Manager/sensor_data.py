@@ -42,21 +42,31 @@ class RestaurantSpace(object):
         
 
     def registerNode(self,x,y,space,level,id, obj):
+        idx = 0
         index = self.tuple_to_str(space, level, id)
         if index in self.tuple_idx.keys():
             return False
-        newMote = sensor_mote_data(self)
-        self.tuple_idx[index] = newMote.idx
-        if newMote.idx not in self.idxList: self.idxList.append(newMote.idx)
-        self.x_coord[newMote.idx] = x
-        self.y_coord[newMote.idx] = y
-        self.space_id[newMote.idx] = space
-        self.device_cluster_level[newMote.idx] = level
-        self.device_cluster_id[newMote.idx] = id 
-        self.occupancy[newMote.idx] = 0
-        cfg.myCanvas.placeNode(newMote.idx, x, y)
-        self.dict_sensor_motes[(x,y)] = newMote
-        self.size += 1
+        if (x,y) in self.dict_sensor_motes:
+            idx = (self.dict_sensor_motes[(x,y)]).idx
+            
+        else:
+            newMote = sensor_mote_data(self)
+            self.dict_sensor_motes[(x,y)] = newMote
+            self.size += 1
+            idx = newMote.idx
+            cfg.myCanvas.placeNode(idx, x, y)
+
+        self.tuple_idx[index] = idx
+        if idx not in self.idxList: self.idxList.append(idx)
+        self.x_coord[idx] = x
+        self.y_coord[idx] = y
+        self.space_id[idx] = space
+        self.device_cluster_level[idx] = level
+        self.device_cluster_id[idx] = id 
+        self.occupancy[idx] = 0
+        
+        
+        
         cfg.error.updateText("Node inserted at x:{x} and y:{y}".format(x = cfg.x, y = cfg.y), "deep pink")
         return True
     
