@@ -23,7 +23,7 @@ import time
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 import hashlib
-
+from testconn import internet_on
 
 
 class myCanvasObject(object):
@@ -607,7 +607,7 @@ class menu_help(object):
 
         text.insert(END, "Info:", "h1")
         text.insert(END, "\nThis Node Manager allows network administrators to synchronise the location of the sensor motes with the graphic to be generated, as well as the communication of location-specific information between the sensor motes and the database."+ 
-                        "\n\nThe interface controls are easy to use and intuitive, allowing the user to quickly form a composition of the sensor mote network without much delay. You can then use Spacey Image Processor to generate the graphic! \n\nThe Node Manager comes embedded with an image processing functionality, which edits your floorplan image down to size and color requirement to fit on the canvas.", "h2")
+                        "\n\nThe interface controls are easy to use and intuitive, allowing the user to quickly form a composition of the sensor mote network without much delay. You can then use Spacey Image Processor to generate the graphic! \n\nThe Node Manager comes embedded with an image processing functionality, which edits your floorplan image down to size and color requirement to fit on the canvas. \n\nSpacey Node Manager is now integrated with RedisDB. You can now create floor plans and save them in the cloud! You can also choose to save your work on your local drive.", "h2")
 
         text.insert(END, "\n\nControls:", "h1")
         text.insert(END, "\n\t>> Quit from Node Manager\t\t\t\t", "h3a")
@@ -647,7 +647,7 @@ class menu_help(object):
         text.insert(END, "\n\tGREEN:\t\t\t" + "Valid Entry, node already placed here", "h_green")
         text.insert(END, "\n\tPURPLE:\t\t\t" + "No Entry yet, node can be placed here", "h_purple")
         text.insert(END, "\n\tYELLOW:\t\t\t" + "Awaiting Entry, fill in text field", "h_yellow")
-        text.insert(END, "\n\nYou can use the \"hold\" radio button to set your own value/freeze previous value, in case you are placing nodes with the same cluster id/ level.","h2")
+        text.insert(END, "\n\nYou can use the \"hold\" radio button to set your own value/freeze previous value, in case you are placing nodes with the same cluster id/ level.\n\nDo note that you are not allowed to enter the same combination more than once. As such, you should use the hold buttons to your advantage and spam away if you are only here to try the UI. Our interface is very keyboard-friendly! ","h2")
         text.insert(END, "\n\nStatus Bar", "h3a")
         text.insert(END, "\nUnder menu 1. You may use it to track the node information on an existing node.", "h2")
 
@@ -659,7 +659,8 @@ class menu_help(object):
         
         text.insert(END, "\nJSON Viewer", "h3a")
         text.insert(END, "\nUnder menu 2. You can save your work into a JSON file by clicking the \"Upload JSON\" button. Conversely, you can load a previous save file by clicking the \"Download JSON\" button. You can use the viewer below to check the JSON file contents for debugging purposes.", "h2")
-
+        text.insert(END, "\nDB Operations", "h3a")
+        text.insert(END, "\nUnder menu 2. You can save your work to, or download an existing work from a running Redis Database!\n\n Users will need to register a new account, or use an existing account: \n\n\tUsername: NUS\n\tPassword: password\n\nYou can create a new restaurant under the account, then upload the restaurant information to the account on the cloud database. Once done, you can begin operation once you configured your sensor network properly!", "h2")
         
         
         text.configure(state = "disabled")
@@ -827,9 +828,9 @@ class json_viewer(object):
         self.frame1 = Frame(self.labelFrame, bg = "gray55")
         self.frame1.pack(fill = X, side = TOP)
 
-        self.butt1 = Button(self.frame2, text = "Import JSON", command = self.download, width = 550)
+        self.butt1 = Button(self.frame2, text = "Import JSON [Local]", command = self.download, width = 550)
         self.butt1.pack()
-        self.butt = Button(self.frame2, text = "Export JSON", command = self.upload, width = 550)
+        self.butt = Button(self.frame2, text = "Export JSON [Local]", command = self.upload, width = 550)
         self.butt.pack()
         self.dbframe = LabelFrame(self.frame2, text = "RedisDB Operations: ", bg = "gray55")
         self.dbframe.pack(expand = True, fill = X, ipadx = 2, ipady = 2)
@@ -868,10 +869,16 @@ class json_viewer(object):
         self.obj.insert(END, "Wait for JSON to be \nuploaded...\n\n", "b")
 
     def refreshDB(self):
+        if not internet_on():
+            cfg.error.updateText("[DB] No Network... cannot connect to database", "red")
+            return
+
         cfg.error.updateText("[DB] Connecting...", "yellow")
+        
         err = cfg.database.timeout()
-        if err == 0: cfg.error.updateText("[DB] Time out... cannot connect to database", "red")
+        if err == 1: cfg.error.updateText("[DB] No Network... cannot connect to database", "red")
         else:
+
             cfg.error.updateText("[DB] Connected to database", "pale green")
             cfg.db_options.clear()
             #cfg.db_options += cfg.database.get_registered_restaurants()
@@ -1052,17 +1059,19 @@ class json_viewer(object):
         """
         hashvalue = hashlib.sha256(user_acc.encode())
         encrypted_key = hashvalue.hexdigest()
-        
-        if not cfg.database.login_user(name, encrypted_key): 
-            self.text_input_uid.set("Incorrect login details. Try again.")
+        err = cfg.database.login_user(name, encrypted_key)
+        if err == 0: 
+            self.text_input_uid.set("[DB] Incorrect login details. Try again.")
             self.canIclear = True
             self.text[0].config(bg = "red")
             self.text[1].config(bg = "red")
-        else:
+        elif err == 1:
             cfg.userid = name
-            cfg.error.updateText("Welcome: {}".format(cfg.userid), "pale green")
+            cfg.error.updateText("[DB] Welcome: {}".format(cfg.userid), "pale green")
             self.helpMenu.destroy()
             self.refresh()
+        else:
+            cfg.error.updateText("[DB] Connection Timed out, try again", "red")
  
 
     def register(self): 
@@ -1070,22 +1079,18 @@ class json_viewer(object):
         user_acc = self.text_input_uid.get() + "_" + self.text_input_pw.get()
         hashvalue = hashlib.sha256(user_acc.encode())
         encrypted_key = hashvalue.hexdigest()
-        """
-        digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
-        digest.update(bytes(user_acc, 'utf-8'))
-        
-        encrypted_key = bytes(str(digest.finalize()), 'utf-8')
-        """
-        if not cfg.database.register_user(name, encrypted_key):
-            self.text_input_uid.set("Username already taken.")
+        err = cfg.database.register_user(name, encrypted_key)
+        if err == 0:
+            self.text_input_uid.set("[DB] Username already taken.")
             self.canIclear = True
             self.text[0].config(bg = "red")
-        else:
+        elif err == 1:
             cfg.userid = name
-            cfg.error.updateText("Account created: {}".format(cfg.userid), "pale green")
+            cfg.error.updateText("[DB] Account created: {}".format(cfg.userid), "pale green")
             self.helpMenu.destroy()
             self.refresh()
-
+        else:
+            cfg.error.updateText("[DB] Connection Timed out, try again", "red")
 
         #encrypted_user_acc = 
 

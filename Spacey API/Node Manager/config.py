@@ -20,12 +20,16 @@ import base64
 
 
 # Need to choose depending on running from exe or py. Should point to /Spacey API
-#root = dir(dir(dir(sys.executable)))
-_root = dir(dir(__file__)) 
+_root = dir(dir(dir(sys.executable)))
+
+#_root = dir(dir(os.path.abspath(__file__))) 
 
 # To extract database interface functions
 sys.path.append(join(_root, "Redis"))
+with open("text.txt", "w") as outfile:
+    outfile.write("from_redis: {}".format(_root))
 import redisDB
+
 # Relevant file directories
 
 floorplan_folder_input = os.path.join(_root, "floorplan_images", "input floorplan")
@@ -49,7 +53,7 @@ private_key_folder = os.path.join(_root, "private key")
 
 remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
 password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
-port = '13969'
+port = '13969' #9
 """
 remote_host = 'localhost'
 password = None

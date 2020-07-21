@@ -177,9 +177,6 @@ def setup():
 def destroy(event, root):
     root.destroy()
 
-
 def main():
     setup()
     
-
-main()
