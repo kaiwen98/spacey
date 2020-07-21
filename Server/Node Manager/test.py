@@ -27,7 +27,7 @@ if __name__ == '__main__':
     print('Done')
     p.join()
 """
-
+"""
 import time
 from multiprocessing import Process
  
@@ -55,3 +55,36 @@ if __name__ == '__main__':
     print("terminate process")
     if p.is_alive():
         p.terminate()
+
+
+"""
+
+from multiprocessing import Pool
+import time
+def myfunction(m):
+    while(true):
+
+        time.sleep(5)
+
+        
+if __name__ == '__main__':
+    my_pool = Pool(processes=4) # start 4 worker processes
+    result = my_pool.apply_async(myfunction, (10,)) # evaluate "f(10)" asynchronously in a single process
+    print (result.get(timeout=1))
+
+    print (my_pool.map(myfunction, range(10))) # prints "[0, 1, 4,..., 81]"
+    my_it = my_pool.imap(myfunction, range(10))
+    print (my_it.next() ) # prints "0"
+    print (my_it.next() ) # prints "1"
+    print (my_it.next(timeout=1) ) # prints "4" unless your computer is *very* slow
+    result = my_pool.apply_async(time.sleep, (10,))
+    print (result.get(timeout=1) ) # raises multiprocessing.TimeoutError
+    q = ""
+    while q != 'q':
+       
+        q = input("Press x to randomize")
+        if q  == 'x':
+
+                   
+        elif q == 'q':
+

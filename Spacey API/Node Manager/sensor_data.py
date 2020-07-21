@@ -42,12 +42,9 @@ class RestaurantSpace(object):
         
 
     def registerNode(self,x,y,space,level,id, obj):
-        
-        
         index = self.tuple_to_str(space, level, id)
         if index in self.tuple_idx.keys():
-            cfg.error.updateText("[KeyError] Cannot hash with same key", "red")
-            return
+            return False
         newMote = sensor_mote_data(self)
         self.tuple_idx[index] = newMote.idx
         if newMote.idx not in self.idxList: self.idxList.append(newMote.idx)
@@ -61,14 +58,7 @@ class RestaurantSpace(object):
         self.dict_sensor_motes[(x,y)] = newMote
         self.size += 1
         cfg.error.updateText("Node inserted at x:{x} and y:{y}".format(x = cfg.x, y = cfg.y), "deep pink")
-        """
-        print("added")
-        print(len(self.device_cluster_id))
-        print(len(self.device_cluster_level))
-        print(len(self.space_id))
-        print(len(self.x_coord))
-        print(len(self.y_coord))
-        """
+        return True
     
     def deleteNode(self,x,y):
         idx = self.dict_sensor_motes[(x,y)].idx
@@ -105,6 +95,12 @@ class RestaurantSpace(object):
         print(self.idxList)
 
     def deleteAllNodes(self):
+        if(self.size == 0):
+            return
+        for idx in self.idxList:
+            x = self.x_coord[idx]
+            y = self.y_coord[idx]
+            del self.dict_sensor_motes[(x,y)]
         self.x_coord.clear()
         self.y_coord.clear()
         self.space_id.clear()

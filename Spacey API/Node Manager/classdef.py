@@ -330,7 +330,8 @@ class CursorNode(object):
             if cfg.prev_node_idx is not None: cfg.myCanvas.canvas.itemconfig(cfg.myCanvas.rec_obj[cfg.prev_node_idx], fill = "blue")
             cfg.deposit_flag = False
             self.callBack[0]("No node information") # Print text on status label
-            self.callBack[1]("MediumPurple1")
+            if cfg.err_inval_input: self.callBack[1]("MediumPurple1")
+            err_inval_input = False
             
 
 class menu_upload(object):
@@ -354,6 +355,7 @@ class menu_upload(object):
     def floorplanclear(self):
         cfg.myCanvas.deleteImage()
         cfg.res.deleteAllNodes()
+        
         
 
 class map_refresh(object):
@@ -497,7 +499,7 @@ class menu_devinfo(object):
                 self.error_text.insert(i,("<Entry [{num}]>: Entry must be a positive number".format(num = self.titleName[i]), "orange"))
                 self.entryList[i].config(bg = "red")
                 self.needCorrect[i] = True
-        
+    
             
 
         numErrors = 0
@@ -523,13 +525,20 @@ class menu_devinfo(object):
                     flag = False
 
         x = self.nodeEntry
-        
+
+        if cfg.res.registerNode(cfg.x, cfg.y, x[0], x[1], x[2], cfg.node) is False:
+            cfg.err_inval_input = True
+            self.highlightDeviceInfo("red")
+            cfg.error.updateText("[KeyError] Cannot hash with same key", "red")
+            self.keyEntry = self.entryList[0]
+            self.keyEntry.focus_set()
+            return
         # Deposit sensor node on map
         cfg.deposit_flag = True
         self.callBack[0]()
 
         # Save sensor detail locally in previously declared class
-        cfg.res.registerNode(cfg.x, cfg.y, x[0], x[1], x[2], cfg.node)
+
         
         cfg.res.printMoteAt(cfg.x, cfg.y)
 
@@ -542,7 +551,7 @@ class menu_devinfo(object):
 class menu_status(object):
     def __init__(self, frame, width, height):
         self.frame = frame
-        self.labelFrame = LabelFrame(self.frame, text = "Status bar", bg = "gray55", height = 170+20, width = 550)
+        self.labelFrame = LabelFrame(self.frame, text = "Status bar", bg = "gray55", height = 100, width = 550)
         self.labelFrame.pack(fill = X, padx = cfg.padx, pady = cfg.pady, side = TOP)
         self.labelFrame.pack_propagate(0)
         self.obj = Label(self.labelFrame,text = "", bd = 100, height = 300, width = 550)
@@ -724,14 +733,14 @@ class img_xyshift(object):
         self.framex.pack(side = TOP, fill = X)
         self.framey.pack(side = TOP, fill = X)
 
-        self.but1 = Button(self.framex, text = "Left", command = self.left, width = 3)
+        self.but1 = Button(self.framex, text = "Left", command = self.left, width = 2)
         self.but1.pack(ipadx = 10, ipady = 10, side = LEFT)
-        self.but2 = Button(self.framex, text = "Right", command = self.right, width = 3)
+        self.but2 = Button(self.framex, text = "Right", command = self.right, width = 2)
         self.but2.pack(ipadx = 10, ipady = 10, side = LEFT)
 
-        self.but1 = Button(self.framey, text = "Up", command = self.up, width = 3)
+        self.but1 = Button(self.framey, text = "Up", command = self.up, width = 2)
         self.but1.pack(ipadx = 10, ipady = 10, side = LEFT)
-        self.but2 = Button(self.framey, text = "Down", command = self.down, width = 3)
+        self.but2 = Button(self.framey, text = "Down", command = self.down, width = 2)
         self.but2.pack(ipadx = 10, ipady = 10, side = LEFT)
 
         self.framex2 = Frame(self.parentFrame2, height = 70)
@@ -739,9 +748,9 @@ class img_xyshift(object):
         self.framex2.pack(side = TOP, fill = X)
         self.framey2.pack(side = TOP, fill = X)  
 
-        self.but1 = Button(self.framex2, text = "Scale +", command = self.s_up, width = 3)
+        self.but1 = Button(self.framex2, text = "Scale +", command = self.s_up, width = 2)
         self.but1.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
-        self.but2 = Button(self.framey2, text = "Scale -", command = self.s_down, width = 3)
+        self.but2 = Button(self.framey2, text = "Scale -", command = self.s_down, width = 2)
         self.but2.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
 
         self.factor = factor

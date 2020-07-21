@@ -73,7 +73,8 @@ def setup():
     #cfg.root.geometry('1280x720')  #size of w
     cfg.root.update_idletasks()
     factor = 1
-    cfg.root.geometry(str(int(1366*factor)) + "x" + str(int(768*factor)))  #size of w
+    #cfg.root.geometry(str(int(1366*factor)) + "x" + str(int(768*factor)))  #size of w
+    cfg.root.geometry(str(int(1280*factor)) + "x" + str(int(720*factor)))  #size of w
     cfg.root.resizable(0, 0)
     
 

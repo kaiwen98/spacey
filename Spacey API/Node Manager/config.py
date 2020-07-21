@@ -14,13 +14,24 @@ import config as cfg
 from sensor_data import *
 import imgpro
 import os
-from os.path import dirname as dir, splitext, basename, join
+from os.path import dirname as dir, splitext, basename, join, abspath
 import sys
 import base64
-
+from platform import system as platf
 
 # Need to choose depending on running from exe or py. Should point to /Spacey API
-_root = dir(dir(dir(sys.executable)))
+
+parentdir = basename(dir(abspath(__file__)))
+if (parentdir == "Node Manager"):
+    _root = dir(dir(abspath(__file__)))
+else:
+    if platf() == 'Linux':
+        _root = dir(dir(dir(abspath(__file__))))
+
+    elif platf() == 'Windows':
+        _root = dir(dir(dir(sys.executable)))
+   
+
 
 #_root = dir(dir(os.path.abspath(__file__))) 
 
@@ -81,6 +92,7 @@ prev_node_idx = None
 step = 5 #dist between each grid line
 toggle = 0 #toggle btw entry[left] or canvas
 initflag = 0 #detect correct user input
+err_inval_input = True #Allow red color on entry boxes when user rehashes stored key
 error = None #error obj
 error_font = None #error font
 json_font = None #json font
