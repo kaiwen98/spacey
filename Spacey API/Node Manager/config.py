@@ -65,9 +65,10 @@ private_key_folder = os.path.join(_root, "private key")
 remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
 password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
 port = '13969' #9
+
 """
 remote_host = 'localhost'
-password = None
+password = 'kaiwen'
 port = '6379'
 """
 

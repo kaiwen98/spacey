@@ -163,6 +163,7 @@ class ResServer(object):
 
             cfg.database.client.hmset(full_name_occupancy, new_occupancy)
         mutex.release()
+        time.sleep(5)
 
 q = None
 
@@ -177,14 +178,14 @@ def main():
 
 
     p.start()
-
+    
     _q = ""
     while _q != 'q':
         _q = input("input")
         print("this is ", str(_q))
         if _q  != "x":
             if mutex.acquire():
-                x.randomize()
+                q.start()
 
 
 
