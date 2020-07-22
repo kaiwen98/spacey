@@ -15,7 +15,7 @@ from os.path import dirname as dir, splitext, basename, join
 import sys
 import base64
 import res_info as res
-from multiprocessing import Process, Pipe
+from multiprocessing import Process, Pipe, Queue
 import threading
 import random
 import time
@@ -50,6 +50,8 @@ password = None
 port = '6379'
 """
 mutex = threading.Lock()
+mutex1 = threading.Lock()
+r = Queue()
 
 available_restaurants_name = None
 nodeOn = None
@@ -127,8 +129,10 @@ class ResServer(object):
         client = redis.Redis(host=self.remote_host, port=self.port,
                              db=0, password=self.password, decode_responses=True)
         while(True):
-            mutex.acquire()
+            
             for i in range(len(self.available_restaurants_name)):
+                if(r.empty() is False and r.get() == '1'):
+                    self.randomize()
 
                 print("checking...", self.available_restaurants_name[i])
 
@@ -142,13 +146,13 @@ class ResServer(object):
                 if self.restaurants[i].occupancy != occupancy:
                     imageupdate(self.restaurants[i], occupancy)
                 # You can change update frequency from here. The scan is asynchronous
-            mutex.release()
-            time.sleep(5)
+                
+                time.sleep(1)
+ 
 
 
     def randomize(self):
-        global mutex
-
+        global mutex1
         print("hi")
         for i in range(len(self.available_restaurants_name)):
             print(self.available_restaurants_name[i])
@@ -162,32 +166,26 @@ class ResServer(object):
                 new_occupancy[i] = random.randint(0, 1)
 
             cfg.database.client.hmset(full_name_occupancy, new_occupancy)
-        mutex.release()
-        time.sleep(5)
 
 q = None
 
 def main():
-    global mutex, q
+    global mutex, mutex1, q
     userID = 'NUS'
     cfg.database.timeout()
     x = ResServer(userID)
     
     p = Process(target= x.scan_update)
     q = Process(target = x.randomize)
-
-
     p.start()
-    
+    q.start()
     _q = ""
+    
     while _q != 'q':
         _q = input("input")
         print("this is ", str(_q))
-        if _q  != "x":
-            if mutex.acquire():
-                q.start()
-
-
+        if _q == 'x':
+            r.put("1")
 
 if __name__ == '__main__':
     main()
