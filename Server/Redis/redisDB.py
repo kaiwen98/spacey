@@ -182,24 +182,27 @@ class redis_database(object):
 
 
 if __name__ == "__main__":
-    #remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
-    #password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
-    password = None
-    #port = '13969'
-    remote_host = 'localhost'
-    port = '6379'
+    remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
+    password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
+    #password = None
+    port = '13969'
+    #remote_host = 'localhost'
+    #port = '6379'
     #port = '3'
     r = redis_database(root,remote_host, port, password)
     r.timeout()
     
     r.user = 'NUS'
     #r.clearUser('Macdonalds')
+    print(r.client.keys())
     print(r.client.lindex("Macdonalds_registered_restaurants", 0))
     print(r.client.keys())
     print(r.client.hgetall('users_private_key'))
     print(r.client.smembers('registered_users'))
     print(r.get_registered_restaurants())
     print(r.get_all_restaurant_from_user('NUS'))
+    print(r.client.hgetall('users_info'))
+    print(r.client.hgetall('NUS_Deck_occupancy'))
     #r.client.flushdb()
     #print(r.client.smembers('registered_users'))
 

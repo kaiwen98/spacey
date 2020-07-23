@@ -15,7 +15,6 @@ from os.path import dirname as dir, splitext, basename, join
 import sys
 import base64
 import res_info as res
-from multiprocessing import Process, Pipe, Queue
 import threading
 import random
 import time
@@ -25,6 +24,7 @@ import redis
 # Need to choose depending on running from exe or py. Should point to /Server
 # root = dir(dir(dir(sys.executable)))
 _root = dir(dir(__file__))
+print(_root)
 
 # To extract database interface functions
 sys.path.append(join(_root, "Redis"))
@@ -49,9 +49,7 @@ remote_host = 'localhost'
 password = None
 port = '6379'
 """
-mutex = threading.Lock()
-mutex1 = threading.Lock()
-r = Queue()
+
 
 available_restaurants_name = None
 nodeOn = None
@@ -107,9 +105,7 @@ class ResServer(object):
             full_name = self.userID + "_" + i
             full_name_occupancy = full_name + "_occupancy"
             full_name_coord = full_name + "_coord"
-            ######################
             occupancy = cfg.database.client.hgetall(full_name_occupancy)
-            ######################
             coord = cfg.database.client.hgetall(full_name_coord)
             cfg.json_deserialize_image(
                 coord["processed_img"], cfg.get_output_graphic_path(full_name))
@@ -119,44 +115,42 @@ class ResServer(object):
             print(occupancy)
             print(coord)
 
-            self.restaurants[full_name] = res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name))
-            # self.restaurants.append(res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len))
-            print("ok!")
+            # self.restaurants.append(res.restaurant_info(
+            #     full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len))
+            self.restaurants[i] = res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len)
+            print("ok!!!!!!!!!!!!!!")
+            print(self.restaurants)
 
     def scan_update(self):
         """
         print(self.userID)
         """
-        global mutex
+
         client = redis.Redis(host=self.remote_host, port=self.port,
                              db=0, password=self.password, decode_responses=True)
-        while(True):
             
-            for i in range(len(self.available_restaurants_name)):
-                """
-                if(r.empty() is False and r.get() == '1'):
-                    self.randomize()"""
+        for i in range(len(self.available_restaurants_name)):
+            print("checking...", self.available_restaurants_name[i])
 
-                print("checking...", self.available_restaurants_name[i])
+            occupancy = {}
+            full_name = self.userID + "_" + \
+                self.available_restaurants_name[i]
+            full_name_occupancy = full_name + "_occupancy"
 
-                occupancy = {}
-                full_name = self.userID + "_" + self.available_restaurants_name[i]
-                full_name_occupancy = full_name + "_occupancy"
-
-                # occupancy = cfg.database.client.hgetall(full_name_occupancy)
-                #GET MOST UPDATED OCCUPANCY
-                occupancy = client.hgetall(full_name_occupancy)
-
-                if self.restaurants[i].occupancy != occupancy:
-                    imageupdate(self.restaurants[i], occupancy)
-                # You can change update frequency from here. The scan is asynchronous
-                
-                time.sleep(1)
+            # occupancy = cfg.database.client.hgetall(full_name_occupancy)
+            occupancy = client.hgetall(full_name_occupancy)
+            if self.restaurants[i].occupancy != occupancy:
+                imageupdate(self.restaurants[i], occupancy)
+            # You can change update frequency from here. The scan is asynchronous
+    def get_info(self):    
+        client = redis.Redis(host=self.remote_host, port=self.port,
+                             db=0, password=self.password, decode_responses=True)        
+        return self.restaurants
  
 
 
     def randomize(self):
-        global mutex1
+    
         print("hi")
         for i in range(len(self.available_restaurants_name)):
             print(self.available_restaurants_name[i])
@@ -171,30 +165,14 @@ class ResServer(object):
 
             cfg.database.client.hmset(full_name_occupancy, new_occupancy)
 
-q = None
+
 
 def main():
-    global mutex, mutex1, q
-    # connect to DB
     userID = 'NUS'
     cfg.database.timeout()
-
-
-    # initialize
     x = ResServer(userID)
     
-    p = Process(target= x.scan_update)
-    q = Process(target = x.randomize)
-    p.start()
-    q.start()
-    _q = ""
-    
-    while _q != 'q':
-        _q = input("input")
-        print("this is ", str(_q))
-        if _q == 'x':
-            r.put("1")
-
+  
 if __name__ == '__main__':
     main()
 
