@@ -43,7 +43,8 @@ class RestaurantSpace(object):
 
     def registerNode(self,x,y,space,level,id, obj):
         idx = 0
-        index = self.tuple_to_str(space, level, id)
+        #index = self.tuple_to_str(space, level, id)
+        index = self.tuple_to_str(id, level, space)
         if index in self.tuple_idx.keys():
             return False
 

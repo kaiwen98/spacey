@@ -95,7 +95,8 @@ class redis_database(object):
         return self.res_list
 
     def clearDB(self, session_name):
-
+        if session_name not in self.client.lrange(self.user + "_registered_restaurants", 0, -1): return 
+        session_name = "NUS_" + session_name
         for i in ["_coord", "_config", "_hash", "_occupancy"]:
             name = str(session_name) + i
             self.client.delete(name)
@@ -200,7 +201,7 @@ if __name__ == "__main__":
     print(r.client.hgetall('NUS_Macdonalds_hash'))
     #r.client.delete('NEWTEST1', 'NEWTEST', 'fool')
     print(r.client.hgetall('NUS_Macdonalds_occupancy'))
-
+    #print(r.client.lrange("NUS" + "_registered_restaurants", 0, -1))
     
     # Life Hax
     #r.client.hmset('users_private_key',{'NUS': 'ec9193f8f25777fc0dbd511fdd617feee807ca9c4de6b51045b9cf98c535bcac'})

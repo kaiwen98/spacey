@@ -153,7 +153,10 @@ class CanvasGridFrame(object):
         _y1 = cfg.y_list[int(cfg.canvas_h/step)-1]
         _y2 = cfg.y_list[int(cfg.canvas_h/step)-2]
 
+        #inner border bounded by the rectangle is the border of the visible canvas.
         cfg.x_bb1, cfg.y_bb1, cfg.x_bb2, cfg.y_bb2 = x2,y2,_x2, _y2
+
+        #if no image/ image deleted, set future image to fit the canvas as much as possible
         if cfg.img_x_bb1 is -1:  cfg.img_x_bb1, cfg.img_y_bb1 = cfg.x_bb1, cfg.y_bb1
         
         
@@ -178,6 +181,7 @@ class CanvasGridFrame(object):
         if delete: cfg.res.deleteAllNodes()
         cfg.myCanvas.deleteAllGrids()
         self.grid = self.createGrid()
+        # If need resize and there is an image to resize
         if resize and cfg.image_flag: cfg.img.resize()
         
         cfg.myCanvas.canvas.tag_raise(cfg.cursor)
@@ -355,6 +359,7 @@ class menu_upload(object):
     def floorplanclear(self):
         cfg.myCanvas.deleteImage()
         cfg.res.deleteAllNodes()
+        cfg.get_output_graphic_path()
         
         
 
@@ -1135,6 +1140,7 @@ class json_viewer(object):
         self.session_name_set = False
         cfg.error.updateText("[DB] Created new session: "+ str(cfg.session_name), "pale green")
         cfg.local_disk  = False
+        cfg.database.clearDB(cfg.session_name)
         if cfg.img is not None: cfg.img.save()
         #cfg.json_path = cfg.json_path + ".json"
         imagegen() # Generates template
