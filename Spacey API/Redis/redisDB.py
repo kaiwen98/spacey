@@ -95,7 +95,7 @@ class redis_database(object):
         return self.res_list
 
     def clearDB(self, session_name):
-        if session_name not in self.client.lrange(self.user + "_registered_restaurants", 0, -1): return 
+        if session_name not in self.client.lrange(self.user + "_registered_restaurants", 0, -1): return "Invalid input! Restaurant is not yet registered with your account..."
         session_name = "NUS_" + session_name
         for i in ["_coord", "_config", "_hash", "_occupancy"]:
             name = str(session_name) + i
@@ -193,7 +193,7 @@ if __name__ == "__main__":
     r.user = 'NUS'
     #r.clearUser('Macdonalds')
     #print(r.clearDB('NUS_Macdonalds'))
-    print(r.client.lindex("Macdonalds_registered_restaurants", 0))
+    print(r.client.lrange("NUS_registered_restaurants", 0,-1))
     print(r.client.keys())
     print(r.client.hgetall('users_private_key'))
     print(r.client.smembers('registered_users'))

@@ -921,7 +921,7 @@ class json_viewer(object):
 
     def DBclearDB(self):
         res = self.dbselect.get()
-        name = cfg.userid + "_" + res
+        name = res
         cfg.database.clearDB(name)
         cfg.error.updateText("Restaurant deleted: {}".format(name), "yellow")
         self.refresh()
