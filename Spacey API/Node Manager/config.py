@@ -117,8 +117,17 @@ img_y_bb1 = -1
 cfg.db_options = ["No Database Selected"] 
 userid = ""
 session_name = ""
+no_floor_plan = False
 
 local_disk = False
+
+# Restaurant info 
+res_addr = None
+res_occup_hr = None
+res_lat = None
+res_lng = None
+
+res_info_op = ["res_lat", "res_lng", "res_addr", "res_occup_hr"]
 
 # Variables that will be stored to restore save states with the Node Manager
 config_op = ["image_flag", "x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img_y_bb1", "box_len", "prepimgpath", "scale", "postimgpath", "img_padding"]
@@ -126,13 +135,15 @@ config_op = ["image_flag", "x_bb1", "x_bb2", "y_bb1", "y_bb2", "img_x_bb1", "img
 # Dictionaries for JSON compilation purposes.
 configinfo = {}
 devinfo = {}
-
+resinfo = {}
 json_zipinfo = {}
 json_occupancy = {}
 json_hash = {}
 json_coord = {}
 output_graphic_coord = {}
 
+def getvar():
+    return globals()
 
 # File functions
 def getbasename(path):
@@ -148,6 +159,7 @@ def get_output_graphic_path():
     return result
 
 def get_output_floor_plan_path():
+    if no_floor_plan: return None
     if local_disk: name = cfg.session_name
     else         : name = (cfg.userid + "_" + cfg.session_name).lstrip('_')
     result = os.path.join(floorplan_folder_output, "processed_img_"+name+".png")
@@ -157,16 +169,21 @@ def get_output_floor_plan_path():
 
 # Serializes image from png to string
 def json_serialize_image(image_file):
-    with open(image_file, mode='rb') as file:
-        img = file.read()
-    return base64.b64encode(img).decode("utf-8") #picture to bytes, then to string 
-
+    try:
+        with open(image_file, mode='rb') as file:
+            img = file.read()
+        return base64.b64encode(img).decode("utf-8") #picture to bytes, then to string 
+    except:
+        return None
 # Deserializes image from string to png, then save it in the specified file directory
 def json_deserialize_image(encoded_str,image_file):
     result = encoded_str.encode("utf-8")
     result = base64.b64decode(result)
-    image_result = open(image_file, 'wb') # create a writable image and write the decoding result
-    image_result.write(result)
+    try:
+        image_result = open(image_file, 'wb') # create a writable image and write the decoding result
+        image_result.write(result)
+    except:
+        return None
 
 def configJsonDir(root):
     json_folder = join(root, 'json_files')
@@ -196,6 +213,7 @@ def compile(root, local_disk = True):
     # List of dictionaries containing serialised information. We will now write it into a json file to store in database/ local disk
     json_dict_list = [json_zipinfo, json_occupancy, json_hash, json_coord]
     name = cfg.userid + "_" + cfg.session_name
+
     if local_disk:
         name = session_name
         for i in range(len(json_dict_list)):
@@ -204,7 +222,10 @@ def compile(root, local_disk = True):
             with open(path, 'w') as outfile:
                 json.dump(json_dict_list[i], outfile)
     else:  
+        for i in res_info_op:
+            resinfo[i] = globals()[i]
         cfg.database.exportToDB(name, import_from_script = json_dict_list)
+        cfg.database.setResInfo(name, resinfo)
 
     data = {}
     # Confirms the json file's existence and prints contents on console.
@@ -249,15 +270,19 @@ def decompile(root, local_disk = True):
         data = cfg.database.importFromDB(name, export_to_script = data)
         for i in json_dict_list_name:
             globals()[i] = data[json_dict_list_name.index(i)]
+        res_info = cfg.database.getResInfo(name)
 
 
     configinfo = json.loads(json_zipinfo.get("configinfo"))
     devinfo = json.loads(json_zipinfo.get("devinfo"))
     processed_img = json_coord.get("processed_img")
     processed_floorplan = json_zipinfo.get("processed_floorplan")
+
     if not local_disk:
         cfg.json_deserialize_image(processed_img, cfg.get_output_graphic_path())
         cfg.json_deserialize_image(processed_floorplan, cfg.get_output_floor_plan_path())
+        for i in res_info_op:
+            globals()[i] = resinfo[i] 
 
     output_graphic_coord = json_coord
     cfg.box_len = json_coord['box_len']
@@ -267,6 +292,8 @@ def decompile(root, local_disk = True):
 
     for i in config_op:
         globals()[i] = configinfo[i]
+
+
     
     for i in res.devinfo:
         setattr(res, i, devinfo[i])

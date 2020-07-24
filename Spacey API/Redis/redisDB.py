@@ -97,7 +97,7 @@ class redis_database(object):
     def clearDB(self, session_name):
         if session_name not in self.client.lrange(self.user + "_registered_restaurants", 0, -1): return "Invalid input! Restaurant is not yet registered with your account..."
         session_name = "NUS_" + session_name
-        for i in ["_coord", "_config", "_hash", "_occupancy"]:
+        for i in ["_coord", "_config", "_hash", "_occupancy", "res_info"]:
             name = str(session_name) + i
             self.client.delete(name)
         print("name: ", name)
@@ -126,7 +126,25 @@ class redis_database(object):
         json_file_occupancy = join(json_folder, 'occupancy')
         json_file_hash = join(json_folder, 'hash')
         json_file_coord = join(json_folder, 'coord')
+  
         return [json_file_config, json_file_occupancy, json_file_hash, json_file_coord]
+
+    def setResInfo(self, name, res_info):
+        full_name = name + "_"+"res_info"
+        self.client.hmset(full_name, res_info)
+        return True
+    
+    def getResInfo(self, name):
+        full_name = name + "_"+"res_info"
+        if len(self.client.hgetall(full_name)) == 0:
+            print("here from DB")
+            null_dict = {}
+            res_info_op = ["res_lat", "res_lng", "res_addr", "res_occup_hr"]
+            for i in res_info_op:
+                null_dict[i] = "-"
+
+            self.client.hmset(full_name,null_dict)
+        return self.client.hgetall(full_name)
 
     # connects to remote database and stores json information there
     def exportToDB(self, session_name, import_from_script = None, reset = True):
@@ -192,7 +210,7 @@ if __name__ == "__main__":
     r.timeout()
     r.user = 'NUS'
     #r.clearUser('Macdonalds')
-    #print(r.clearDB('NUS_Macdonalds'))
+    #print(r.clearDB('NUSKFC'))
     print(r.client.lrange("NUS_registered_restaurants", 0,-1))
     print(r.client.keys())
     print(r.client.hgetall('users_private_key'))
@@ -202,9 +220,10 @@ if __name__ == "__main__":
     #r.client.delete('NEWTEST1', 'NEWTEST', 'fool')
     print(r.client.hgetall('NUS_Macdonalds_occupancy'))
     #print(r.client.lrange("NUS" + "_registered_restaurants", 0, -1))
-    
+    print(r.client.hgetall('NUS_Frontier_res_info'))
     # Life Hax
     #r.client.hmset('users_private_key',{'NUS': 'ec9193f8f25777fc0dbd511fdd617feee807ca9c4de6b51045b9cf98c535bcac'})
     #r.client.flushdb()
     #print(r.client.smembers('registered_users'))
     
+    #r.client.delete("NUSSpacey_res_info")
