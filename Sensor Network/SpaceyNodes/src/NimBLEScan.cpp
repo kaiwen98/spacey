@@ -22,6 +22,7 @@
 #include "NimBLELog.h"
 
 #include <string>
+#include "SpaceyAPI.h"
 
 static const char* LOG_TAG = "NimBLEScan";
 
@@ -44,6 +45,19 @@ NimBLEScan::NimBLEScan() {
 }
 
 
+void BLEScan::setClusterNum(std::string clusterNum){
+	m_clusterNum = clusterNum;
+    tokenize(clusterNum_buffer, clusterNum.c_str(), ",");
+}
+
+char* BLEScan::getClusterNum(int i){
+	return clusterNum_buffer[i];
+}
+
+int   BLEScan::getNumResults(){
+    return m_scanResults.getCount();
+}
+
 /**
  * @brief Handle GAP events related to scans.
  * @param [in] event The event type for this event.
@@ -64,12 +78,27 @@ NimBLEScan::NimBLEScan() {
             }
 
             rc = ble_hs_adv_parse_fields(&fields, event->disc.data,
-                                     event->disc.length_data);
+                                     event->disc.length_data);        
+
+
             if (rc != 0) {
                 NIMBLE_LOGE(LOG_TAG, "Gap Event Parse ERROR.");
                 return 0;
             }
 
+            //////////////////// Spacey /////////////////////////////////////////////////////
+            
+            if(fields.name == NULL) return 0;
+            std::string name = std::string(reinterpret_cast<char*>(fields.name), fields.name_len);
+            NIMBLE_LOGE(LOG_TAG, "HELLO, %s\n", name.c_str());
+
+            if (!verifySpaceyID(name, pScan->clusterNum_buffer)) {
+                NIMBLE_LOGI(LOG_TAG, "Rejected");
+                return 0;
+            }
+            
+            /////////////////////////////////////////////////////////////////////////////////
+            
             NimBLEAddress advertisedAddress(event->disc.addr);
 
             // Examine our list of ignored addresses and stop processing if we don't want to see it or are already connected
@@ -333,6 +362,7 @@ NimBLEScanResults NimBLEScan::start(uint32_t duration, bool is_continue) {
  * @return True if successful.
  */
 bool NimBLEScan::stop() {
+    if(m_stopped) return true;
     NIMBLE_LOGD(LOG_TAG, ">> stop()");
 
     int rc = ble_gap_disc_cancel();
@@ -430,6 +460,10 @@ int NimBLEScanResults::getCount() {
  */
 NimBLEAdvertisedDevice NimBLEScanResults::getDevice(uint32_t i) {
     return *m_advertisedDevicesVector[i];
+}
+
+NimBLEAdvertisedDevice* NimBLEScanResults::getDevicePtr(uint32_t i) {
+    return m_advertisedDevicesVector[i];
 }
 
 

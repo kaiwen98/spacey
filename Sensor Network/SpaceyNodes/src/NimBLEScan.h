@@ -44,6 +44,7 @@ public:
     void                                           dump();
     int                                            getCount();
     NimBLEAdvertisedDevice                         getDevice(uint32_t i);
+    NimBLEAdvertisedDevice*                        getDevicePtr(uint32_t i);
     std::vector<NimBLEAdvertisedDevice*>::iterator begin();
     std::vector<NimBLEAdvertisedDevice*>::iterator end();
     NimBLEAdvertisedDevice                         *getDevice(const NimBLEAddress &address);
@@ -69,11 +70,16 @@ public:
     void                setDuplicateFilter(bool active);
     void                setLimitedOnly(bool active);
     void                setFilterPolicy(uint8_t filter);
+    void                setClusterNum(std::string clusterNum);
+    char*               getClusterNum(int i);
+
     bool                stop();
     void                clearResults();
     NimBLEScanResults   getResults();
     void                erase(const NimBLEAddress &address);
-
+    std::string         m_clusterNum;
+    char*               clusterNum_buffer[3];
+    int                 getNumResults();
 
 private:
     NimBLEScan();

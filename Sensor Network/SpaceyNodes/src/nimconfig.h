@@ -86,7 +86,7 @@
 #define CONFIG_BT_NIMBLE_TASK_STACK_SIZE 4096
 
 /** Sets the number of simultaneous connections (esp controller max is 9) */
-#define CONFIG_BT_NIMBLE_MAX_CONNECTIONS 3
+#define CONFIG_BT_NIMBLE_MAX_CONNECTIONS 5
 
 /** Sets the number of devices allowed to store/bond with */
 #define CONFIG_BT_NIMBLE_MAX_BONDS 3

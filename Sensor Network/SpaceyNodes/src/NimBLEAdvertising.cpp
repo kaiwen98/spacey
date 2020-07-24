@@ -212,6 +212,7 @@ void NimBLEAdvertising::setAdvertisementData(NimBLEAdvertisementData& advertisem
  * @param [in] advertisementData The data to be advertised.
  */
 void NimBLEAdvertising::setScanResponseData(NimBLEAdvertisementData& advertisementData) {
+
     NIMBLE_LOGD(LOG_TAG, ">> setScanResponseData");
     int rc = ble_gap_adv_rsp_set_data(
         (uint8_t*)advertisementData.getPayload().data(),
@@ -228,6 +229,7 @@ void NimBLEAdvertising::setScanResponseData(NimBLEAdvertisementData& advertiseme
  * @brief Start advertising.
  */
 void NimBLEAdvertising::start() {
+    m_stopped = false;
     NIMBLE_LOGD(LOG_TAG, ">> Advertising start: customAdvData: %d, customScanResponseData: %d", m_customAdvData, m_customScanResponseData);
 
     // If Host is not synced we cannot start advertising.
@@ -419,6 +421,8 @@ void NimBLEAdvertising::start() {
  * @brief Stop advertising.
  */
 void NimBLEAdvertising::stop() {
+    if (m_stopped) return;
+    m_stopped = true;
     NIMBLE_LOGD(LOG_TAG, ">> stop");
     int rc = ble_gap_adv_stop();
     if (rc != 0 && rc != BLE_HS_EALREADY) {
@@ -435,6 +439,7 @@ void NimBLEAdvertising::stop() {
  * we need clear the flag so it reloads it.
  */
 void NimBLEAdvertising::onHostReset() {
+    m_stopped = true;
     m_advDataSet = false;
 }
 
@@ -547,6 +552,8 @@ void NimBLEAdvertisementData::setName(const std::string &name) {
 } // setName
 
 
+
+
 /**
  * @brief Set the partial services to advertise.
  * @param [in] uuid The single service to advertise.
@@ -634,6 +641,7 @@ void NimBLEAdvertisementData::setShortName(const std::string &name) {
     addData(std::string(cdata, 2) + name);
     NIMBLE_LOGD("NimBLEAdvertisementData", "<< setShortName");
 } // setShortName
+
 
 
 /**

@@ -95,6 +95,8 @@ public:
     static bool             getInitialized();
     static NimBLEAddress    getAddress();
     static std::string      toString();
+    static void             changeName(const std::string &deviceName);
+
 
 #if defined(CONFIG_BT_NIMBLE_ROLE_OBSERVER)
     static NimBLEScan*      getScan();

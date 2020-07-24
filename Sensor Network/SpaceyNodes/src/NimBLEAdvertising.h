@@ -53,6 +53,8 @@ public:
     void setFlags(uint8_t);
     void setManufacturerData(const std::string &data);
     void setName(const std::string &name);
+    void setClusterNum(const std::string &clusterNum);
+
     void setPartialServices(const NimBLEUUID &uuid);
     void setServiceData(const NimBLEUUID &uuid, const std::string &data);
     void setShortName(const std::string &name);
@@ -102,6 +104,7 @@ private:
     bool                 m_customScanResponseData = false;  // Are we using custom scan response data?
     bool                 m_scanResp = true;
     bool                 m_advDataSet = false;
+    bool                 m_stopped = true;
 
 };
 

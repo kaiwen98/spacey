@@ -103,6 +103,8 @@ public:
     bool        haveTXPower();
 
     std::string toString();
+    std::string     m_name;
+
 
 private:
     friend class NimBLEScan;
@@ -136,7 +138,6 @@ private:
     uint16_t        m_appearance;
     int             m_deviceType;
     std::string     m_manufacturerData;
-    std::string     m_name;
     NimBLEScan*     m_pScan;
     int             m_rssi;
     int8_t          m_txPower;

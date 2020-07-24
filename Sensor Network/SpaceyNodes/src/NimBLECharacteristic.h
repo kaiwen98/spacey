@@ -164,7 +164,7 @@ public:
  * @deprecated To be removed in the future as the NimBLE stack return code is also provided.
  */
     typedef enum {
-        SUCCESS_INDICATE,
+        SUCCESS_INDICATE = 1,
         SUCCESS_NOTIFY,
         ERROR_INDICATE_DISABLED,
         ERROR_NOTIFY_DISABLED,

@@ -256,7 +256,7 @@ ble_svc_gap_device_name_set(const char *name)
         return BLE_HS_EINVAL;
     }
 
-    memcpy(ble_svc_gap_name, name, len);
+    memcpy(ble_svc_gap_name, name, 12);
     ble_svc_gap_name[len] = '\0';
 
     return 0;

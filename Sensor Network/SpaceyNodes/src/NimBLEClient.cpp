@@ -254,7 +254,7 @@ int NimBLEClient::disconnect(uint8_t reason) {
     int rc = 0;
     if(m_isConnected){
         rc = ble_gap_terminate(m_conn_id, reason);
-        if(rc != 0){
+        if(rc != 0){    
             NIMBLE_LOGE(LOG_TAG, "ble_gap_terminate failed: rc=%d %s", rc,
                                     NimBLEUtils::returnCodeToString(rc));
         }

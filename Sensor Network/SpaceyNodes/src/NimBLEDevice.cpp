@@ -160,6 +160,7 @@ void NimBLEDevice::stopAdvertising() {
  */
 /* STATIC */ bool NimBLEDevice::deleteClient(NimBLEClient* pClient) {
     if(pClient == nullptr) {
+        NIMBLE_LOGD(LOG_TAG,"<<NULLPT");
         return false;
     }
 
@@ -167,6 +168,7 @@ void NimBLEDevice::stopAdvertising() {
 
     if(pClient->m_isConnected) {
         rc = pClient->disconnect();
+        NIMBLE_LOGD(LOG_TAG, "<<RC = %d", rc);
         if (rc != 0 && rc != BLE_HS_EALREADY && rc != BLE_HS_ENOTCONN) {
             return false;
         }
@@ -477,6 +479,11 @@ void NimBLEDevice::stopAdvertising() {
 
     nimble_port_freertos_deinit();
 } // host_task
+
+
+void NimBLEDevice::changeName(const std::string &deviceName){
+    int rc = ble_svc_gap_device_name_set(deviceName.c_str());
+}
 
 
 /**

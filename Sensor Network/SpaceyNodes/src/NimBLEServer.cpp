@@ -55,6 +55,9 @@ NimBLEServer::~NimBLEServer() {
 }
 
 
+uint16_t NimBLEServer::getConnDevConnID(){
+    return *(m_connectedPeersVec.begin());
+}
 /**
  * @brief Create a %BLE Service.
  * @param [in] uuid The UUID of the new service.
@@ -231,6 +234,8 @@ void NimBLEServer::advertiseOnDisconnect(bool aod) {
 size_t NimBLEServer::getConnectedCount() {
     return m_connectedPeersVec.size();
 } // getConnectedCount
+
+
 
 
 /**

@@ -262,6 +262,7 @@ bool NimBLEAdvertisedDevice::haveTXPower() {
             setServiceUUID(NimBLEUUID(fields->uuids16[i].value));
         }
     }
+      
 
     if (fields->uuids32 != NULL) {
         for (i = 0; i < fields->num_uuids32; i++) {
@@ -278,6 +279,7 @@ bool NimBLEAdvertisedDevice::haveTXPower() {
     if (fields->name != NULL) {
         setName(std::string(reinterpret_cast<char*>(fields->name), fields->name_len));
     }
+    
 
     if (fields->tx_pwr_lvl_is_present) {
         setTXPower(fields->tx_pwr_lvl);

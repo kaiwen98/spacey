@@ -58,6 +58,8 @@ public:
     uint16_t               getPeerMTU(uint16_t conn_id);
 //    std::vector<uint16_t>  getPeerDevices();
     void                   advertiseOnDisconnect(bool);
+    uint16_t               getConnDevConnID();
+    void                   resetGATT();
 
 private:
     NimBLEServer();
@@ -78,7 +80,7 @@ private:
     std::vector<NimBLECharacteristic*> m_notifyChrVec;
 
     static int             handleGapEvent(struct ble_gap_event *event, void *arg);
-    void                   resetGATT();
+    
 }; // NimBLEServer
 
 
