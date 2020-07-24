@@ -23,12 +23,11 @@ import random
 import time
 import redis
 
-<<<<<<< HEAD
-bot = telegram.Bot("1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY")
-_root = dir(dir(__file__))
-=======
+
 bot = telegram.Bot(TOKEN)
->>>>>>> 6ebb98a77c55127fe684ef1ebb1953f73b4c25e1
+_root = dir(dir(__file__))
+
+
 
 users_info_path = os.path.join(_root, "Telegram Bot\\users_info.csv")
 locations_path = os.path.join(_root, "Telegram Bot\\locations.csv")
