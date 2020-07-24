@@ -23,12 +23,8 @@ import random
 import time
 import redis
 
-<<<<<<< HEAD
 bot = telegram.Bot("1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY")
 _root = dir(dir(__file__))
-=======
-bot = telegram.Bot(TOKEN)
->>>>>>> 6ebb98a77c55127fe684ef1ebb1953f73b4c25e1
 
 users_info_path = os.path.join(_root, "Telegram Bot\\users_info.csv")
 locations_path = os.path.join(_root, "Telegram Bot\\locations.csv")
@@ -674,7 +670,7 @@ def daily_notifications_12pm(context):
     users_info = cfg.database.client.hgetall('users_info')
     for id_number, data in users_info.items():
         data = json.loads(data)
-        if str(data['daily_notifications']) != '0': #daily notification on, send notification
+        if str(data['daily_notifications']) != '0' and data['daily_time'] == '12pm': #daily notification on and timing is 12pm, send notification
             name = data['name']
             user_id = id_number
             location = data['daily_notifications']
@@ -724,6 +720,47 @@ def daily_notifications_12pm(context):
             #Send occupancy data, pie chart and floorplan
             context.bot.send_message(user_id, text="Hey "+ name +"! Here is your daily notification for <b><u>"+location+"</u></b>!\n\n"+seats_emoji+"<b>Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)"+alert, parse_mode='HTML')
             # context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\chart_'+str(location)+'.png', 'rb'))
+            context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\output_NUS_'+location+'.png', 'rb'))
+
+def daily_notifications_1pm(context):
+    
+    users_info = cfg.database.client.hgetall('users_info')
+    for id_number, data in users_info.items():
+        data = json.loads(data)
+        if str(data['daily_notifications']) != '0' and data['daily_time'] == '1pm': #daily notification on and timing is 1pm, send notification
+            name = data['name']
+            user_id = id_number
+            location = data['daily_notifications']
+            localtime = time.localtime(time.time())
+            date = str(localtime.tm_mday)+'/'+str(localtime.tm_mon)+'/'+str(localtime.tm_year)
+            time_now = str(localtime.tm_hour)+':'+str(localtime.tm_min)+':'+str(localtime.tm_sec)
+            seats_available = 0
+            seats_taken = 0
+            occupancy_data = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
+            for seat in occupancy_data.values():
+                if seat == '0':
+                    seats_available += 1
+                else:
+                    seats_taken += 1
+            seats_total = seats_available + seats_taken
+            seats_occupancy = round(seats_taken/seats_total*100, 2)
+            
+            config_obj = cfg.ResServer('NUS')
+            restaurants_data = config_obj.get_info()
+            for loc_data, obj_data in restaurants_data.items():
+                if location == loc_data:
+                    occupancy = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
+                    imageupdate(obj_data, occupancy)
+                    imagegen(obj_data)
+
+            if seats_occupancy < 50:
+                alert = green_alert
+            elif seats_occupancy >=80:
+                alert = red_alert
+            else:
+                alert = yellow_alert 
+            #Send occupancy data
+            context.bot.send_message(user_id, text="Hey "+ name +"! Here is your daily notification for <b><u>"+location+"</u></b>!\n\n"+seats_emoji+"<b>Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)"+alert, parse_mode='HTML')
             context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\output_NUS_'+location+'.png', 'rb'))
 
 def full_notifications(context):
@@ -938,7 +975,7 @@ def main():
     # limit global throughput to 3 messages per 3 seconds
     q = mq.MessageQueue(all_burst_limit=29, all_time_limit_ms=1017)
     request = Request(con_pool_size=8)
-    spaceybot = MQBot(TOKEN, request=request, mqueue=q)
+    spaceybot = MQBot('1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY', request=request, mqueue=q)
 
     # Create the Updater and pass in bot's token.
     updater = Updater(bot=spaceybot, use_context = True)
