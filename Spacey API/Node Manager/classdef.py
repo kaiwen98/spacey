@@ -1104,15 +1104,16 @@ class json_viewer(object):
             self.text_input[0].set(cfg.session_name)
             e.config(state = DISABLED)
             for i in cfg.res_info_op:
-                if cfg.getvar()[i] == '-' or cfg.getvar()[i] is None: pass
-                elif i == "res_addr":
-                    self.t2.insert(1.0, cfg.getvar()[i].rstrip('\n'))
+                if cfg.getvar()[i].rstrip('\n') == '-': temp = ""
+                else                                  : temp = cfg.getvar()[i].rstrip('\n')
+                if i == "res_addr":
+                    self.t2.insert(1.0, temp)
                 elif i == "res_occup_hr":
-                    self.t1.insert(1.0, cfg.getvar()[i].rstrip('\n'))
+                    self.t1.insert(1.0, temp)
                 elif i == "res_lat":
-                    self.text_input[1].set(cfg.getvar()[i].rstrip('\n'))
+                    self.text_input[1].set(temp)
                 elif i == "res_lng":
-                    self.text_input[2].set(cfg.getvar()[i].rstrip('\n'))
+                    self.text_input[2].set(temp)
         
 
     def updateInfo(self, push_floor_plan):
@@ -1124,7 +1125,11 @@ class json_viewer(object):
             if len(cfg.getvar()[i].rstrip('\n')) == 0:
                 print("here")
                 cfg.getvar()[i] = '-'
-        if push_floor_plan: self.uploadDB()
+        if push_floor_plan: 
+            if self.text_input[0].get() is "": 
+                cfg.error.updateText("Empty field not allowed!", "Red")
+                return
+            self.uploadDB()
         else              : 
             for i in cfg.res_info_op:
                 cfg.resinfo[i] = cfg.getvar()[i]
