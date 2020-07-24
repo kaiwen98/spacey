@@ -189,8 +189,9 @@ def compile(root, local_disk = True):
     json_occupancy = cfg.res.occupancy
     json_hash = cfg.res.tuple_idx
     json_coord = cfg.output_graphic_coord
-    json_coord["processed_img"] = json_serialize_image(cfg.get_output_graphic_path())
-    json_zipinfo["processed_floorplan"] = json_serialize_image(cfg.get_output_floor_plan_path())
+    if image_flag == True:
+        json_coord["processed_img"] = json_serialize_image(cfg.get_output_graphic_path())
+        json_zipinfo["processed_floorplan"] = json_serialize_image(cfg.get_output_floor_plan_path())
 
     # List of dictionaries containing serialised information. We will now write it into a json file to store in database/ local disk
     json_dict_list = [json_zipinfo, json_occupancy, json_hash, json_coord]
