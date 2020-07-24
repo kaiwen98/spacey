@@ -203,6 +203,6 @@ if __name__ == "__main__":
     print(r.get_all_restaurant_from_user('NUS'))
     print(r.client.hgetall('users_info'))
     print(r.client.hgetall('NUS_Deck_occupancy'))
-    #r.client.flushdb()
+    r.client.flushdb()
     #print(r.client.smembers('registered_users'))
 

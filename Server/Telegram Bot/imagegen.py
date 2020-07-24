@@ -16,11 +16,11 @@ def imagegen(res_info):
     res_info.node_on = node_on
     res_info.node_off = node_off
 
-    print("cfg.box_len: ", res_info.box_len)
+    # print("cfg.box_len: ", res_info.box_len)
     bg = Image.open(res_info.image)
-    print(res_info.name)
-    print(res_info.coord)
-    print(res_info.occupancy)
+    # print(res_info.name)
+    # print(res_info.coord)
+    # print(res_info.occupancy)
     for i in res_info.coord.keys():
         x = res_info.coord[str(i)].rsplit(',')[0]
         y = res_info.coord[str(i)].rsplit(',')[1]
@@ -30,7 +30,7 @@ def imagegen(res_info):
         if int(res_info.occupancy[str(i)]) == 0: node = node_on
         else: node = node_off
         bg.paste(node, (int(x),int(y)))
-    print(bg.size)
+    # print(bg.size)
     # bg.show()
     bg.save(res_info.image, quality=95, format = "PNG")
 
@@ -48,12 +48,11 @@ def imageupdate(res_info, occupancy_new):
             y = res_info.coord[i].rsplit(',')[1]
             res_info.temp.paste(node, (int(x), int(y)))
             res_info.occupancy[i] = occupancy_new[i]
-    res_info.temp.show()
+    # res_info.temp.show()
     save_graphic(res_info)
     
 
 # commit changes in occupancy to image to present.
 def save_graphic(res_info):
-    print("THIS IS YOUR MOM")
-    print(res_info.image)
+    # print(res_info.image)
     res_info.temp.save(res_info.image, quality=95, format = "PNG")

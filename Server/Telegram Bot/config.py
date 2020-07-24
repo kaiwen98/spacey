@@ -24,7 +24,7 @@ import redis
 # Need to choose depending on running from exe or py. Should point to /Server
 # root = dir(dir(dir(sys.executable)))
 _root = dir(dir(__file__))
-print(_root)
+# print(_root)
 
 # To extract database interface functions
 sys.path.append(join(_root, "Redis"))
@@ -87,9 +87,6 @@ def get_output_graphic_path(name):
 
 class ResServer(object):
     def __init__(self, userID):
-
-        print(cfg.database.client.keys())
-
         self.userID = userID
         self.available_restaurants_name = cfg.database.get_all_restaurant_from_user(
             userID)
@@ -112,14 +109,12 @@ class ResServer(object):
             self.box_len = int(coord["box_len"])
             del coord["processed_img"]
             del coord["box_len"]
-            print(occupancy)
-            print(coord)
+            
 
             # self.restaurants.append(res.restaurant_info(
             #     full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len))
             self.restaurants[i] = res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len)
-            print("ok!!!!!!!!!!!!!!")
-            print(self.restaurants)
+            
 
     def scan_update(self):
         """
@@ -130,8 +125,7 @@ class ResServer(object):
                              db=0, password=self.password, decode_responses=True)
             
         for i in range(len(self.available_restaurants_name)):
-            print("checking...", self.available_restaurants_name[i])
-
+            
             occupancy = {}
             full_name = self.userID + "_" + \
                 self.available_restaurants_name[i]
@@ -151,9 +145,9 @@ class ResServer(object):
 
     def randomize(self):
     
-        print("hi")
+        # print("hi")
         for i in range(len(self.available_restaurants_name)):
-            print(self.available_restaurants_name[i])
+            # print(self.available_restaurants_name[i])
             occupancy = {}
             new_occupancy = {}
             full_name = self.userID + "_" + self.available_restaurants_name[i]
