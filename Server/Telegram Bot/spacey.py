@@ -86,7 +86,8 @@ def start(update, context):
                                             '/notifications to subscribe to notifications.\n'
                                             +diamond+' <b>Daily notifications.</b> Sends daily updates at 12pm of your chosen location.\n'
                                             +diamond+' <b>>80% notifications.</b> Sends updates of your chosen location whenever it is reaching its full capacity.\n'
-                                            '<i>Note: seat occupancies are updated through sensors. However, for simulation purposes, use /setspaceyoccupancy to manipulate the occupancy of <u>Spacey Cafe</u> to either 20%, 60% or 80%!</i>\n', parse_mode = 'HTML')
+                                            '<i>Note: seat occupancies are updated through sensors. However, for simulation purposes, use /setspaceyoccupancy to manipulate the occupancy of <u>Spacey</u> to either 20%, 60% or 80%!\n</i>'
+                                            '<i>Note 2: >80% notifications are checked every 2 mins and total visitors count is updated every 5 mins for testing purposes</i>\n', parse_mode = 'HTML')
 
 def menu(update,context):
     locations_list = cfg.database.get_all_restaurant_from_user('NUS')
@@ -191,8 +192,8 @@ def check_what(update, context):
         context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\output_NUS_'+location+'.png', 'rb'))
 
         keyboard=[[InlineKeyboardButton("Operation Hours", callback_data='Operation Hours'),
-            InlineKeyboardButton("How to go", callback_data='How to go'),
-            InlineKeyboardButton("Recent Statistics", callback_data='Recent Statistics')],
+            InlineKeyboardButton("How to go", callback_data='How to go')],
+            [InlineKeyboardButton("Recent Statistics", callback_data='Recent Statistics')],
             [InlineKeyboardButton("End", callback_data='End')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         context.bot.send_message(user_id, text="Anything else regarding " + location +" that you would like to know about?", reply_markup=reply_markup)
@@ -670,7 +671,7 @@ def daily_notifications_12pm(context):
     users_info = cfg.database.client.hgetall('users_info')
     for id_number, data in users_info.items():
         data = json.loads(data)
-        if str(data['daily_notifications']) != '0': #daily notification on, send notification
+        if str(data['daily_notifications']) != '0' and data['daily_time'] == '12pm': #daily 12pm notification on, send notification
             name = data['name']
             user_id = id_number
             location = data['daily_notifications']
@@ -720,7 +721,65 @@ def daily_notifications_12pm(context):
             #Send occupancy data, pie chart and floorplan
             context.bot.send_message(user_id, text="Hey "+ name +"! Here is your daily notification for <b><u>"+location+"</u></b>!\n\n"+seats_emoji+"<b>Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)"+alert, parse_mode='HTML')
             # context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\chart_'+str(location)+'.png', 'rb'))
-            context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\output_NUS_'+location+'.png', 'rb'))
+            # context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\output_NUS_'+location+'.png', 'rb'))
+
+
+def daily_notifications_1pm(context):     
+    users_info = cfg.database.client.hgetall('users_info')
+    for id_number, data in users_info.items():
+        data = json.loads(data)
+        if str(data['daily_notifications']) != '0' and data['daily_time'] == '1pm': #daily 1pm notification on, send notification
+            name = data['name']
+            user_id = id_number
+            location = data['daily_notifications']
+            seats_available = 0
+            seats_taken = 0
+            occupancy_data = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
+            for seat in occupancy_data.values():
+                if seat == '0':
+                    seats_available += 1
+                else:
+                    seats_taken += 1
+            seats_total = seats_available + seats_taken
+            seats_occupancy = round(seats_taken/seats_total*100, 2)
+
+            if seats_occupancy < 50:
+                alert = green_alert
+            elif seats_occupancy >=80:
+                alert = red_alert
+            else:
+                alert = yellow_alert 
+            #Send occupancy data
+            context.bot.send_message(user_id, text="Hey "+ name +"! Here is your daily notification for <b><u>"+location+"</u></b>!\n\n"+seats_emoji+"<b>Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)"+alert, parse_mode='HTML')
+            
+def daily_notifications_2pm(context):     
+    users_info = cfg.database.client.hgetall('users_info')
+    for id_number, data in users_info.items():
+        data = json.loads(data)
+        if str(data['daily_notifications']) != '0' and data['daily_time'] == '2pm': #daily 2pm notification on, send notification
+            name = data['name']
+            user_id = id_number
+            location = data['daily_notifications']
+            seats_available = 0
+            seats_taken = 0
+            occupancy_data = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
+            for seat in occupancy_data.values():
+                if seat == '0':
+                    seats_available += 1
+                else:
+                    seats_taken += 1
+            seats_total = seats_available + seats_taken
+            seats_occupancy = round(seats_taken/seats_total*100, 2)
+
+            if seats_occupancy < 50:
+                alert = green_alert
+            elif seats_occupancy >=80:
+                alert = red_alert
+            else:
+                alert = yellow_alert 
+            #Send occupancy data
+            context.bot.send_message(user_id, text="Hey "+ name +"! Here is your daily notification for <b><u>"+location+"</u></b>!\n\n"+seats_emoji+"<b>Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)"+alert, parse_mode='HTML')
+            
 
 def full_notifications(context):
     users_info = cfg.database.client.hgetall('users_info')
@@ -769,7 +828,7 @@ def full_notifications(context):
                         imagegen(obj_data)
 
                 #Send occupancy data, pie chart and floorplan
-                context.bot.send_message(user_id, text="Hey "+ name +"! Occupancy for <b><u>"+location+"</u></b> has reached >=80%!\n\n"+seats_emoji+"<b>Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)"+red_alert,parse_mode='HTML')
+                context.bot.send_message(user_id, text="Hey "+ name +"! <b><u>"+location+"</u></b> is getting crowded!\n\n"+seats_emoji+"<b>Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)"+red_alert,parse_mode='HTML')
                 # context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\chart_'+str(location)+'.png', 'rb')) 
                 # context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\output_NUS_'+location+'.png', 'rb'))
 
@@ -854,9 +913,9 @@ def setspaceyvalue(update,context):
                 count += 1
             else:
                 occupancy_data[seat_num] = '0'
-            
+    percentage = round(count/len(occupancy_data)*100)     
     cfg.database.client.hmset('NUS_Spacey_occupancy', occupancy_data)    
-    context.bot.send_message(user_id, 'Occupancy for Spacey Cafe set to <b>'+query.data+'</b>!',parse_mode='HTML')
+    context.bot.send_message(user_id, 'Occupancy for Spacey Cafe set to <b>'+str(percentage)+'</b>%!' ,parse_mode='HTML')
     return ConversationHandler.END
 
 # def update_seats(context):
@@ -899,15 +958,7 @@ def setspaceyvalue(update,context):
 #     date = str(localtime.tm_mday)+'/'+str(localtime.tm_mon)+'/'+str(localtime.tm_year)
 #     time_now = str(localtime.tm_hour)+':'+str(localtime.tm_min)+':'+str(localtime.tm_sec)
 #     context.bot_data['time_updated'] = date + time_now
-
-
-def test_with_limit(update,context):
-    for i in range(10):
-        context.bot.send_message("772520752", i) 
-
-def test_no_limit(update,context):
-    for i in range(10):
-        bot.send_message("772520752", i)    
+ 
 
 class MQBot(telegram.bot.Bot):
     '''A subclass of Bot which delegates send method handling to MQ'''
@@ -945,12 +996,7 @@ def main():
 
     # Create command handlers
     dp.add_handler(CommandHandler("start", start))
-    
-
     dp.add_handler(CommandHandler("test", test))
-    dp.add_handler(CommandHandler("test_with_limit", test_with_limit))
-    dp.add_handler(CommandHandler("test_no_limit", test_no_limit))
-
 
     dp.add_error_handler(error_callback)
 
@@ -976,9 +1022,17 @@ def main():
     j = updater.job_queue
 
     # Set daily notifications
-    daily_notification_12pm_t = datetime.time(12,19,00,000000)
+    daily_notification_12pm_t = datetime.time(4,00,00,000000) #UTC time
     dp.add_handler(CallbackQueryHandler(daily_notifications_12pm))
-    job_daily = j.run_daily(daily_notifications_12pm, daily_notification_12pm_t)
+    job_daily1 = j.run_daily(daily_notifications_12pm, daily_notification_12pm_t)
+
+    daily_notification_1pm_t = datetime.time(5,00,00,000000)
+    dp.add_handler(CallbackQueryHandler(daily_notifications_1pm))
+    job_daily2 = j.run_daily(daily_notifications_1pm, daily_notification_1pm_t)
+
+    daily_notification_2pm_t = datetime.time(6,00,00,000000)
+    dp.add_handler(CallbackQueryHandler(daily_notifications_2pm))
+    job_daily3 = j.run_daily(daily_notifications_2pm, daily_notification_2pm_t)
 
     # t_1 = datetime.time(13,30,00,000000)
     # dp.add_handler(CallbackQueryHandler(hourly_info1))
@@ -990,10 +1044,10 @@ def main():
 
     # Set >80% notifications
     dp.add_handler(CallbackQueryHandler(full_notifications))
-    job_minute1 = j.run_repeating(full_notifications, interval=60, first=0) #check and alert every 2 mins
+    job_minute1 = j.run_repeating(full_notifications, interval=120, first=0) #check and alert every 2 mins
 
     dp.add_handler(CallbackQueryHandler(hourly_update))
-    job_minute2 = j.run_repeating(hourly_update, interval=60, first=0)
+    job_minute2 = j.run_repeating(hourly_update, interval=300, first=0)
 
     # Update seats occupancy
     # dp.add_handler(CallbackQueryHandler(update_seats))
