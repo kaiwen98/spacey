@@ -19,14 +19,18 @@ class RestaurantSpace(object):
         self.devinfo = ["x_coord", "y_coord", "space_id", "device_cluster_level", "device_cluster_id", "idxList", "tuple_idx", "occupancy"]
         self.tuple_idx = {}
         self.occupancy = {}
+        self.keysbefore = []
     
     def tuple_to_str(self, space, level, id):
         arg = locals()
         result = ""
-        for i in locals().values():
+        for i in (locals().values()):        
             if not str(i).isnumeric(): continue
             add = str(i) + ','
             result += add
+
+        print("THIS:")
+        print(result.rstrip(','))
         return result.rstrip(',')
 
     def str_to_tuple(self, strg):
@@ -36,8 +40,10 @@ class RestaurantSpace(object):
     
     def changeNodeSize(self):
         for i in self.idxList:
+            print("change node size, i is ", i)
             x = self.x_coord[i]
             y = self.y_coord[i]
+            print("coords, ",x,y)
             cfg.myCanvas.canvas.coords(cfg.myCanvas.rec_obj[i], x-cfg.box_len, y-cfg.box_len, x+cfg.box_len, y+cfg.box_len)
         
 
@@ -85,7 +91,7 @@ class RestaurantSpace(object):
         space = self.space_id[idx]
         level = self.device_cluster_level[idx]
         id = self.device_cluster_id[idx]
-        self.tuple_idx.pop(self.tuple_to_str(space, level, id))
+        self.tuple_idx.pop(self.tuple_to_str(id, level, space))
         del self.x_coord[idx]
         del self.y_coord[idx]
         del self.space_id[idx]
@@ -94,6 +100,9 @@ class RestaurantSpace(object):
         del self.occupancy[idx]
         self.idxList.remove(idx)
         self.size -= 1
+
+        # Next node inserted will use this idx enqueued
+        self.keysbefore.append(idx)
 
         cfg.myCanvas.deleteNode(idx)
 
@@ -155,7 +164,10 @@ class RestaurantSpace(object):
 
 class sensor_mote_data(object):
     def __init__(self,res):
-        self.idx = str(res.size)
+        if(len(res.keysbefore) is not 0):
+            self.idx = res.keysbefore.pop()
+        else:
+            self.idx = str(res.size)
         self.res = res
     
     def printMote(self):

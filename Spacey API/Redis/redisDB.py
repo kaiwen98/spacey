@@ -220,7 +220,7 @@ if __name__ == "__main__":
     #r.client.delete('NEWTEST1', 'NEWTEST', 'fool')
     print(r.client.hgetall('NUS_Macdonalds_occupancy'))
     #print(r.client.lrange("NUS" + "_registered_restaurants", 0, -1))
-    print(r.client.hgetall('NUS_KFC_coord'))
+    print(r.client.hgetall('NUS_Frontier_res_info'))
     # Life Hax
     #r.client.hmset('users_private_key',{'NUS': 'ec9193f8f25777fc0dbd511fdd617feee807ca9c4de6b51045b9cf98c535bcac'})
     #r.client.flushdb()

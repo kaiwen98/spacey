@@ -84,6 +84,7 @@ class myCanvasObject(object):
 
     def deleteNode(self, idx):
         if cfg.prev_node_idx is idx: cfg.prev_node_idx = None
+        print("canvas")
         print("before ", self.rec_obj.keys())
         self.canvas.delete(self.rec_obj[idx])
         del self.rec_obj[idx]
