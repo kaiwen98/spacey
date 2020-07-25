@@ -351,8 +351,11 @@ class menu_upload(object):
     def fileupload(self):
         cfg.myCanvas.deleteImage()
         cfg.res.deleteAllNodes()
-        filename = filedialog.askopenfilename(initialdir = cfg.floorplan_folder_input, title = "Select File", filetypes = (("all files","*.*"),("png files","*.png"), ("jpeg files","*.jpg")))
-
+        try:
+            filename = filedialog.askopenfilename(initialdir = cfg.floorplan_folder_input, title = "Select File", filetypes = (("all files","*.*"),("png files","*.png"), ("jpeg files","*.jpg")))
+        except:
+            cfg.error.updateText("Upload failed", "red")
+            return
         # Create Image generator
         cfg.img = imgpro.floorPlan(filename, cfg.myCanvas.canvas)
     
@@ -360,6 +363,7 @@ class menu_upload(object):
         cfg.myCanvas.deleteImage()
         cfg.res.deleteAllNodes()
         cfg.get_output_graphic_path()
+        cfg.no_floor_plan = True
         
         
 
@@ -865,6 +869,7 @@ class json_viewer(object):
         self.dbframe.pack(expand = True, fill = X, ipadx = 2, ipady = 2)
         
         self.refreshbutt = Button(self.dbframe, text = "Connect to RedisDB", command = self.refreshDB, width = 550, bg = "IndianRed2", activebackground= "salmon")
+        #self.refreshbutt = Button(self.dbframe, text = "Connect to RedisDB", command = partial(self.displayUploadMenu, cfg.root), width = 550, bg = "IndianRed2", activebackground= "salmon")
         self.refreshbutt.pack()
         self.dbselect = tk.StringVar(cfg.root)
         self.dbselect.set(cfg.db_options[0]) # default value
@@ -882,6 +887,8 @@ class json_viewer(object):
         self.buttdel1.pack_forget()
         self.buttdel2 = Button(self.dbframe, text = "Delete Account", command = self.DBclearUser, width = 550, bg = "RosyBrown1")
         self.buttdel2.pack_forget()
+        self.buttupdate = Button(self.dbframe, text = "Update Restaurant Information", command = partial(self.displayUploadMenu, cfg.root, True), width = 550, bg = "sky blue")
+        self.buttupdate.pack_forget()
     
         #self.butt.pack(ipadx = 30, ipady = 30, fill = X)
         self.obj = Text(self.frame1,  width = 550, height = 190, bg = "gray10", font = cfg.json_font)
@@ -896,6 +903,8 @@ class json_viewer(object):
         self.obj.tag_config("p", foreground = "deep pink")
         self.obj.tag_config("y", foreground = "yellow")
         self.obj.insert(END, "Wait for JSON to be \nuploaded...\n\n", "b")
+
+        self.text_input = [StringVar() for i in range(3)]
 
     def refreshDB(self):
         if not internet_on():
@@ -949,18 +958,23 @@ class json_viewer(object):
             self.butt3.pack_forget()
             self.buttdel1.pack_forget()
             self.buttdel2.pack_forget()
+            self.buttupdate.pack_forget()
             self.session_name_set = False
+            cfg.session_name = None
         elif self.dbselect.get() == "Enter New Restaurant":
             self.butt2.pack_forget()
             self.butt3.pack()
             self.buttdel1.pack_forget()
             self.buttdel2.pack()
+            self.buttupdate.pack_forget()
             self.session_name_set = False
+            cfg.session_name = None
         else:
             self.butt2.pack()
             self.butt3.pack()
             self.buttdel1.pack()
             self.buttdel2.pack()
+            self.buttupdate.pack()
             cfg.session_name = self.dbselect.get()
             self.session_name_set = True
     def updateText(self, _text, _bg):
@@ -989,7 +1003,10 @@ class json_viewer(object):
             cfg.error.updateText("[ERR] Need at least 1 node", "red")
             return
         cfg.local_disk = True
-        cfg.json_path = filedialog.asksaveasfilename(initialdir = cfg.json_folder_config, title = "Select File", filetypes = [("Json File", "*.json")])
+        try:
+            cfg.json_path = filedialog.asksaveasfilename(initialdir = cfg.json_folder_config, title = "Select File", filetypes = [("Json File", "*.json")])
+        except:
+            cfg.error.updateText("Upload failed", "red")
         cfg.session_name = cfg.getbasename(cfg.json_path)
         
         if cfg.img is not None: cfg.img.save()
@@ -1001,30 +1018,119 @@ class json_viewer(object):
         cfg.error.updateText("JSON Updated successfully", "pale green")
         self.refresh()
     
-    def displayUploadMenu(self, root):
-        if cfg.res.size == 0:
+    def displayUploadMenu(self, root, update = False):
+        freeze_flag = 0
+
+        
+        # If restaurant is recognised
+        if self.dbselect.get() not in ["No Database Selected", "No restaurants stored", "Enter New Restaurant"]: 
+            cfg.session_name = self.dbselect.get()
+            if update is False:
+                self.uploadDB()
+                return
+            else:
+                cfg.res_info = cfg.database.getResInfo(cfg.userid+"_"+cfg.session_name)
+                
+                for i in cfg.res_info_op:
+                    print(cfg.res_info)
+                    cfg.getvar()[i] = cfg.res_info[i]
+
+        
+                freeze_flag = 1
+                cfg.res_info.clear()
+
+
+        if cfg.res.size == 0 and update == False:
             cfg.error.updateText("[ERR] Need at least 1 node", "red")
             return
-        if self.dbselect.get() not in ["No Database Selected", "No restaurants stored", "Enter New Restaurant"]: 
-            cfg.error.updateText("Uploading to DB, please wait", "yellow")
-            self.uploadDB()
-            return
         self.helpMenu = Toplevel(root)
-        self.helpMenu.geometry('300x55')
-        self.helpMenu.configure(bg = "tomato2")
-        self.helpMenu.title("Enter Restaurant Name!")
+        self.helpMenu.geometry('300x750')
+        if not update:  self.helpMenu.configure(bg = "tomato2")
+        else     :  self.helpMenu.configure(bg = "sky blue")
+        self.helpMenu.title("Enter Restaurant Details!")
             # Icon of the window
         if platf() == 'Linux':
             img = PhotoImage(file= cfg.gif_path)
             self.helpMenu.tk.call('wm', 'iconphoto', self.helpMenu._w, img)
         elif platf() == 'Windows':
-            self.helpMenu.iconbitmap(cfg.icon_path)
+            self.helpMenu.iconbitmap(cfg.icon_path)        
+
         frame = Frame(self.helpMenu, bg = "gray10")
-        frame.pack(expand = 1)
-        self.text_input = StringVar()
-        text = Entry(frame, textvariable = self.text_input)
-        text.pack(expand = 1, padx = 10, pady = 10)
-        text.bind('<Return>', self.uploadDB)
+        info_frame1 = Frame(self.helpMenu, bg = "gray10")
+        info_frame2 = LabelFrame(self.helpMenu, bg = "gray10", text = "Enter location coordinates\nfor Google Map support!", font = ("Courier, 10"), foreground = "white")
+        info_frame3 = Frame(self.helpMenu, bg = "gray10")
+        info_frame4 = Frame(self.helpMenu, bg = "gray10")
+        Label(self.helpMenu, bg = "gray10", 
+        text = "Please enter the restaurant name,\nthat field is compulsory!\n\nYou can choose to input your\nrestaurant details so that\nother customers can find you!", 
+        height = 10, foreground = "white",font = ("Courier, 12")).pack(fill = X, side = TOP, pady = 15, padx = 10)
+
+        frame.pack(fill = X, side = TOP, pady = 15, padx = 10)
+        
+        info_frame2.pack(fill = X, side = TOP, pady = 2, padx = 10)
+        info_frame3.pack(fill = X, side = TOP, pady = 2, padx = 10)
+        info_frame1.pack(fill = X, side = TOP, pady = 2, padx = 10)
+        info_frame4.pack(fill = BOTH, side = TOP, pady = 2, padx = 2, expand = 1)
+
+        # LONG, LAT, ADDR, OPHR
+        
+        
+        Label(frame, text = "Restaurant Name", bg = "gray10", foreground = "white", font = ("Courier, 10")).pack(side = LEFT, padx = 10, pady = 10)
+        # restaurant nam -> text_input[0]
+        e = Entry(frame, textvariable = self.text_input[0], bg = "khaki")
+        e.pack(fill = X, padx = 8, pady = 10, side = LEFT, expand = 1)
+
+        res_op_hr = LabelFrame(info_frame1, text = "Operating hours: \neg. <Mon-Sun, 7.00am - 9.30pm>", bg = "gray10", foreground = "white", font = ("Courier, 10"))
+        res_op_hr.pack(expand = 1, fill = X)
+        # op hrs -> t1 
+        self.t1 = Text(res_op_hr, width = 15, height = 7)
+        self.t1.pack(padx = 2, pady = 2, fill = X)
+
+        res_addr_hr = LabelFrame(info_frame3, text = "Restaurant Address", bg = "gray10", foreground = "white", font = ("Courier, 10"))
+        res_addr_hr.pack(expand = 1, fill = X)
+        # addr -> t2
+        self.t2 = Text(res_addr_hr, width = 15, height = 7)
+        self.t2.pack(padx = 2, pady = 2, fill = X)
+
+        Label(info_frame2, text = "Latitude", bg = "gray10", foreground = "white", font = ("Courier, 10")).pack(side = LEFT, padx = 10, pady = 10)
+        Entry(info_frame2, textvariable = self.text_input[1], width = 7).pack(padx = 10, pady = 10, side = LEFT)
+        
+        Label(info_frame2, text = "Longitude", bg = "gray10", foreground = "white", font = ("Courier, 10")).pack(side = LEFT, padx = 10, pady = 10)
+        Entry(info_frame2, textvariable = self.text_input[2], width = 7).pack(padx = 8, pady = 10, side = LEFT)
+        #Button(info_frame4, text = "Register restaurant", command = self.uploadDB)
+        if update: Button(info_frame4, text = "Update restaurant", command = partial(self.updateInfo, False), font = ("Courier, 10"), height = 3).pack(fill = X, expand = 1, padx = 10, pady = 10)
+        else     : Button(info_frame4, text = "Register restaurant", command = partial(self.updateInfo, True), font = ("Courier, 10"), height = 3).pack(fill = X, expand = 1, padx = 10, pady = 10)
+
+        if freeze_flag: 
+            self.text_input[0].set(cfg.session_name)
+            e.config(state = DISABLED)
+            for i in cfg.res_info_op:
+                if cfg.getvar()[i] == '-' or cfg.getvar()[i] is None: pass
+                elif i == "res_addr":
+                    self.t2.insert(1.0, cfg.getvar()[i].rstrip('\n'))
+                elif i == "res_occup_hr":
+                    self.t1.insert(1.0, cfg.getvar()[i].rstrip('\n'))
+                elif i == "res_lat":
+                    self.text_input[1].set(cfg.getvar()[i].rstrip('\n'))
+                elif i == "res_lng":
+                    self.text_input[2].set(cfg.getvar()[i].rstrip('\n'))
+        
+
+    def updateInfo(self, push_floor_plan):
+        cfg.res_lat = self.text_input[1].get().rstrip('\n')
+        cfg.res_lng = self.text_input[2].get().rstrip('\n')
+        cfg.res_addr = self.t2.get(1.0, END).rstrip('\n')
+        cfg.res_occup_hr = self.t1.get(1.0, END).rstrip('\n')
+        for i in cfg.res_info_op:
+            if len(cfg.getvar()[i].rstrip('\n')) == 0:
+                print("here")
+                cfg.getvar()[i] = '-'
+        if push_floor_plan: self.uploadDB()
+        else              : 
+            for i in cfg.res_info_op:
+                cfg.resinfo[i] = cfg.getvar()[i]
+            if cfg.database.setResInfo(cfg.userid+"_"+cfg.session_name, cfg.resinfo): 
+                cfg.error.updateText("Updated Restaurant info!", "pale green")
+                self.helpMenu.destroy()
 
     def displayLoginMenu(self, root):
         self.helpMenu = Toplevel(root)
@@ -1134,8 +1240,10 @@ class json_viewer(object):
         while True: 
             if cfg.error.updateText("Uploading, please wait...", "yellow") == True: break
         if self.session_name_set is False:
-            if self.text_input.get() is "": return
-            cfg.session_name = self.text_input.get()
+            if self.text_input[0].get() is "": 
+                cfg.error.updateText("Empty field not allowed!", "Red")
+                return
+            cfg.session_name = self.text_input[0].get()
             self.helpMenu.destroy()
         self.session_name_set = False
         cfg.error.updateText("[DB] Created new session: "+ str(cfg.session_name), "pale green")
@@ -1143,6 +1251,12 @@ class json_viewer(object):
         cfg.database.clearDB(cfg.session_name)
         if cfg.img is not None: cfg.img.save()
         #cfg.json_path = cfg.json_path + ".json"
+
+        if cfg.myCanvas.floorplan_obj is None:
+            cfg.no_floor_plan = True
+        else:
+            cfg.no_floor_plan = False
+
         imagegen() # Generates template
         str1 = cfg.compile(cfg.json_folder, local_disk = False)
         self.updateText(str1+"\n", "p")
@@ -1154,7 +1268,11 @@ class json_viewer(object):
     
     def download(self):
         cfg.local_disk = True
-        filename = filedialog.askopenfilename(initialdir = cfg.json_folder_config, title = "Select File", filetypes = [("Json File", "*.json")])
+        try:
+            filename = filedialog.askopenfilename(initialdir = cfg.json_folder_config, title = "Select File", filetypes = [("Json File", "*.json")])
+        except:
+            cfg.error.updateText("Download failed", "red")
+            return
         cfg.session_name = cfg.getbasename(filename)
         if cfg.res.size: cfg.res.deleteAllNodes()
         if cfg.image_flag: cfg.myCanvas.deleteImage()
