@@ -177,9 +177,9 @@ def json_serialize_image(image_file):
         return None
 # Deserializes image from string to png, then save it in the specified file directory
 def json_deserialize_image(encoded_str,image_file):
-    result = encoded_str.encode("utf-8")
-    result = base64.b64decode(result)
     try:
+        result = encoded_str.encode("utf-8")
+        result = base64.b64decode(result)
         image_result = open(image_file, 'wb') # create a writable image and write the decoding result
         image_result.write(result)
     except:
@@ -207,9 +207,9 @@ def compile(root, local_disk = True):
     json_hash = cfg.res.tuple_idx
     json_coord = cfg.output_graphic_coord
     if image_flag == True:
-        json_coord["processed_img"] = json_serialize_image(cfg.get_output_graphic_path())
+        
         json_zipinfo["processed_floorplan"] = json_serialize_image(cfg.get_output_floor_plan_path())
-
+    json_coord["processed_img"] = json_serialize_image(cfg.get_output_graphic_path())
     # List of dictionaries containing serialised information. We will now write it into a json file to store in database/ local disk
     json_dict_list = [json_zipinfo, json_occupancy, json_hash, json_coord]
     name = cfg.userid + "_" + cfg.session_name
@@ -270,7 +270,7 @@ def decompile(root, local_disk = True):
         data = cfg.database.importFromDB(name, export_to_script = data)
         for i in json_dict_list_name:
             globals()[i] = data[json_dict_list_name.index(i)]
-        res_info = cfg.database.getResInfo(name)
+        resinfo = cfg.database.getResInfo(name)
 
 
     configinfo = json.loads(json_zipinfo.get("configinfo"))
@@ -282,8 +282,10 @@ def decompile(root, local_disk = True):
         cfg.json_deserialize_image(processed_img, cfg.get_output_graphic_path())
         cfg.json_deserialize_image(processed_floorplan, cfg.get_output_floor_plan_path())
         for i in res_info_op:
-            globals()[i] = resinfo[i] 
 
+            globals()[i] = resinfo[i] 
+    else:
+        no_floor_plan = False
     output_graphic_coord = json_coord
     cfg.box_len = json_coord['box_len']
     json_coord.pop('box_len')
