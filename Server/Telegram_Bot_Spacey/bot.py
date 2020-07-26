@@ -9,7 +9,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import os
 PORT = int(os.environ.get('PORT', 5000))
 
-_root = dir(dir(abspath(__file__)))
+#_root = dir(dir(abspath(__file__)))
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -26,7 +26,7 @@ def start(update, context):
 
 def help(update, context):
     """Send a message when the command /help is issued."""
-    update.message.reply_text(_root)
+    update.message.reply_text('cool')
 
 def echo(update, context):
     """Echo the user message."""
