@@ -20,10 +20,12 @@ import base64
 import res_info as res
 from multiprocessing import Process, Pipe, Lock
 import random
-import time
+
 import redis
 
 _root = dir(dir(__file__))
+PORT = int(os.environ.get('PORT', '8443'))
+TOKEN = '1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY'
 
 users_info_path = os.path.join(_root, "Telegram Bot\\users_info.csv")
 locations_path = os.path.join(_root, "Telegram Bot\\locations.csv")
@@ -957,7 +959,7 @@ def main():
     # limit global throughput to 3 messages per 3 seconds
     q = mq.MessageQueue(all_burst_limit=29, all_time_limit_ms=1017)
     request = Request(con_pool_size=8)
-    spaceybot = MQBot('1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY', request=request, mqueue=q)
+    spaceybot = MQBot(TOKEN, request=request, mqueue=q)
 
     # Create the Updater and pass in bot's token.
     updater = Updater(bot=spaceybot, use_context = True)
@@ -1026,7 +1028,11 @@ def main():
     # job_minute2 = j.run_repeating(update_seats, interval=888, first=0) #run every 3 mins 180
     
     # Start the Bot
-    updater.start_polling()
+    updater.start_webhook(listen="0.0.0.0",
+                      port=PORT,
+                      url_path=TOKEN)
+    updater.bot.set_webhook("https://spaceytelegram.herokuapp.com/" + TOKEN)
+
     updater.idle()
 
 
