@@ -84,6 +84,7 @@ class myCanvasObject(object):
 
     def deleteNode(self, idx):
         if cfg.prev_node_idx is idx: cfg.prev_node_idx = None
+        print("canvas")
         print("before ", self.rec_obj.keys())
         self.canvas.delete(self.rec_obj[idx])
         del self.rec_obj[idx]
@@ -363,7 +364,7 @@ class menu_upload(object):
         cfg.myCanvas.deleteImage()
         cfg.res.deleteAllNodes()
         cfg.get_output_graphic_path()
-        cfg.no_floor_plan = True
+    
         
         
 
@@ -1011,6 +1012,10 @@ class json_viewer(object):
         
         if cfg.img is not None: cfg.img.save()
         #cfg.json_path = cfg.json_path + ".json"
+        if cfg.myCanvas.floorplan_obj is None:
+            cfg.no_floor_plan = True
+        else:
+            cfg.no_floor_plan = False
         imagegen() # Generates template
         str1 = cfg.compile(cfg.json_folder)
         self.updateText(str1+"\n", "p")
