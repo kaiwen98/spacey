@@ -934,7 +934,6 @@ def setspaceyvalue(update,context):
 #     time_now = str(localtime.tm_hour)+':'+str(localtime.tm_min)+':'+str(localtime.tm_sec)
 #     context.bot_data['time_updated'] = date + time_now
  
-
 class MQBot(telegram.bot.Bot):
     '''A subclass of Bot which delegates send method handling to MQ'''
     def __init__(self, *args, is_queued_def=True, mqueue=None, **kwargs):
@@ -964,7 +963,7 @@ def main():
     spaceybot = MQBot(TOKEN, request=request, mqueue=q)
 
     # Create the Updater and pass in bot's token.
-    updater = Updater(bot=spaceybot, use_context = True)
+    updater = Updater(TOKEN,bot=spaceybot, use_context = True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
