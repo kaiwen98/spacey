@@ -126,8 +126,7 @@ class ResServer(object):
         for i in range(len(self.available_restaurants_name)):
             
             occupancy = {}
-            full_name = self.userID + "_" + \
-                self.available_restaurants_name[i]
+            full_name = self.userID + "_" + self.available_restaurants_name[i]
             full_name_occupancy = full_name + "_occupancy"
 
             # occupancy = cfg.database.client.hgetall(full_name_occupancy)

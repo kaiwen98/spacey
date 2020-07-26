@@ -181,11 +181,8 @@ def check_what(update, context):
         for loc_data, obj_data in restaurants_data.items():
             if location == loc_data:
                 occupancy = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
-                report("Starting plot")
                 imageupdate(obj_data, occupancy)
-                report("end imgupdate plot")
                 imagegen(obj_data)
-                report("end imggen  plot")
 
         if seats_occupancy < 50:
             alert = green_alert
@@ -196,8 +193,8 @@ def check_what(update, context):
 
         #Send occupancy data, pie chart and floorplan
         context.bot.send_message(user_id, text=seats_emoji+"<b> Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%) "+ alert,parse_mode='HTML')
-        #context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\chart_'+str(location)+'.png', 'rb'))
-        context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\output_NUS_'+str(location)+'.png', 'rb'))
+        context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\chart_'+str(location)+'.png', 'rb'))
+        context.bot.send_photo(user_id, photo=open(join(image_output_graphic_folder,'output_NUS_'+str(location)+'.png'), 'rb'))
 
         keyboard=[[InlineKeyboardButton("Operation Hours", callback_data='Operation Hours'),
             InlineKeyboardButton("How to go", callback_data='How to go'),
@@ -1038,7 +1035,7 @@ def main():
     """
     updater.start_polling()
     """
-
+    
     updater.start_webhook(listen="0.0.0.0",
                         port= int(PORT),
                         url_path=TOKEN)
