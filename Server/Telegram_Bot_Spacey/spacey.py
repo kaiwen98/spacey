@@ -968,7 +968,7 @@ def main():
     spaceybot = MQBot(TOKEN, request=request, mqueue=q)
 
     # Create the Updater and pass in bot's token.
-    updater = Updater(TOKEN,bot=spaceybot, use_context = True)
+    updater = Updater(bot=spaceybot, use_context = True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
