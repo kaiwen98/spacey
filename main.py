@@ -3,8 +3,8 @@ import sys
 root = dirname(abspath(__file__))
 sys.path.append(join(root, "Server"))
 sys.path.append(join(root, "Server", "Telegram_Bot_Spacey"))
-from Server.Telegram_Bot_Spacey import bot
+from Server.Telegram_Bot_Spacey import botw
 from Server.Telegram_Bot_Spacey import spacey
 
 if __name__ == "__main__":
-    bot.main()
+    botw.main()
