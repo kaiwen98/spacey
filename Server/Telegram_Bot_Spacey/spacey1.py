@@ -19,7 +19,6 @@ from os.path import dirname as dir, splitext, basename, join, abspath
 import sys
 import base64
 import res_info as res
-from multiprocessing import Process, Pipe, Lock
 import random
 import time
 import redis
@@ -197,7 +196,7 @@ def check_what(update, context):
 
         #Send occupancy data, pie chart and floorplan
         context.bot.send_message(user_id, text=seats_emoji+"<b> Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%) "+ alert,parse_mode='HTML')
-        context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\chart_'+str(location)+'.png', 'rb'))
+        #context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\chart_'+str(location)+'.png', 'rb'))
         context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\output_NUS_'+str(location)+'.png', 'rb'))
 
         keyboard=[[InlineKeyboardButton("Operation Hours", callback_data='Operation Hours'),
