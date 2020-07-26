@@ -25,7 +25,7 @@ import redis
 
 _root = dir(dir(abspath(__file__)))
 print("_root: ", _root)
-PORT = int(os.environ.get('PORT', '5000'))
+PORT = int(os.environ.get('PORT', 5000))
 TOKEN = '1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY'
 
 users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
