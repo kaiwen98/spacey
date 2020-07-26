@@ -1024,12 +1024,13 @@ class json_viewer(object):
         self.refresh()
     
     def displayUploadMenu(self, root, update = False):
-        freeze_flag = 0
+
 
         
         # If restaurant is recognised
         if self.dbselect.get() not in ["No Database Selected", "No restaurants stored", "Enter New Restaurant"]: 
             cfg.session_name = self.dbselect.get()
+
             if update is False:
                 self.uploadDB()
                 return
@@ -1040,8 +1041,7 @@ class json_viewer(object):
                     print(cfg.res_info)
                     cfg.getvar()[i] = cfg.res_info[i]
 
-        
-                freeze_flag = 1
+
                 cfg.res_info.clear()
 
 
@@ -1050,9 +1050,11 @@ class json_viewer(object):
             return
         self.helpMenu = Toplevel(root)
         self.helpMenu.geometry('300x750')
-        if not update:  self.helpMenu.configure(bg = "tomato2")
-        else     :  self.helpMenu.configure(bg = "sky blue")
-        self.helpMenu.title("Enter Restaurant Details!")
+        if update:  self.helpMenu.configure(bg = "sky blue")
+        else     :  self.helpMenu.configure(bg = "tomato2")
+
+        if update: self.helpMenu.title("Update Restaurant Details!")
+        else     : self.helpMenu.title("Enter Restaurant Details!")
             # Icon of the window
         if platf() == 'Linux':
             img = PhotoImage(file= cfg.gif_path)
@@ -1065,8 +1067,12 @@ class json_viewer(object):
         info_frame2 = LabelFrame(self.helpMenu, bg = "gray10", text = "Enter location coordinates\nfor Google Map support!", font = ("Courier, 10"), foreground = "white")
         info_frame3 = Frame(self.helpMenu, bg = "gray10")
         info_frame4 = Frame(self.helpMenu, bg = "gray10")
+
+        if update: _text = "Update your restaurant information."
+        else:      _text = "Please enter the restaurant name,\nthat field is compulsory!\n\nYou can choose to input your\nrestaurant details so that\nother customers can find you!", 
+
         Label(self.helpMenu, bg = "gray10", 
-        text = "Please enter the restaurant name,\nthat field is compulsory!\n\nYou can choose to input your\nrestaurant details so that\nother customers can find you!", 
+        text = _text,
         height = 10, foreground = "white",font = ("Courier, 12")).pack(fill = X, side = TOP, pady = 15, padx = 10)
 
         frame.pack(fill = X, side = TOP, pady = 15, padx = 10)
@@ -1105,7 +1111,7 @@ class json_viewer(object):
         if update: Button(info_frame4, text = "Update restaurant", command = partial(self.updateInfo, False), font = ("Courier, 10"), height = 3).pack(fill = X, expand = 1, padx = 10, pady = 10)
         else     : Button(info_frame4, text = "Register restaurant", command = partial(self.updateInfo, True), font = ("Courier, 10"), height = 3).pack(fill = X, expand = 1, padx = 10, pady = 10)
 
-        if freeze_flag: 
+        if update: 
             self.text_input[0].set(cfg.session_name)
             e.config(state = DISABLED)
             for i in cfg.res_info_op:
@@ -1119,7 +1125,14 @@ class json_viewer(object):
                     self.text_input[1].set(temp)
                 elif i == "res_lng":
                     self.text_input[2].set(temp)
-        
+        else:    
+            temp = ""   
+            self.t2.insert(1.0, temp)
+            self.t1.insert(1.0, temp)
+            self.text_input[0].set(temp)
+            self.text_input[1].set(temp)
+            self.text_input[2].set(temp)
+
 
     def updateInfo(self, push_floor_plan):
         cfg.res_lat = self.text_input[1].get().rstrip('\n')
