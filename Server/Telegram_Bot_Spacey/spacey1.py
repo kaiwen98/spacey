@@ -1,3 +1,4 @@
+
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler
 from telegram.ext import messagequeue as mq
 from telegram.utils.request import Request
@@ -14,22 +15,19 @@ import json
 import config as cfg
 from imagegen import *
 import os
-from os.path import dirname as dir, splitext, basename, join, abspath
+from os.path import dirname as dir, splitext, basename, join
 import sys
 import base64
 import res_info as res
 from multiprocessing import Process, Pipe, Lock
 import random
-
+import time
 import redis
 
-_root = dir(dir(abspath(__file__)))
-print("_root: ", _root)
-PORT = int(os.environ.get('PORT', 5000))
-TOKEN = '1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY'
+_root = dir(dir(__file__))
 
-users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
-locations_path = os.path.join(_root, "Telegram_Bot_Spacey", "locations.csv")
+users_info_path = os.path.join(_root, "Telegram Bot\\users_info.csv")
+locations_path = os.path.join(_root, "Telegram Bot\\locations.csv")
 image_folder = os.path.join(_root, "images")
 image_output_graphic_folder = os.path.join(image_folder, "output graphic")
 
@@ -178,13 +176,12 @@ def check_what(update, context):
         restaurants_data = config_obj.get_info()
         for loc_data, obj_data in restaurants_data.items():
             if location == loc_data:
-                
                 occupancy = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
-                print("Start to imgupdate")
+                print("Starting plot")
                 imageupdate(obj_data, occupancy)
-                print("Start to imggen")
+                print("end imgupdate plot")
                 imagegen(obj_data)
-                print("Success")
+                print("end imggen  plot")
 
         if seats_occupancy < 50:
             alert = green_alert
@@ -938,6 +935,7 @@ def setspaceyvalue(update,context):
 #     time_now = str(localtime.tm_hour)+':'+str(localtime.tm_min)+':'+str(localtime.tm_sec)
 #     context.bot_data['time_updated'] = date + time_now
  
+
 class MQBot(telegram.bot.Bot):
     '''A subclass of Bot which delegates send method handling to MQ'''
     def __init__(self, *args, is_queued_def=True, mqueue=None, **kwargs):
@@ -958,18 +956,12 @@ class MQBot(telegram.bot.Bot):
         OPTIONAL arguments'''
         return super(MQBot, self).send_message(*args, **kwargs)
 
-def report(err):
-    with open("err.txt", "w") as outfile:
-        outfile.write(err)
 
 def main():
-    report("Start")
-    cfg.main()
-    report("cfg done")
     # limit global throughput to 3 messages per 3 seconds
     q = mq.MessageQueue(all_burst_limit=29, all_time_limit_ms=1017)
     request = Request(con_pool_size=8)
-    spaceybot = MQBot(TOKEN, request=request, mqueue=q)
+    spaceybot = MQBot('1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY', request=request, mqueue=q)
 
     # Create the Updater and pass in bot's token.
     updater = Updater(bot=spaceybot, use_context = True)
@@ -1038,26 +1030,12 @@ def main():
     # job_minute2 = j.run_repeating(update_seats, interval=888, first=0) #run every 3 mins 180
     
     # Start the Bot
-
-    ### THIS IS TO START FROM HEROKU ###
-    
-    updater.start_webhook(listen="0.0.0.0",
-                      port= int(PORT),
-                      url_path=TOKEN)
-    updater.bot.setWebhook("https://spaceyherok.herokuapp.com/" + TOKEN)
-    
-    ### THIS IS TO START OUTSIDE HEROKU ###
-    """
     updater.start_polling()
-    """
-    report("gg to idle")
     updater.idle()
 
-def test():
-    print("boop")
 
 if __name__ == '__main__':
-    
+    cfg.main()
     # userID = 'NUS'
     # cfg.database.timeout()
     # x = ResServer(userID)
@@ -1065,5 +1043,3 @@ if __name__ == '__main__':
     # p.start()
     main()
 
-
-#https://api.telegram.org/botNIMAMA/getUpdates
