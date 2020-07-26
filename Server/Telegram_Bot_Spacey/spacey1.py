@@ -15,7 +15,7 @@ import json
 import config as cfg
 from imagegen import *
 import os
-from os.path import dirname as dir, splitext, basename, join
+from os.path import dirname as dir, splitext, basename, join, abspath
 import sys
 import base64
 import res_info as res
@@ -24,8 +24,8 @@ import random
 import time
 import redis
 
-_root = dir(dir(__file__))
-
+_root = dir(dir(abspath(__file__)))
+PORT = int(os.environ.get('PORT', 5000))
 users_info_path = os.path.join(_root, "Telegram Bot\\users_info.csv")
 locations_path = os.path.join(_root, "Telegram Bot\\locations.csv")
 image_folder = os.path.join(_root, "images")
@@ -1030,7 +1030,15 @@ def main():
     # job_minute2 = j.run_repeating(update_seats, interval=888, first=0) #run every 3 mins 180
     
     # Start the Bot
+    """
     updater.start_polling()
+    """
+
+    updater.start_webhook(listen="0.0.0.0",
+                        port= int(PORT),
+                        url_path=TOKEN)
+    updater.bot.setWebhook("https://spaceyherok.herokuapp.com/" + TOKEN)
+    
     updater.idle()
 
 

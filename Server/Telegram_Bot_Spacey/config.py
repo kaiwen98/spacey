@@ -11,11 +11,10 @@
 import config as cfg
 from imagegen import *
 import os
-from os.path import dirname as dir, splitext, basename, join
+from os.path import dirname as dir, splitext, basename, join, abspath
 import sys
 import base64
 import res_info as res
-import threading
 import random
 import time
 import redis
@@ -23,7 +22,7 @@ import redis
 
 # Need to choose depending on running from exe or py. Should point to /Server
 # root = dir(dir(dir(sys.executable)))
-_root = dir(dir(__file__))
+_root = dir(dir(abspath(__file__)))
 # print(_root)
 
 # To extract database interface functions
