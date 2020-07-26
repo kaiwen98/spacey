@@ -36,6 +36,11 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                      level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+def report(err):
+    with open("err.txt", "w") as outfile:
+        outfile.write(err)
+
 def error_callback(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
@@ -177,11 +182,11 @@ def check_what(update, context):
         for loc_data, obj_data in restaurants_data.items():
             if location == loc_data:
                 occupancy = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
-                print("Starting plot")
+                report("Starting plot")
                 imageupdate(obj_data, occupancy)
-                print("end imgupdate plot")
+                report("end imgupdate plot")
                 imagegen(obj_data)
-                print("end imggen  plot")
+                report("end imggen  plot")
 
         if seats_occupancy < 50:
             alert = green_alert
