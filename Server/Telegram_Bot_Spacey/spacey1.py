@@ -26,11 +26,11 @@ import redis
 
 _root = dir(dir(abspath(__file__)))
 PORT = int(os.environ.get('PORT', 5000))
-users_info_path = os.path.join(_root, "Telegram Bot\\users_info.csv")
-locations_path = os.path.join(_root, "Telegram Bot\\locations.csv")
+users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
+locations_path = os.path.join(_root, "Telegram_Bot_Spacey", "locations.csv")
 image_folder = os.path.join(_root, "images")
 image_output_graphic_folder = os.path.join(image_folder, "output graphic")
-
+TOKEN = '1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY'
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
@@ -958,6 +958,7 @@ class MQBot(telegram.bot.Bot):
 
 
 def main():
+    cfg.main()
     # limit global throughput to 3 messages per 3 seconds
     q = mq.MessageQueue(all_burst_limit=29, all_time_limit_ms=1017)
     request = Request(con_pool_size=8)
@@ -1043,7 +1044,7 @@ def main():
 
 
 if __name__ == '__main__':
-    cfg.main()
+    
     # userID = 'NUS'
     # cfg.database.timeout()
     # x = ResServer(userID)
