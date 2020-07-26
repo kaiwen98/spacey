@@ -9,8 +9,8 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import os
 PORT = int(os.environ.get('PORT', 5000))
 
-_root = dir(dir(abspath(__file__)))
-users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
+#_root = dir(dir(abspath(__file__)))
+#users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
