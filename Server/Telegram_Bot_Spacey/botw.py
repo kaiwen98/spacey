@@ -8,7 +8,7 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import os
 from os.path import dirname, abspath, join
-import redis
+#
 PORT = int(os.environ.get('PORT', 5000))
 
 _root = dirname(dirname(abspath(__file__)))
