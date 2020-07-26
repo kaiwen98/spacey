@@ -954,9 +954,14 @@ class MQBot(telegram.bot.Bot):
         OPTIONAL arguments'''
         return super(MQBot, self).send_message(*args, **kwargs)
 
+def report(err):
+    with open("err.txt", "w") as outfile:
+        outfile.write(err)
 
 def main():
+    report("Start")
     cfg.main()
+    report("cfg done")
     # limit global throughput to 3 messages per 3 seconds
     q = mq.MessageQueue(all_burst_limit=29, all_time_limit_ms=1017)
     request = Request(con_pool_size=8)
@@ -1041,7 +1046,7 @@ def main():
     """
     updater.start_polling()
     """
-
+    report("gg to idle")
     updater.idle()
 
 def test():
