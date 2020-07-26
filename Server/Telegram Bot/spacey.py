@@ -23,7 +23,6 @@ import random
 import time
 import redis
 
-
 _root = dir(dir(__file__))
 
 users_info_path = os.path.join(_root, "Telegram Bot\\users_info.csv")
@@ -82,11 +81,13 @@ def start(update, context):
                                             '/menu to start checking details of a location.\n'
                                             +diamond+ ' <b>Occupancy.</b> Gives current seat occupancy of the given location.\n'
                                             +diamond+' <b>Operation Hours.</b> Gives the opening hours of the given location.\n'
-                                            +diamond+' <b>How to go.</b> Gives the address and map of the given location.\n\n'
+                                            +diamond+' <b>How to go.</b> Gives the address and map of the given location.\n'
+                                            +diamond+' <b>Recent statistics.</b> Gives the recent visitors count of given location.\n\n'
                                             '/notifications to subscribe to notifications.\n'
-                                            +diamond+' <b>Daily notifications.</b> Sends daily updates at 12pm of your chosen location.\n'
+                                            +diamond+' <b>Daily notifications.</b> Sends daily updates of your chosen location at different timings.\n'
                                             +diamond+' <b>>80% notifications.</b> Sends updates of your chosen location whenever it is reaching its full capacity.\n'
-                                            '<i>Note: seat occupancies are updated through sensors. However, for simulation purposes, use /setspaceyoccupancy to manipulate the occupancy of <u>Spacey Cafe</u> to either 20%, 60% or 80%!</i>\n', parse_mode = 'HTML')
+                                            '<i>Note: seat occupancies are updated through sensors. However, for simulation purposes, use /setspaceyoccupancy to manipulate the occupancy of <u>Spacey Cafe</u> to either 20%, 60% or 80%!</i>\n'
+                                            '<i>Note 2: >80% notifications and latest visitors count are checked every 2mins and 5 mins respectively for testing purposes.</i>\n\n', parse_mode = 'HTML')
 
 def menu(update,context):
     locations_list = cfg.database.get_all_restaurant_from_user('NUS')
@@ -191,32 +192,38 @@ def check_what(update, context):
         context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\output_NUS_'+location+'.png', 'rb'))
 
         keyboard=[[InlineKeyboardButton("Operation Hours", callback_data='Operation Hours'),
-            InlineKeyboardButton("How to go", callback_data='How to go')],
-            [InlineKeyboardButton("Recent Statistics", callback_data='Recent Statistics')],
-            [InlineKeyboardButton("End", callback_data='End')]]
+            InlineKeyboardButton("How to go", callback_data='How to go'),
+            InlineKeyboardButton("Recent Statistics", callback_data='Recent Statistics')],
+            [InlineKeyboardButton("Back to Menu", callback_data='Back to Menu'),InlineKeyboardButton("End", callback_data='End')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         context.bot.send_message(user_id, text="Anything else regarding " + location +" that you would like to know about?", reply_markup=reply_markup)
         return CHECKWHAT
     
     elif option == 'Operation Hours':
         try:
-            context.bot.send_message(user_id, text=location_data[location]["Operation Hours"])
+            # context.bot.send_message(user_id, text=location_data[location]["Operation Hours"])
+            data = cfg.database.client.hgetall("NUS_"+location+"_res_info")
+            context.bot.send_message(user_id, data['res_occup_hr'])
         except:
             context.bot.send_message(user_id, text='No data found!')
 
         keyboard=[[InlineKeyboardButton("Occupancy", callback_data='Occupancy'),
             InlineKeyboardButton("How to go", callback_data='How to go'),
             InlineKeyboardButton("Recent Statistics", callback_data='Recent Statistics')],
-            [InlineKeyboardButton("End", callback_data='End')]]
+            [InlineKeyboardButton("Back to Menu", callback_data='Back to Menu'),InlineKeyboardButton("End", callback_data='End')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         context.bot.send_message(user_id, text="Anything else regarding " + location +" that you would like to know about?", reply_markup=reply_markup)
         return CHECKWHAT
 
     elif option == 'How to go':
         try:
-            latitude = location_data[location]['Latitude']
-            longitude = location_data[location]['Longitude']
-            address = location_data[location]['Address']
+            # latitude = location_data[location]['Latitude']
+            # longitude = location_data[location]['Longitude']
+            # address = location_data[location]['Address']
+            data = cfg.database.client.hgetall("NUS_"+location+"_res_info")
+            latitude = data['res_lat']
+            longitude = data['res_lng']
+            address = data['res_addr']      
             context.bot.send_venue(user_id, latitude=latitude, longitude=longitude, title=location, address=address)
         except:
             context.bot.send_message(user_id, text='No data found!')
@@ -224,7 +231,7 @@ def check_what(update, context):
         keyboard=[[InlineKeyboardButton("Occupancy", callback_data='Occupancy'),
             InlineKeyboardButton("Operation Hours", callback_data='Operation Hours'),
             InlineKeyboardButton("Recent Statistics", callback_data='Recent Statistics')],
-            [InlineKeyboardButton("End", callback_data='End')]]
+            [InlineKeyboardButton("Back to Menu", callback_data='Back to Menu'),InlineKeyboardButton("End", callback_data='End')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         context.bot.send_message(user_id, text="Anything else regarding " + location +" that you would like to know about?", reply_markup=reply_markup)
         return CHECKWHAT
@@ -259,12 +266,21 @@ def check_what(update, context):
         keyboard=[[InlineKeyboardButton("Occupancy", callback_data='Occupancy'),
             InlineKeyboardButton("Operation Hours", callback_data='Operation Hours'),
             InlineKeyboardButton("How to go", callback_data='How to go')],
-            [InlineKeyboardButton("End", callback_data='End')]]
+            [InlineKeyboardButton("Back to Menu", callback_data='Back to Menu'),InlineKeyboardButton("End", callback_data='End')]]
         reply_markup = InlineKeyboardMarkup(keyboard)
         context.bot.send_message(user_id, text="Anything else regarding " + location +" that you would like to know about?", reply_markup=reply_markup)
         return CHECKWHAT
 
     elif option == 'Back':
+        locations_list = cfg.database.get_all_restaurant_from_user('NUS')
+        keyboard=[]
+        for location in locations_list:
+            keyboard.append([InlineKeyboardButton(location, callback_data=location)])
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        context.bot.send_message(user_id, 'Which location would you like to check?', reply_markup=reply_markup)
+        return LOCATION
+
+    elif option == 'Back to Menu':
         locations_list = cfg.database.get_all_restaurant_from_user('NUS')
         keyboard=[]
         for location in locations_list:
@@ -283,54 +299,9 @@ def test(update, context):
     chatid = update.message.from_user.id
     grpid = update.message.chat.id
 
-    # cfg.main()
-    obj = cfg.ResServer('NUS')
-    y = obj.get_info()
+    data = cfg.database.client.hgetall("NUS_Deck_res_info")
+    update.message.reply_text(data['res_lat'])
     
-    data = cfg.database.client.hgetall("NUS_Deck_totalvisitors")
-    latest10 = list(data)[-10:]
-    total_visitors_list = []
-    for timestamp in latest10:
-        total_visitors_list.append(int(data[timestamp]))
-        
-    height = total_visitors_list
-    bars = latest10
-    y_pos = np.arange(len(bars))
-    #Set y-ticks to whole numbers
-    yticks_values = range(min(height), (max(height)+1))
-    plt.yticks(yticks_values)
-    # Create bars
-    plt.bar(y_pos, height)
-    location = "Deck"
-    # Create names on the x-axis
-    plt.xticks(y_pos, bars,rotation='vertical')
-    # Set labels
-    plt.ylabel("Number of users")
-    plt.xlabel("Time")
-    plt.title("Graph of most recent visitors count in "+location+'.\n')
-    plt.tight_layout()
-    plt.savefig(image_output_graphic_folder+'\\bar_'+str(location)+'.png')
-    context.bot.send_photo(chatid, photo=open(image_output_graphic_folder+'\\bar_'+location+'.png', 'rb'))
-    plt.clf()
-    
-
-    # context.bot.send_message(chat_id='36927293', text=)
-    # occupancy = cfg.database.client.hgetall('NUS_Spacey cafe_occupancy')
-    # context.bot.send_message(chat_id=chatid, text=y)
-    # for i in cfg.database.client.keys():
-    #     context.bot.send_message(chat_id=chatid, text=i)
-    
-    #results = getcsv()
-    # context.bot.send_photo(chatid, photo=open('C:\\Users\chuanan\Desktop\lol\spacey\Server\images\output graphic\output_NUS_Deck.png', 'rb'))
-    # context.bot.send_photo('C:\Users\chuanan\Desktop\lol\spacey\Server\images\output graphic')
-    #chat_type = update.message.chat.type
-    
-    #bot.send_message(772520752, "<b>SUCK MY KUKUJIAO</b>",parse_mode='HTML')
-    # keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
-    #          InlineKeyboardButton("Option 2", callback_data='2')],
-    #       [InlineKeyboardButton("Option 3", callback_data='3')]]
-    # reply_markup = InlineKeyboardMarkup(keyboard)
-    # update.message.reply_text('Please choose:', reply_markup=reply_markup)
 def notifications(update, context):
     user_id = str(update.message.from_user.id)
 
@@ -637,6 +608,7 @@ def unsubscribe_type(update,context):
             elif query.data == 'Unsubscribe>80%':
                 location_removed = data['full_notifications']
                 data['full_notifications'] = 0
+                data['flag'] = 0
                 notification_type =  '>80% notifications'
                 
             elif query.data == 'UnsubscribeBoth':
@@ -645,6 +617,7 @@ def unsubscribe_type(update,context):
                 data['daily_notifications'] = 0
                 data['daily_time'] = 0
                 data['full_notifications'] = 0
+                data['flag'] = 0
                 notification_type =  'Both notifications'
                 
             elif query.data == 'Cancel':
@@ -703,13 +676,13 @@ def daily_notifications_12pm(context):
             # plt.savefig(image_output_graphic_folder+'\\chart_'+str(location)+'.png')
             # plt.clf()
             #Generate FLOORPLAN
-            config_obj = cfg.ResServer('NUS')
-            restaurants_data = config_obj.get_info()
-            for loc_data, obj_data in restaurants_data.items():
-                if location == loc_data:
-                    occupancy = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
-                    imageupdate(obj_data, occupancy)
-                    imagegen(obj_data)
+            # config_obj = cfg.ResServer('NUS')
+            # restaurants_data = config_obj.get_info()
+            # for loc_data, obj_data in restaurants_data.items():
+            #     if location == loc_data:
+            #         occupancy = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
+            #         imageupdate(obj_data, occupancy)
+            #         imagegen(obj_data)
 
             if seats_occupancy < 50:
                 alert = green_alert
@@ -818,15 +791,15 @@ def full_notifications(context):
                 # plt.clf()        
 
                 #Generate FLOORPLAN
-                config_obj = cfg.ResServer('NUS')
-                restaurants_data = config_obj.get_info()
-                for loc_data, obj_data in restaurants_data.items():
-                    if location == loc_data:
-                        occupancy = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
-                        imageupdate(obj_data, occupancy)
-                        imagegen(obj_data)
+                # config_obj = cfg.ResServer('NUS')
+                # restaurants_data = config_obj.get_info()
+                # for loc_data, obj_data in restaurants_data.items():
+                #     if location == loc_data:
+                #         occupancy = cfg.database.client.hgetall('NUS_'+location+'_occupancy')
+                #         imageupdate(obj_data, occupancy)
+                #         imagegen(obj_data)
 
-                #Send occupancy data, pie chart and floorplan
+                #Send occupancy data
                 context.bot.send_message(user_id, text="Hey "+ name +"! <b><u>"+location+"</u></b> is getting crowded!\n\n"+seats_emoji+"<b>Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%)"+red_alert,parse_mode='HTML')
                 # context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\chart_'+str(location)+'.png', 'rb')) 
                 # context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\output_NUS_'+location+'.png', 'rb'))
@@ -881,7 +854,7 @@ def setspaceyvalue(update,context):
     query = update.callback_query
     user_id = query.from_user.id
     query.edit_message_text(text="Selected option: {}".format(query.data))
-    occupancy_data = cfg.database.client.hgetall('NUS_Spacey_occupancy')
+    occupancy_data = cfg.database.client.hgetall('NUS_Spacey Cafe_occupancy')
     count = 0
     if query.data == '80%':
         for seat_num, status in occupancy_data.items():
@@ -913,7 +886,7 @@ def setspaceyvalue(update,context):
             else:
                 occupancy_data[seat_num] = '0'
     percentage = round(count/len(occupancy_data)*100)     
-    cfg.database.client.hmset('NUS_Spacey_occupancy', occupancy_data)    
+    cfg.database.client.hmset('NUS_Spacey Cafe_occupancy', occupancy_data)    
     context.bot.send_message(user_id, 'Occupancy for Spacey Cafe set to <b>'+str(percentage)+'</b>%!' ,parse_mode='HTML')
     return ConversationHandler.END
 
@@ -984,7 +957,7 @@ def main():
     # limit global throughput to 3 messages per 3 seconds
     q = mq.MessageQueue(all_burst_limit=29, all_time_limit_ms=1017)
     request = Request(con_pool_size=8)
-    spaceybot = MQBot(TOKEN, request=request, mqueue=q)
+    spaceybot = MQBot('1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY', request=request, mqueue=q)
 
     # Create the Updater and pass in bot's token.
     updater = Updater(bot=spaceybot, use_context = True)
@@ -1021,15 +994,15 @@ def main():
     j = updater.job_queue
 
     # Set daily notifications
-    daily_notification_12pm_t = datetime.time(15,10,00,000000)
+    daily_notification_12pm_t = datetime.time(4,00,00,000000)
     dp.add_handler(CallbackQueryHandler(daily_notifications_12pm))
     job_daily1 = j.run_daily(daily_notifications_12pm, daily_notification_12pm_t)
 
-    daily_notification_1pm_t = datetime.time(15,12,00,000000)
+    daily_notification_1pm_t = datetime.time(5,00,00,000000)
     dp.add_handler(CallbackQueryHandler(daily_notifications_1pm))
     job_daily2 = j.run_daily(daily_notifications_1pm, daily_notification_1pm_t)
 
-    daily_notification_2pm_t = datetime.time(15,14,00,000000)
+    daily_notification_2pm_t = datetime.time(6,00,00,000000)
     dp.add_handler(CallbackQueryHandler(daily_notifications_2pm))
     job_daily3 = j.run_daily(daily_notifications_2pm, daily_notification_2pm_t)
 
@@ -1043,7 +1016,7 @@ def main():
 
     # Set >80% notifications
     dp.add_handler(CallbackQueryHandler(full_notifications))
-    job_minute1 = j.run_repeating(full_notifications, interval=300, first=0) #check and alert every 2 mins
+    job_minute1 = j.run_repeating(full_notifications, interval=120, first=0) #check and alert every 2 mins
 
     dp.add_handler(CallbackQueryHandler(hourly_update))
     job_minute2 = j.run_repeating(hourly_update, interval=300, first=0)
@@ -1059,6 +1032,11 @@ def main():
 
 if __name__ == '__main__':
     cfg.main()
+    # userID = 'NUS'
+    # cfg.database.timeout()
+    # x = ResServer(userID)
+    # p = Process(target=x.scan_update)
+    # p.start()
     main()
 
 
