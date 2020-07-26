@@ -10,8 +10,6 @@ import os
 from os.path import dirname, abspath, join
 PORT = int(os.environ.get('PORT', 5000))
 
-_root = dirname(dirname(abspath(__file__)))
-users_info_path = join(_root, "Telegram_Bot_Spacey", "users_info.csv")
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -24,7 +22,7 @@ TOKEN = '1299596539:AAGD6nFaVfn2FF0EbhdXvLYlrGxSE-NQKr8'
 # context. Error handlers also receive the raised TelegramError object in error.
 def start(update, context):
     """Send a message when the command /start is issued."""
-    update.message.reply_text(users_info_path)
+    update.message.reply_text('hi')
 
 def help(update, context):
     """Send a message when the command /help is issued."""
