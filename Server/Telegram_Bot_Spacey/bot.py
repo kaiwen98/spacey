@@ -23,7 +23,7 @@ TOKEN = '1299596539:AAGD6nFaVfn2FF0EbhdXvLYlrGxSE-NQKr8'
 # context. Error handlers also receive the raised TelegramError object in error.
 def start(update, context):
     """Send a message when the command /start is issued."""
-    update.message.reply_text(users_info_path)
+    update.message.reply_text('f')
 
 def help(update, context):
     """Send a message when the command /help is issued."""
