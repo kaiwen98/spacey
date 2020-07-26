@@ -7,4 +7,4 @@ from Server.Telegram_Bot_Spacey import bot
 from Server.Telegram_Bot_Spacey import spacey
 
 if __name__ == "__main__":
-    spacey.main()
+    bot.main()
