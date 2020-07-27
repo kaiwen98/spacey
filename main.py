@@ -5,7 +5,7 @@ sys.path.append(join(root, "Server"))
 sys.path.append(join(root, "Server", "Telegram_Bot_Spacey"))
 from Server.Telegram_Bot_Spacey import botw
 from Server.Telegram_Bot_Spacey import spacey
-from Server.Telegram_Bot_Spacey import spacey1
+from Server.Telegram_Bot_Spacey import spacey2
 
 if __name__ == "__main__":
-    spacey1.main()
+    spacey2.main()
