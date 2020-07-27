@@ -18,7 +18,7 @@ from os.path import dirname as dir, splitext, basename, join, abspath
 import sys
 import base64
 import res_info as res
-from multiprocessing import Process, Pipe, Lock
+
 import random
 import time
 import redis
