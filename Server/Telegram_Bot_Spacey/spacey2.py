@@ -25,7 +25,7 @@ import redis
 
 _root = dir(dir(abspath(__file__)))
 PORT = int(os.environ.get('PORT', 5000))
-TOKEN = '1165909865:AAFStUPdW-W5HpzEfuGabXZK_ysUBy1KJ3s'
+TOKEN = NOTOKENFORU
 
 # users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
 # locations_path = os.path.join(_root, "Telegram_Bot_Spacey", "locations.csv")
@@ -272,7 +272,7 @@ def check_what(update, context):
         total_visitors_list = []
         for timestamp in latest10:
             total_visitors_list.append(int(data_keep[timestamp]))
-            
+
         height = total_visitors_list
         bars = latest10
         y_pos = np.arange(len(bars))
