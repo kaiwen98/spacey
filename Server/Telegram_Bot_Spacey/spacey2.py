@@ -25,10 +25,10 @@ import redis
 
 _root = dir(dir(abspath(__file__)))
 PORT = int(os.environ.get('PORT', 5000))
-TOKEN = '1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY'
+TOKEN = '1165909865:AAHR4VkQAIKXFv6Jw-lbe4faMIil_mjXBK4'
 
-users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
-locations_path = os.path.join(_root, "Telegram_Bot_Spacey", "locations.csv")
+# users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
+# locations_path = os.path.join(_root, "Telegram_Bot_Spacey", "locations.csv")
 image_folder = os.path.join(_root, "images")
 image_output_graphic_folder = os.path.join(image_folder, "output graphic")
 
@@ -57,24 +57,24 @@ def start(update, context):
     user_id = str(update.message.from_user.id)
     date = datetime.datetime.now()
     #Store user data in csv
-    with open(users_info_path) as csvfile:
-        spamreader = csv.reader(csvfile, delimiter = ",") 
-        results = []
-        user_id_list = []
-        for i in spamreader:
-            results.append(i)
-            user_id_list.append(i[2])
-    if user_id not in user_id_list:
-        results.append([name,username,user_id,date,0,0,0])
-        with open(users_info_path, 'w', newline='') as csvfile:
-            spamwriter = csv.writer(csvfile, delimiter = ",") 
-            for i in results:
-                spamwriter.writerow(i)
+    # with open(users_info_path) as csvfile:
+    #     spamreader = csv.reader(csvfile, delimiter = ",") 
+    #     results = []
+    #     user_id_list = []
+    #     for i in spamreader:
+    #         results.append(i)
+    #         user_id_list.append(i[2])
+    # if user_id not in user_id_list:
+    #     results.append([name,username,user_id,date,0,0,0])
+    #     with open(users_info_path, 'w', newline='') as csvfile:
+    #         spamwriter = csv.writer(csvfile, delimiter = ",") 
+    #         for i in results:
+    #             spamwriter.writerow(i)
 
     #Store user data in database
     users_info = cfg.database.client.hgetall('users_info')
     if user_id not in users_info.keys():
-        dict_object = {"name": name, "username": username, "daily_notifications": "0", "full_notifications": "0", "flag":"0","daily_time":"0","subscribe_area":"0"}
+        dict_object = {"name": name, "username": username, "daily_notifications": "0", "full_notifications": "0", "flag":"0","daily_time":"0","daily_area":"0",">80_area":"0"}
         stringified_dict_obj = json.dumps(dict_object) 
         new_entry = {user_id:stringified_dict_obj}
         cfg.database.client.hmset('users_info',new_entry)
@@ -113,23 +113,23 @@ def check_area(update,context):
     return LOCATION
 
 
-def getcsv():
-    with open(locations_path) as csvfile:
-        spamreader = csv.DictReader(csvfile, delimiter = ",")
-        results = {}
-        for i in spamreader:
-            location = i.pop('Location')
-            results[location] = dict(i)
-        return results
+# def getcsv():
+#     with open(locations_path) as csvfile:
+#         spamreader = csv.DictReader(csvfile, delimiter = ",")
+#         results = {}
+#         for i in spamreader:
+#             location = i.pop('Location')
+#             results[location] = dict(i)
+#         return results
 
-def get_locations():
-    with open(locations_path) as csvfile:
-        spamreader = csv.DictReader(csvfile, delimiter = ",")
-        locations = []
-        for i in spamreader:
-            location = i.pop('Location')
-            locations.append(location)
-        return locations
+# def get_locations():
+#     with open(locations_path) as csvfile:
+#         spamreader = csv.DictReader(csvfile, delimiter = ",")
+#         locations = []
+#         for i in spamreader:
+#             location = i.pop('Location')
+#             locations.append(location)
+#         return locations
 
 def check_location(update, context):
     query = update.callback_query
@@ -165,7 +165,7 @@ def check_what(update, context):
     user_id = query.from_user.id
     location = context.user_data['location']
     area = context.user_data['area']
-    location_data = getcsv()
+    # location_data = getcsv()
     if option == 'Occupancy':
         localtime = time.localtime(time.time())
         date = str(localtime.tm_mday)+'/'+str(localtime.tm_mon)+'/'+str(localtime.tm_year)
@@ -443,13 +443,20 @@ def subscribe_main(update, context):
 
     elif query.data == 'Subscribe>80%':
         context.user_data['subscribe_type'] = query.data
-        locations_list = cfg.database.get_all_restaurant_from_user('NUS')
+        areas = cfg.database.client.smembers ('registered_users')
         keyboard=[]
-        for location in locations_list:
-            keyboard.append([InlineKeyboardButton(location, callback_data=location)])
+        for area in areas:
+            keyboard.append([InlineKeyboardButton(area, callback_data=area)])
         reply_markup = InlineKeyboardMarkup(keyboard)
-        context.bot.send_message(user_id, text="Which location would you like to be notified?", reply_markup=reply_markup)
-        return SUBSCRIBE_LOCATION
+        context.bot.send_message(user_id, 'Which area would you like to choose?', reply_markup=reply_markup)
+        return SUBSCRIBE_AREA
+        # locations_list = cfg.database.get_all_restaurant_from_user('NUS')
+        # keyboard=[]
+        # for location in locations_list:
+        #     keyboard.append([InlineKeyboardButton(location, callback_data=location)])
+        # reply_markup = InlineKeyboardMarkup(keyboard)
+        # context.bot.send_message(user_id, text="Which location would you like to be notified?", reply_markup=reply_markup)
+        # return SUBSCRIBE_LOCATION
 
     elif query.data == 'Subscribedaily':
         context.user_data['subscribe_type'] = query.data
@@ -492,12 +499,21 @@ def subscribe_area(update,context):
     query = update.callback_query
     query.edit_message_text(text="Selected option: {}".format(query.data))
     user_id = str(query.from_user.id)
-    context.user_data['subscribe_area'] = query.data
     users_info = cfg.database.client.hgetall('users_info')
     for id_number, data in users_info.items():
         if id_number == user_id:
             data = json.loads(data)
-            data['subscribe_area'] = query.data
+            if context.user_data['subscribe_type'] == 'Subscribedaily':
+                data['daily_area'] = query.data
+                context.user_data['daily_area'] = query.data
+            elif context.user_data['subscribe_type'] == 'Subscribe>80%': 
+                data['>80_area'] = query.data
+                context.user_data['>80_area'] = query.data
+            elif context.user_data['subscribe_type'] == 'SubscribeBoth':
+                data['daily_area'] = query.data
+                data['>80_area'] = query.data
+                context.user_data['daily_area'] = query.data
+                context.user_data['>80_area'] = query.data
             data = json.dumps(data)
             new_entry = {id_number:data}
             cfg.database.client.hmset('users_info',new_entry)
@@ -662,12 +678,14 @@ def unsubscribe_type(update,context):
                 location_removed = data['daily_notifications']
                 data['daily_notifications'] = 0
                 data['daily_time'] = 0
+                data['daily_area'] = 0
                 notification_type =  'Daily notifications'
                 
             elif query.data == 'Unsubscribe>80%':
                 location_removed = data['full_notifications']
                 data['full_notifications'] = 0
                 data['flag'] = 0
+                data['>80_area'] = 0
                 notification_type =  '>80% notifications'
                 
             elif query.data == 'UnsubscribeBoth':
@@ -675,8 +693,10 @@ def unsubscribe_type(update,context):
                 location2_removed = data['full_notifications']
                 data['daily_notifications'] = 0
                 data['daily_time'] = 0
+                data['daily_area'] = 0
                 data['full_notifications'] = 0
                 data['flag'] = 0
+                data['>80_area'] = 0
                 notification_type =  'Both notifications'
                 
             elif query.data == 'Cancel':
@@ -705,7 +725,7 @@ def daily_notifications_12pm(context):
         if str(data['daily_notifications']) != '0' and data['daily_time'] == '12pm': #daily 12pm notification on, send notification
             name = data['name']
             user_id = id_number
-            area = data['subscribe_area']
+            area = data['daily_area']
             location = data['daily_notifications']
             localtime = time.localtime(time.time())
             date = str(localtime.tm_mday)+'/'+str(localtime.tm_mon)+'/'+str(localtime.tm_year)
@@ -763,7 +783,7 @@ def daily_notifications_1pm(context):
         if str(data['daily_notifications']) != '0' and data['daily_time'] == '1pm': #daily 1pm notification on, send notification
             name = data['name']
             user_id = id_number
-            area = data['subscribe_area']
+            area = data['daily_area']
             location = data['daily_notifications']
             seats_available = 0
             seats_taken = 0
@@ -792,7 +812,7 @@ def daily_notifications_2pm(context):
         if str(data['daily_notifications']) != '0' and data['daily_time'] == '2pm': #daily 2pm notification on, send notification
             name = data['name']
             user_id = id_number
-            area = data['subscribe_area']
+            area = data['daily_area']
             location = data['daily_notifications']
             seats_available = 0
             seats_taken = 0
@@ -822,7 +842,7 @@ def full_notifications(context):
         if str(data['full_notifications']) != '0' and str(data['flag']) == '0': #>80% notifications on and flag off. ie send notification
             name = data['name']
             user_id = id_number
-            area = data['subscribe_area']
+            area = data['>80_area']
             location = data['full_notifications']
             seats_available = 0
             seats_taken = 0
@@ -873,7 +893,7 @@ def full_notifications(context):
                 cfg.database.client.hmset('users_info',new_entry)
 
         elif str(data['full_notifications']) != '0' and str(data['flag']) == '1': # >80% notifications on and flag is on
-            area = data['subscribe_area']
+            area = data['>80_area']
             location = data['full_notifications']
             seats_available = 0
             seats_taken = 0
@@ -1074,15 +1094,15 @@ def main():
     j = updater.job_queue
 
     # Set daily notifications
-    daily_notification_12pm_t = datetime.time(4,00,00,000000)
+    daily_notification_12pm_t = datetime.time(13,10,00,000000)
     dp.add_handler(CallbackQueryHandler(daily_notifications_12pm))
     job_daily1 = j.run_daily(daily_notifications_12pm, daily_notification_12pm_t)
 
-    daily_notification_1pm_t = datetime.time(5,00,00,000000)
+    daily_notification_1pm_t = datetime.time(13,12,00,000000)
     dp.add_handler(CallbackQueryHandler(daily_notifications_1pm))
     job_daily2 = j.run_daily(daily_notifications_1pm, daily_notification_1pm_t)
 
-    daily_notification_2pm_t = datetime.time(6,00,00,000000)
+    daily_notification_2pm_t = datetime.time(13,14,00,000000)
     dp.add_handler(CallbackQueryHandler(daily_notifications_2pm))
     job_daily3 = j.run_daily(daily_notifications_2pm, daily_notification_2pm_t)
 
@@ -1106,13 +1126,13 @@ def main():
     # job_minute2 = j.run_repeating(update_seats, interval=888, first=0) #run every 3 mins 180
     
     # Start the Bot
-    updater.start_polling()
-    """
+    # updater.start_polling()
+    
     updater.start_webhook(listen="0.0.0.0",
                       port= int(PORT),
                       url_path=TOKEN)
     updater.bot.setWebhook("https://spaceyherok.herokuapp.com/" + TOKEN)
-    """
+    
     updater.idle()
 
 
