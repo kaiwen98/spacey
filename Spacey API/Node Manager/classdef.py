@@ -344,9 +344,9 @@ class menu_upload(object):
         self.frame = frame
         self.labelFrame = LabelFrame(self.frame, text = "Floor Plan Manager", height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
-        self.obj = Button(self.labelFrame, text = "Import Floor plan", command = self.fileupload)
+        self.obj = Button(self.labelFrame, text = "Import Floor plan", command = self.fileupload, bg = cfg.buttcolor)
         self.obj.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
-        self.obj = Button(self.labelFrame, text = "Clear Floor plan", command = self.floorplanclear)
+        self.obj = Button(self.labelFrame, text = "Clear Floor plan", command = self.floorplanclear, bg = cfg.buttcolor)
         self.obj.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
 
     def fileupload(self):
@@ -375,9 +375,9 @@ class map_refresh(object):
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
         self.labelFrame = LabelFrame(self.frame, text = "Grid scale... ", height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
-        self.but1 = Button(self.labelFrame, text = "Scale up", command = self.updateUp)
+        self.but1 = Button(self.labelFrame, text = "Scale up", command = self.updateUp, bg = cfg.buttcolor)
         self.but1.pack(ipadx = 10, ipady = 10, fill = X)
-        self.but2 = Button(self.labelFrame, text = "Scale down", command = self.updateDown)
+        self.but2 = Button(self.labelFrame, text = "Scale down", command = self.updateDown, bg = cfg.buttcolor)
         self.but2.pack(ipadx = 10, ipady = 10, fill = X)
         self.factor = factor
 
@@ -573,10 +573,10 @@ class menu_devinfo(object):
 class menu_status(object):
     def __init__(self, frame, width, height):
         self.frame = frame
-        self.labelFrame = LabelFrame(self.frame, text = "Status bar", bg = "gray55", height = 100, width = 550)
+        self.labelFrame = LabelFrame(self.frame, text = "Status bar", bg = "gray55", height = 150, width = 550)
         self.labelFrame.pack(fill = X, padx = cfg.padx, pady = cfg.pady, side = TOP)
         self.labelFrame.pack_propagate(0)
-        self.obj = Label(self.labelFrame,text = "", bd = 100, height = 300, width = 550)
+        self.obj = Label(self.labelFrame,text = "", bd = 100, height = 400, width = 550)
         self.obj.pack(padx = 10, pady = 10)
     def updateText(self, _text):
         self.obj.configure(text = _text)
@@ -669,7 +669,7 @@ class menu_help(object):
         text.insert(END, "\nUnder menu 1. Click to clear the canvas of the contents.", "h2")
 
         text.insert(END, "\nFloor Plan upload", "h3a")
-        text.insert(END, "\nUnder menu 1. You may upload your floor plan image using the upload button, preferably in PNG format.", "h2")
+        text.insert(END, "\nUnder menu 1. You may upload your floor plan image using the upload button, preferably in PNG format. Feel free to grab some random floor plan for the internet and try it on the GUI!", "h2")
 
         
         text.insert(END, "\nSet Sensor ID", "h3a")
@@ -691,7 +691,7 @@ class menu_help(object):
         text.insert(END, "\nJSON Viewer", "h3a")
         text.insert(END, "\nUnder menu 2. You can save your work into a JSON file by clicking the \"Upload JSON [Local]\" button. Conversely, you can load a previous save file by clicking the \"Download JSON [Local]\" button. You can use the viewer below to check the JSON file contents for debugging purposes.", "h2")
         text.insert(END, "\nDB Operations", "h3a")
-        text.insert(END, "\nUnder menu 2. You can save your work to, or download an existing work from a running Redis Database!\n\n Users will need to register a new account, or use an existing account: \n\n\tUsername: NUS\n\tPassword: password\n\nYou can create a new restaurant under the account, then upload the restaurant information to the account on the cloud database. Once done, you can begin operation once you configured your sensor network properly!", "h2")
+        text.insert(END, "\nUnder menu 2. You can save your work to, or download an existing work from a running Redis Database!\n\n Users will need to register a new account, or use an existing account: \n\n\tUsername: NTU\n\tPassword: password\n\nYou can create a new restaurant under the account, then upload the restaurant information to the account on the cloud database. Once done, you can begin operation once you configured your sensor network properly!\nYou can also use this feature to update your restaurants' address and opening hours, which are displayed to the client from the chatbot.", "h2")
         
         
         text.configure(state = "disabled")
@@ -713,7 +713,7 @@ class menu_debug(object):
         #cfg.error_font = font.Font(family = "Times", font = "3", weight =  "BOLD")
         cfg.error_font = font.Font(family="Courier New", size=8, weight = "bold")
         self.frame = frame
-        self.labelFrame = LabelFrame(self.frame, text = "Debugger", bg = "gray55", height = 300, width = 550)
+        self.labelFrame = LabelFrame(self.frame, text = "Debugger", bg = "gray55", height = 500, width = 550)
         self.labelFrame.pack(fill = X, padx = cfg.padx, pady = cfg.pady, side = TOP)
         self.labelFrame.pack_propagate(0)
         self.obj = Listbox(self.labelFrame,height = 300, width = 550, bg = "gray10", font = cfg.error_font)
@@ -758,14 +758,14 @@ class img_xyshift(object):
         self.framex.pack(side = TOP, fill = X)
         self.framey.pack(side = TOP, fill = X)
 
-        self.but1 = Button(self.framex, text = "Left", command = self.left, width = 2)
+        self.but1 = Button(self.framex, text = "Left", command = self.left, width = 2, bg = cfg.buttcolor)
         self.but1.pack(ipadx = 10, ipady = 10, side = LEFT)
-        self.but2 = Button(self.framex, text = "Right", command = self.right, width = 2)
+        self.but2 = Button(self.framex, text = "Right", command = self.right, width = 2, bg = cfg.buttcolor)
         self.but2.pack(ipadx = 10, ipady = 10, side = LEFT)
 
-        self.but1 = Button(self.framey, text = "Up", command = self.up, width = 2)
+        self.but1 = Button(self.framey, text = "Up", command = self.up, width = 2, bg = cfg.buttcolor)
         self.but1.pack(ipadx = 10, ipady = 10, side = LEFT)
-        self.but2 = Button(self.framey, text = "Down", command = self.down, width = 2)
+        self.but2 = Button(self.framey, text = "Down", command = self.down, width = 2, bg = cfg.buttcolor)
         self.but2.pack(ipadx = 10, ipady = 10, side = LEFT)
 
         self.framex2 = Frame(self.parentFrame2, height = 70)
@@ -773,9 +773,9 @@ class img_xyshift(object):
         self.framex2.pack(side = TOP, fill = X)
         self.framey2.pack(side = TOP, fill = X)  
 
-        self.but1 = Button(self.framex2, text = "Scale +", command = self.s_up, width = 2)
+        self.but1 = Button(self.framex2, text = "Expand", command = self.s_up, width = 8, bg = cfg.buttcolor)
         self.but1.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
-        self.but2 = Button(self.framey2, text = "Scale -", command = self.s_down, width = 2)
+        self.but2 = Button(self.framey2, text = "Contract", command = self.s_down, width = 8, bg = cfg.buttcolor)
         self.but2.pack(ipadx = 10, ipady = 10, fill = X, side = TOP)
 
         self.factor = factor
@@ -795,6 +795,9 @@ class img_xyshift(object):
         cfg.myCanvas.canvas.move(cfg.myCanvas.floorplan_obj, 0, self.factor)
     
     def s_up(self):
+        if cfg.myCanvas.floorplan_obj is None: 
+            cfg.error.updateText("<Floor Plan> Cannot scale down before inserting floor plan!", "orange")
+            return
         if cfg.img_padding == 0: 
             cfg.error.updateText("<Floor Plan> Cannot scale down further", "orange")
             return
@@ -811,9 +814,9 @@ class img_scaleshift(object):
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
         self.labelFrame = LabelFrame(self.frame, text = "Floorplan scales...", height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
-        self.but1 = Button(self.labelFrame, text = "Size +", command = self.up, width = 4)
+        self.but1 = Button(self.labelFrame, text = "Size +", command = self.up, width = 4, bg = cfg.buttcolor)
         self.but1.pack(ipadx = 10, ipady = 10, side = LEFT)
-        self.but2 = Button(self.labelFrame, text = "Size -", command = self.down, width = 4)
+        self.but2 = Button(self.labelFrame, text = "Size -", command = self.down, width = 4, bg = cfg.buttcolor)
         self.but2.pack(ipadx = 10, ipady = 10, side = LEFT)
         self.factor = factor
 
@@ -835,9 +838,9 @@ class node_scaleshift(object):
         #self.frame.grid(row = 0, column = 0, sticky = E+W)
         self.labelFrame = LabelFrame(self.frame, text = "Node scales...", height = 150, width = 550, bg = "gray55")
         self.labelFrame.pack(fill = X, side = TOP, pady = cfg.pady, padx = cfg.padx)
-        self.but1 = Button(self.labelFrame, text = "Up", command = self.up, width = 4)
+        self.but1 = Button(self.labelFrame, text = "Up", command = self.up, width = 4, bg = cfg.buttcolor)
         self.but1.pack(ipadx = 10, ipady = 10, side = LEFT, padx = 25)
-        self.but2 = Button(self.labelFrame, text = "Down", command = self.down, width = 4)
+        self.but2 = Button(self.labelFrame, text = "Down", command = self.down, width = 4, bg = cfg.buttcolor)
         self.but2.pack(ipadx = 10, ipady = 10, side = LEFT, padx = 12)
         self.factor = factor
 
@@ -862,9 +865,9 @@ class json_viewer(object):
         self.frame1 = Frame(self.labelFrame, bg = "gray55")
         self.frame1.pack(fill = X, side = TOP)
 
-        self.butt1 = Button(self.frame2, text = "Import JSON [Local]", command = self.download, width = 550)
+        self.butt1 = Button(self.frame2, text = "Import JSON [Local]", command = self.download, width = 550, bg = cfg.buttcolor)
         self.butt1.pack()
-        self.butt = Button(self.frame2, text = "Export JSON [Local]", command = self.upload, width = 550)
+        self.butt = Button(self.frame2, text = "Export JSON [Local]", command = self.upload, width = 550, bg = cfg.buttcolor)
         self.butt.pack()
         self.dbframe = LabelFrame(self.frame2, text = "RedisDB Operations: ", bg = "gray55")
         self.dbframe.pack(expand = True, fill = X, ipadx = 2, ipady = 2)

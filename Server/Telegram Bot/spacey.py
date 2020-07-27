@@ -957,7 +957,7 @@ def main():
     # limit global throughput to 3 messages per 3 seconds
     q = mq.MessageQueue(all_burst_limit=29, all_time_limit_ms=1017)
     request = Request(con_pool_size=8)
-    spaceybot = MQBot('1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY', request=request, mqueue=q)
+    spaceybot = MQBot('<TELEGRAM API KEY>', request=request, mqueue=q)
 
     # Create the Updater and pass in bot's token.
     updater = Updater(bot=spaceybot, use_context = True)

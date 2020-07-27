@@ -197,14 +197,9 @@ class redis_database(object):
                 if not export_limit: return export_to_script
 
 if __name__ == "__main__":
-    remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
-    password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
-    port = '13969'
-    """
-    remote_host = 'localhost'
-    password = None
-    port = '6379'
-    """
+    remote_host = '<REDIS HOST>'
+    password = '<REDIS PW>'
+    port = '<REDIS PORT>'
 
     r = redis_database(root,remote_host, port, password)
     r.timeout()

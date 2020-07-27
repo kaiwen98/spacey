@@ -58,7 +58,7 @@ def focus_canvas():
 def setup():
     cfg.root = Tk()
     default_font = font.nametofont("TkDefaultFont")
-    default_font.configure(size=6)
+    default_font.configure(size=8)
     global canvas_w, canvas_h, image_file
     #cfg.root.state('zoomed') # Full window view
     cfg.root.title('Spacey Node Manager') # Set title name
@@ -111,7 +111,7 @@ def setup():
    
     ### Creation of Config menu ###
     
-    _frame_menu = LabelFrame(cfg.root, text = "Configurations", width = int(w/1.8), height = h, bg = "gray40")
+    _frame_menu = LabelFrame(cfg.root, text = "Configurations", width = int(w/1.6), height = h, bg = "gray40")
     _frame_menu.pack(padx = 20, pady = 20, side = LEFT, expand = 1, anchor = "w")
     _frame_menu.pack_propagate(False)
     
@@ -127,7 +127,7 @@ def setup():
     frame_menu.bind("<Configure>", lambda event, canvas=menu_canvas: onFrameConfigure(canvas))
 
 
-    frame_menu1 = LabelFrame(frame_menu, text = "Menu 1", width = w/4, height = h, bg = "gray40")
+    frame_menu1 = LabelFrame(frame_menu, text = "Menu 1", width = w/3.4, height = h, bg = "gray40")
     frame_menu1.pack(side = LEFT, expand = 1, fill = X)
     frame_menu1.pack_propagate(False)
 
@@ -152,7 +152,7 @@ def setup():
     
 
 
-    frame_menu2 = LabelFrame(frame_menu, text = "Menu 2", width = w/4, height = h, bg = "gray40")
+    frame_menu2 = LabelFrame(frame_menu, text = "Menu 2", width = w/3.4, height = h, bg = "gray40")
     frame_menu2.pack(side = LEFT, expand = 1)
     frame_menu2.pack_propagate(False)
 

@@ -99,6 +99,7 @@ error_font = None #error font
 json_font = None #json font
 max_step = 200 #prevent grid line from scaling down to self collapse
 hlcolor = "yellow" #glb highlight color
+buttcolor = "gray80"
 cursor = None #glb cursor
 box_len = step #length of node
 scale = 50 #num of grid lines along x axis
