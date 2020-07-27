@@ -1,6 +1,18 @@
 # SPACEY: IoT Solution for occupancy management in restaurant chains
 ![](https://img.theculturetrip.com/wp-content/uploads/2018/05/de4wxm.jpg)
 
+
+## How to use:
+* [**Telegram Bot**](https://github.com/kaiwen98/spacey/tree/master/Server)
+  <br>You can try our bot right now! Our bot name is @spaceynusbot. Do let us know what you think! </br><br/>
+* [**Node Manager GUI**](https://github.com/kaiwen98/spacey/tree/master/Spacey%20API)
+<br>Our latest release is [v1.2.0](https://github.com/kaiwen98/spacey/releases/tag/1.2.0). So far, this release is a Windows build. </br>For Linux users, kindly [click here](https://github.com/kaiwen98/spacey/archive/master.zip) to get the zip file, in which you can then run the binary on your terminal.<br/><br/>
+* [**BLE Sensor Network**](https://github.com/kaiwen98/spacey/tree/master/Sensor%20Network/SpaceyNodes)
+<br>You will need to have the following setup:</br>
+  * Install [Arduino IDE](https://www.arduino.cc/en/main/software)
+  * Install [Arduino-ESP32 Libraries](https://github.com/espressif/arduino-esp32)
+  * Own at least 2 ESP32 SoC microcontrollers
+
 ## Problem Scope and Motivation:
   <p><br> Our target problem is commonplace throughout Singapore - During mealtimes, customers often arrive at their favourite eateries only to discover that there are no more seats available for them. They either have to waste time looking for another eatery, or stand around to wait until the other customers are done with their meal. </br>
   <br> This is a very common problem in large-scale and popular hawker centres such as Chomp Chomp and Bukit Merah Hawker centre, whereby a seat reservation and tracking systems are not implemented unlike restaurants such as Saboten and Andes. </br>
