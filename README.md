@@ -6,7 +6,9 @@
 * [**Telegram Bot**](https://github.com/kaiwen98/spacey/tree/master/Server)
   <br>You can try our bot right now! Our bot name is @spaceynusbot. Do let us know what you think! </br><br/>
 * [**Node Manager GUI**](https://github.com/kaiwen98/spacey/tree/master/Spacey%20API)
-<br>Our latest release is [v1.2.0](https://github.com/kaiwen98/spacey/releases/tag/1.2.0). So far, this release is a Windows build. </br>For Linux users, kindly [click here](https://github.com/kaiwen98/spacey/archive/master.zip) to get the zip file, in which you can then run the binary on your terminal.<br/><br/>
+<br>Our latest release is [v1.2.0](https://github.com/kaiwen98/spacey/releases/tag/1.2.0). 
+  * Windows Users are to download **Spacey.API.Windows.1.2.0.exe** and run the installation wizard.
+  * Linux Users are to download **Spacey.API.Linux.1.2.0.zip** and extract it in their working directory, then run **./run.sh** in the **~/Spacey API/** folder.
 * [**BLE Sensor Network**](https://github.com/kaiwen98/spacey/tree/master/Sensor%20Network/SpaceyNodes)
 <br>You will need to have the following setup:</br>
   * Install [Arduino IDE](https://www.arduino.cc/en/main/software)
