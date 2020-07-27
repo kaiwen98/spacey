@@ -215,7 +215,7 @@ def check_what(update, context):
 
         #Send occupancy data, pie chart and floorplan
         context.bot.send_message(user_id, text=seats_emoji+"<b> Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%) "+ alert,parse_mode='HTML')
-        context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\chart_'+str(location)+'.png', 'rb'))
+        context.bot.send_photo(user_id, photo=open(join(image_output_graphic_folder,"chart_"+str(location)+".png"), 'rb'))
         context.bot.send_photo(user_id, photo=open(join(image_output_graphic_folder,'output_'+str(area)+'_'+str(location)+'.png'), 'rb'))
 
         keyboard=[[InlineKeyboardButton("Operation Hours", callback_data='Operation Hours'),
@@ -1126,8 +1126,9 @@ def main():
     # job_minute2 = j.run_repeating(update_seats, interval=888, first=0) #run every 3 mins 180
     
     # Start the Bot
-    # updater.start_polling()
-    
+    """
+    updater.start_polling()
+    """
     updater.start_webhook(listen="0.0.0.0",
                       port= int(PORT),
                       url_path=TOKEN)
