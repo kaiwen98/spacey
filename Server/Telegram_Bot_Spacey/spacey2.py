@@ -27,8 +27,8 @@ _root = dir(dir(abspath(__file__)))
 PORT = int(os.environ.get('PORT', 5000))
 TOKEN = '1165909865:AAFGrnQ7Pp9FK3VNL2q-wvgV0ld8_6af-lY'
 
-users_info_path = os.path.join(_root, "Telegram Bot", "users_info.csv")
-locations_path = os.path.join(_root, "Telegram Bot", "locations.csv")
+users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
+locations_path = os.path.join(_root, "Telegram_Bot_Spacey", "locations.csv")
 image_folder = os.path.join(_root, "images")
 image_output_graphic_folder = os.path.join(image_folder, "output graphic")
 
@@ -195,7 +195,7 @@ def check_what(update, context):
         plt.legend(labels, loc=3,prop={'size': 15}) #bottom right
         plt.title('Graph of seat occupancy at '+str(location)+'\nUpdated as of '+str(date)+" "+str(time_now))
         plt.tight_layout()
-        plt.savefig(join(image_output_graphic_folder,"chart_"+str(location)+".png")
+        plt.savefig(join(image_output_graphic_folder,"chart_"+str(location)+".png"))
         plt.clf()
         #Generate FLOORPLAN
         config_obj = cfg.ResServer(area)
@@ -216,7 +216,7 @@ def check_what(update, context):
         #Send occupancy data, pie chart and floorplan
         context.bot.send_message(user_id, text=seats_emoji+"<b> Seat Occupancy</b>: "+ str(seats_taken)+'/'+str(seats_total) + " ("+ str(seats_occupancy)+"%) "+ alert,parse_mode='HTML')
         context.bot.send_photo(user_id, photo=open(image_output_graphic_folder+'\\chart_'+str(location)+'.png', 'rb'))
-        context.bot.send_photo(user_id, photo=open(join(image_output_graphic_folder,'\output_'+area+'_'+location+'.png'), 'rb'))
+        context.bot.send_photo(user_id, photo=open(join(image_output_graphic_folder,'output_'+str(area)+'_'+str(location)+'.png'), 'rb'))
 
         keyboard=[[InlineKeyboardButton("Operation Hours", callback_data='Operation Hours'),
             InlineKeyboardButton("How to go", callback_data='How to go'),
@@ -1106,12 +1106,13 @@ def main():
     # job_minute2 = j.run_repeating(update_seats, interval=888, first=0) #run every 3 mins 180
     
     # Start the Bot
-    # updater.start_polling()
+    updater.start_polling()
+    """
     updater.start_webhook(listen="0.0.0.0",
                       port= int(PORT),
                       url_path=TOKEN)
     updater.bot.setWebhook("https://spaceyherok.herokuapp.com/" + TOKEN)
-    
+    """
     updater.idle()
 
 
