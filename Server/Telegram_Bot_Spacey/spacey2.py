@@ -25,7 +25,7 @@ import redis
 
 _root = dir(dir(abspath(__file__)))
 PORT = int(os.environ.get('PORT', 5000))
-TOKEN = NOTOKENFORU
+TOKEN = '1165909865:AAFStUPdW-W5HpzEfuGabXZK_ysUBy1KJ3s'
 
 # users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
 # locations_path = os.path.join(_root, "Telegram_Bot_Spacey", "locations.csv")
@@ -265,6 +265,7 @@ def check_what(update, context):
 
     elif option == "Recent Statistics":
         data = cfg.database.client.hgetall(area+"_"+location+"_totalvisitors")
+        data = sorted(data)
         latest10 = list(data)[-10:]
         total_visitors_list = []
         for timestamp in latest10:
@@ -912,7 +913,7 @@ def full_notifications(context):
                 cfg.database.client.hmset('users_info',new_entry)
 
 def hourly_update(context):
-    areas = cfg.database.client.smembers ('registered_users')
+    areas = cfg.database.client.smembers('registered_users')
     temp_locations_list = []
     for area in areas:
         part_locations_list = cfg.database.get_all_restaurant_from_user(area)
@@ -1126,9 +1127,9 @@ def main():
     # job_minute2 = j.run_repeating(update_seats, interval=888, first=0) #run every 3 mins 180
     
     # Start the Bot
-    """
-    updater.start_polling()
-    """
+    
+    # updater.start_polling()
+    
     updater.start_webhook(listen="0.0.0.0",
                       port= int(PORT),
                       url_path=TOKEN)
