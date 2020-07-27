@@ -272,8 +272,7 @@ def check_what(update, context):
         total_visitors_list = []
         for timestamp in latest10:
             total_visitors_list.append(int(data_keep[timestamp]))
-        context.bot.send_message(user_id, total_visitors_list)    
-
+            
         height = total_visitors_list
         bars = latest10
         y_pos = np.arange(len(bars))
