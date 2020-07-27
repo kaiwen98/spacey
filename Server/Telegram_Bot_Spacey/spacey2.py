@@ -265,12 +265,15 @@ def check_what(update, context):
 
     elif option == "Recent Statistics":
         data = cfg.database.client.hgetall(area+"_"+location+"_totalvisitors")
+        data_keep = data
         data = sorted(data)
-        latest10 = list(data)[-10:]
+        latest10 = data[-10:]
+            
         total_visitors_list = []
         for timestamp in latest10:
-            total_visitors_list.append(int(data[timestamp]))
-            
+            total_visitors_list.append(int(data_keep[timestamp]))
+        context.bot.send_message(user_id, total_visitors_list)    
+
         height = total_visitors_list
         bars = latest10
         y_pos = np.arange(len(bars))
