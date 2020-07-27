@@ -89,7 +89,7 @@ def start(update, context):
                                             +diamond+' <b>Daily notifications.</b> Sends daily updates of your chosen location at different timings.\n'
                                             +diamond+' <b>>80% notifications.</b> Sends updates of your chosen location whenever it is reaching its full capacity.\n'
                                             '<i>Note: seat occupancies are updated through sensors. However, for simulation purposes, use /setspaceyoccupancy to manipulate the occupancy of <u>Spacey Cafe</u> to either 20%, 60% or 80%!</i>\n'
-                                            '<i>Note 2: >80% notifications and latest visitors count are checked every 2mins and 5 mins respectively for testing purposes.</i>\n\n', parse_mode = 'HTML')
+                                            '<i>Note 2: >80% notifications and latest visitors count are checked every 2 mins and 5 mins respectively for testing purposes.</i>\n\n', parse_mode = 'HTML')
 
 def menu(update,context):
     areas = cfg.database.client.smembers ('registered_users')
@@ -1094,15 +1094,15 @@ def main():
     j = updater.job_queue
 
     # Set daily notifications
-    daily_notification_12pm_t = datetime.time(13,10,00,000000)
+    daily_notification_12pm_t = datetime.time(4,00,00,000000)
     dp.add_handler(CallbackQueryHandler(daily_notifications_12pm))
     job_daily1 = j.run_daily(daily_notifications_12pm, daily_notification_12pm_t)
 
-    daily_notification_1pm_t = datetime.time(13,12,00,000000)
+    daily_notification_1pm_t = datetime.time(5,00,00,000000)
     dp.add_handler(CallbackQueryHandler(daily_notifications_1pm))
     job_daily2 = j.run_daily(daily_notifications_1pm, daily_notification_1pm_t)
 
-    daily_notification_2pm_t = datetime.time(13,14,00,000000)
+    daily_notification_2pm_t = datetime.time(6,00,00,000000)
     dp.add_handler(CallbackQueryHandler(daily_notifications_2pm))
     job_daily3 = j.run_daily(daily_notifications_2pm, daily_notification_2pm_t)
 
