@@ -204,7 +204,11 @@ def check_what(update, context):
         #config_obj = cfg.ResServer(area)
         print(area)
         print(res_store.keys())
+        if area not in res_store.keys():
+            res_store[area] = cfg.ResServer(area)
+
         config_obj = res_store[area]
+		
         restaurants_data = config_obj.get_info()
         for loc_data, obj_data in restaurants_data.items():
             if location == loc_data:
