@@ -1031,7 +1031,7 @@ def main():
     job_minute1 = j.run_repeating(full_notifications, interval=120, first=0) #check and alert every 2 mins
 
     dp.add_handler(CallbackQueryHandler(hourly_update))
-    job_minute2 = j.run_repeating(hourly_update, interval=300, first=0)
+    #job_minute2 = j.run_repeating(hourly_update, interval=300, first=0)
 
     # Update seats occupancy
     # dp.add_handler(CallbackQueryHandler(update_seats))
