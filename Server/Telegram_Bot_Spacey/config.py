@@ -11,19 +11,28 @@
 import config as cfg
 from imagegen import *
 import os
-from os.path import dirname as dir, splitext, basename, join, abspath
+from os.path import dirname as dir, splitext, basename, join
 import sys
 import base64
 import res_info as res
+from multiprocessing import Process, Pipe, Queue
+import threading
 import random
 import time
 import redis
+from datetime import datetime
 
+x = []
 
 # Need to choose depending on running from exe or py. Should point to /Server
-# root = dir(dir(dir(sys.executable)))
-_root = dir(dir(abspath(__file__)))
-# print(_root)
+print(basename(dir(dir(__file__))))
+
+if(basename(dir(dir(__file__))) != 'Server'):
+    
+    _root = dir(dir(dir(sys.executable)))
+    with(open("log.txt", 'w')) as w:
+        w.write(_root)
+else: _root = dir(dir(__file__))
 
 # To extract database interface functions
 sys.path.append(join(_root, "Redis"))
@@ -48,8 +57,6 @@ remote_host = 'localhost'
 password = None
 port = '6379'
 """
-
-
 available_restaurants_name = None
 nodeOn = None
 nodeOff = None
@@ -57,7 +64,6 @@ restaurants = None
 cfg.database = redisDB.redis_database(
     _root, cfg.remote_host, cfg.port, cfg.password)
 interrupt = ""
-x = {}
 
 # Serializes image from png to string
 
@@ -87,10 +93,13 @@ def get_output_graphic_path(name):
 
 class ResServer(object):
     def __init__(self, userID):
+
+        print(cfg.database.client.keys())
+
         self.userID = userID
         self.available_restaurants_name = cfg.database.get_all_restaurant_from_user(
             userID)
-        self.restaurants = {}
+        self.restaurants = []
         self.remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
         self.port = '13969'
         self.password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
@@ -102,76 +111,115 @@ class ResServer(object):
             full_name = self.userID + "_" + i
             full_name_occupancy = full_name + "_occupancy"
             full_name_coord = full_name + "_coord"
+            ######################
             occupancy = cfg.database.client.hgetall(full_name_occupancy)
+            ######################
             coord = cfg.database.client.hgetall(full_name_coord)
             cfg.json_deserialize_image(
                 coord["processed_img"], cfg.get_output_graphic_path(full_name))
             self.box_len = int(coord["box_len"])
             del coord["processed_img"]
             del coord["box_len"]
-            
+            print(occupancy)
+            print(coord)
 
-            # self.restaurants.append(res.restaurant_info(
-            #     full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len))
-            self.restaurants[i] = res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len)
-            
+
+            self.restaurants.append(res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len))
+            print("ok!")
 
     def scan_update(self):
-        """
-        print(self.userID)
-        """
 
+        global mutex
         client = redis.Redis(host=self.remote_host, port=self.port,
                              db=0, password=self.password, decode_responses=True)
+        while(True):
             
-        for i in range(len(self.available_restaurants_name)):
-            
-            occupancy = {}
-            full_name = self.userID + "_" + self.available_restaurants_name[i]
-            full_name_occupancy = full_name + "_occupancy"
+            for i in range(len(self.available_restaurants_name)):
+                """
+                if(r.empty() is False and r.get() == '1'):
+                    self.randomize()"""
 
-            # occupancy = cfg.database.client.hgetall(full_name_occupancy)
-            occupancy = client.hgetall(full_name_occupancy)
-            if self.restaurants[i].occupancy != occupancy:
-                imageupdate(self.restaurants[i], occupancy)
-            # You can change update frequency from here. The scan is asynchronous
-    def get_info(self):    
-        client = redis.Redis(host=self.remote_host, port=self.port,
-                             db=0, password=self.password, decode_responses=True)        
-        return self.restaurants
+                print("checking...", self.available_restaurants_name[i])
+
+                occupancy = {}
+                full_name = self.userID + "_" + self.available_restaurants_name[i]
+                full_name_occupancy = full_name + "_occupancy"
+
+                # occupancy = cfg.database.client.hgetall(full_name_occupancy)
+                #GET MOST UPDATED OCCUPANCY
+                occupancy = client.hgetall(full_name_occupancy)
+
+                if self.restaurants[i].occupancy != occupancy:
+                    imageupdate(self.restaurants[i], occupancy)
+                # You can change update frequency from here. The scan is asynchronous
+                
+                time.sleep(1)
  
 
 
     def randomize(self):
-    
-        # print("hi")
+        print("hi")
+        now = datetime.now()
+        current_time = now.strftime("%H:%M")
+        print("Current Time =", current_time)
+        if (current_time <= '07:00') : threshold = 0.2
+        elif (current_time <= '10:00') : threshold = 0.2
+        elif (current_time <= '12:00'): threshold = 0.3
+        elif (current_time <= '14:00'): threshold = 0.5
+        elif (current_time <= '18:00'): threshold = 0.3
+        elif (current_time <= '20:00'): threshold = 0.8
+        else: threshold = 0.1
+
         for i in range(len(self.available_restaurants_name)):
-            # print(self.available_restaurants_name[i])
+            
+            #if self.available_restaurants_name[i] == 'Spacey Cafe' and self.userID == 'NUS': return
+            if self.available_restaurants_name[i] == 'Deck' and self.userID == 'NUS': return
+            print(self.available_restaurants_name[i])
             occupancy = {}
             new_occupancy = {}
             full_name = self.userID + "_" + self.available_restaurants_name[i]
             full_name_occupancy = full_name + "_occupancy"
 
             occupancy = cfg.database.client.hgetall(full_name_occupancy)
-            for i in occupancy.keys():
-                new_occupancy[i] = random.randint(0, 1)
+
+            keys_list = list(occupancy.keys())
+            low = -int(0.2 * len(occupancy.keys()))
+            high = int(0.2 * len(occupancy.keys()))+1
+            numRand = int(len(keys_list) * threshold) + random.randint(low, high)
+            print(numRand)
+            if numRand < 0: numRand = 0
+            keys_sample = random.sample(keys_list, numRand)
+            for j in occupancy.keys():
+                new_occupancy[j] = '0'
+            
+            for j in keys_sample:
+                new_occupancy[j] = '1'
+            
+            print(current_time, "------", new_occupancy,": ", self.userID, "_", self.available_restaurants_name[i])
 
             cfg.database.client.hmset(full_name_occupancy, new_occupancy)
 
-
+q = None
 
 def main():
+    global mutex, mutex1, q
+    # connect to DB
     userID = 'NUS'
     cfg.database.timeout()
+
+    # initialize
+
     res_list = cfg.database.client.smembers('registered_users')
     for i in res_list:
-    	x[i] = ResServer(i)
-    return x
+        x.append(ResServer(i))
 
-    
-  
-if __name__ == '__main__':
-    main()
+def randomise_task():
+    global x
+    for i in x:
+        i.randomize()
+        time.sleep(10)
+        print("Randomised")
+
 
   
 
