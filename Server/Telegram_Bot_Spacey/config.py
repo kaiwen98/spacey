@@ -57,6 +57,7 @@ restaurants = None
 cfg.database = redisDB.redis_database(
     _root, cfg.remote_host, cfg.port, cfg.password)
 interrupt = ""
+x = {}
 
 # Serializes image from png to string
 
@@ -134,6 +135,7 @@ class ResServer(object):
             if self.restaurants[i].occupancy != occupancy:
                 imageupdate(self.restaurants[i], occupancy)
             # You can change update frequency from here. The scan is asynchronous
+
     def get_info(self):    
         client = redis.Redis(host=self.remote_host, port=self.port,
                              db=0, password=self.password, decode_responses=True)        
@@ -162,7 +164,11 @@ class ResServer(object):
 def main():
     userID = 'NUS'
     cfg.database.timeout()
-    x = ResServer(userID)
+    res_list = cfg.database.client.smembers('registered_users')
+    for i in res_list:
+    	x[i] = ResServer(i)
+    return x
+
     
   
 if __name__ == '__main__':
