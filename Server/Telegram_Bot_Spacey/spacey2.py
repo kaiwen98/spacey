@@ -925,6 +925,7 @@ def full_notifications(context):
                 cfg.database.client.hmset('users_info',new_entry)
 
 def hourly_update(context):
+    print("updating")
     areas = cfg.database.client.smembers('registered_users')
     temp_locations_list = []
     for area in areas:
