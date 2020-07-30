@@ -182,9 +182,9 @@ class redis_database(object):
 
 
 if __name__ == "__main__":
-    remote_host = '<REDIS HOST>'
-    password = '<REDIS PASSWORD>'
-    port = '<REDIS PORT>'
+    remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
+    password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
+    port = '13969'
 
     r = redis_database(root,remote_host, port, password)
     r.timeout()

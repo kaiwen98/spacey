@@ -31,7 +31,7 @@ def imagegen(res_info):
         else: node = node_off
         bg.paste(node, (int(x),int(y)))
     print(bg.size)
-    bg.show()
+    #bg.show()
     bg.save(res_info.image, quality=95, format = "PNG")
 
 def imageupdate(res_info, occupancy_new):
@@ -48,7 +48,7 @@ def imageupdate(res_info, occupancy_new):
             y = res_info.coord[i].rsplit(',')[1]
             res_info.temp.paste(node, (int(x), int(y)))
             res_info.occupancy[i] = occupancy_new[i]
-    res_info.temp.show()
+    #res_info.temp.show()
     #save_graphic(res_info)
     
 

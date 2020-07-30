@@ -20,11 +20,19 @@ import threading
 import random
 import time
 import redis
+from datetime import datetime
+
 
 
 # Need to choose depending on running from exe or py. Should point to /Server
-# root = dir(dir(dir(sys.executable)))
-_root = dir(dir(__file__))
+print(basename(dir(dir(__file__))))
+
+if(basename(dir(dir(__file__))) != 'Server'):
+    
+    _root = dir(dir(dir(sys.executable)))
+    with(open("log.txt", 'w')) as w:
+        w.write(_root)
+else: _root = dir(dir(__file__))
 
 # To extract database interface functions
 sys.path.append(join(_root, "Redis"))
@@ -49,10 +57,6 @@ remote_host = 'localhost'
 password = None
 port = '6379'
 """
-mutex = threading.Lock()
-mutex1 = threading.Lock()
-r = Queue()
-
 available_restaurants_name = None
 nodeOn = None
 nodeOff = None
@@ -95,7 +99,7 @@ class ResServer(object):
         self.userID = userID
         self.available_restaurants_name = cfg.database.get_all_restaurant_from_user(
             userID)
-        self.restaurants = {}
+        self.restaurants = []
         self.remote_host = 'redis-13969.c11.us-east-1-3.ec2.cloud.redislabs.com'
         self.port = '13969'
         self.password = 'PbKFE8lJq8HFGve4ON5rRFXhlVrGYUHL'
@@ -119,14 +123,12 @@ class ResServer(object):
             print(occupancy)
             print(coord)
 
-            self.restaurants[full_name] = res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name))
-            # self.restaurants.append(res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len))
+
+            self.restaurants.append(res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len))
             print("ok!")
 
     def scan_update(self):
-        """
-        print(self.userID)
-        """
+
         global mutex
         client = redis.Redis(host=self.remote_host, port=self.port,
                              db=0, password=self.password, decode_responses=True)
@@ -156,9 +158,21 @@ class ResServer(object):
 
 
     def randomize(self):
-        global mutex1
         print("hi")
+        now = datetime.now()
+        current_time = now.strftime("%H:%M")
+        print("Current Time =", current_time)
+        if (current_time <= '07:00') : threshold = 0.2
+        elif (current_time <= '10:00') : threshold = 0.2
+        elif (current_time <= '12:00'): threshold = 0.3
+        elif (current_time <= '14:00'): threshold = 0.5
+        elif (current_time <= '18:00'): threshold = 0.3
+        elif (current_time <= '20:00'): threshold = 0.8
+        else: threshold = 0.1
+
         for i in range(len(self.available_restaurants_name)):
+            
+            if self.available_restaurants_name[i] == 'Deck' and self.userID == 'NUS': return
             print(self.available_restaurants_name[i])
             occupancy = {}
             new_occupancy = {}
@@ -166,8 +180,17 @@ class ResServer(object):
             full_name_occupancy = full_name + "_occupancy"
 
             occupancy = cfg.database.client.hgetall(full_name_occupancy)
-            for i in occupancy.keys():
-                new_occupancy[i] = random.randint(0, 1)
+
+            keys_list = list(occupancy.keys())
+            numRand = int(len(keys_list) * threshold)
+            keys_sample = random.sample(keys_list, numRand)
+            for j in occupancy.keys():
+                new_occupancy[j] = '0'
+            
+            for j in keys_sample:
+                new_occupancy[j] = '1'
+            
+            print(current_time, "------", new_occupancy,": ", self.userID, "_", self.available_restaurants_name[i])
 
             cfg.database.client.hmset(full_name_occupancy, new_occupancy)
 
@@ -179,25 +202,22 @@ def main():
     userID = 'NUS'
     cfg.database.timeout()
 
-
     # initialize
-    x = ResServer(userID)
-    
-    p = Process(target= x.scan_update)
-    q = Process(target = x.randomize)
-    p.start()
-    q.start()
-    _q = ""
-    
-    while _q != 'q':
-        _q = input("input")
-        print("this is ", str(_q))
-        if _q == 'x':
-            r.put("1")
+    x = []
+    res_list = cfg.database.client.smembers('registered_users')
+    for i in res_list:
+        x.append(ResServer(i))
 
+    while(True):
+        for i in x:
+            i.randomize()
+            time.sleep(10)
+            print("Randomised")
+
+"""
 if __name__ == '__main__':
     main()
-
+"""
   
 
 

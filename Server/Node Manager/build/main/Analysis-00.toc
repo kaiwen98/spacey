@@ -1,0 +1,2900 @@
+(['C:\\Users\\Looi Kai Wen\\Desktop\\Spacey_Code\\spacey\\Server\\Node '
+  'Manager\\main.py'],
+ ['C:\\Users\\Looi Kai Wen\\Desktop\\Spacey_Code\\spacey\\Server\\Node Manager',
+  'C:\\Users\\Looi Kai Wen\\Desktop\\Spacey_Code\\spacey\\Server\\Node '
+  'Manager'],
+ ['codecs'],
+ [],
+ [],
+ [],
+ False,
+ False,
+ '3.7.4 (tags/v3.7.4:e09359112e, Jul  8 2019, 19:29:22) [MSC v.1916 32 bit '
+ '(Intel)]',
+ [('pyi_rth_multiprocessing',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PyInstaller\\loader\\rthooks\\pyi_rth_multiprocessing.py',
+   'PYSOURCE'),
+  ('pyi_rth_pkgres',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PyInstaller\\loader\\rthooks\\pyi_rth_pkgres.py',
+   'PYSOURCE'),
+  ('pyi_rth_win32comgenpy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PyInstaller\\loader\\rthooks\\pyi_rth_win32comgenpy.py',
+   'PYSOURCE'),
+  ('main',
+   'C:\\Users\\Looi Kai Wen\\Desktop\\Spacey_Code\\spacey\\Server\\Node '
+   'Manager\\main.py',
+   'PYSOURCE')],
+ [('win32com',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\__init__.py',
+   'PYMODULE'),
+  ('win32com.server.util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\server\\util.py',
+   'PYMODULE'),
+  ('win32com.server.dispatcher',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\server\\dispatcher.py',
+   'PYMODULE'),
+  ('win32traceutil',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\lib\\win32traceutil.py',
+   'PYMODULE'),
+  ('win32com.util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\util.py',
+   'PYMODULE'),
+  ('win32con',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\lib\\win32con.py',
+   'PYMODULE'),
+  ('win32com.server.exception',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\server\\exception.py',
+   'PYMODULE'),
+  ('winerror',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\lib\\winerror.py',
+   'PYMODULE'),
+  ('win32com.server.policy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\server\\policy.py',
+   'PYMODULE'),
+  ('win32com.client',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\client\\__init__.py',
+   'PYMODULE'),
+  ('win32com.client.makepy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\client\\makepy.py',
+   'PYMODULE'),
+  ('getopt',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\getopt.py',
+   'PYMODULE'),
+  ('gettext',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\gettext.py',
+   'PYMODULE'),
+  ('copy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\copy.py',
+   'PYMODULE'),
+  ('struct',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\struct.py',
+   'PYMODULE'),
+  ('pywin.dialogs.status',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\pywin\\dialogs\\status.py',
+   'PYMODULE'),
+  ('_strptime',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_strptime.py',
+   'PYMODULE'),
+  ('datetime',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\datetime.py',
+   'PYMODULE'),
+  ('calendar',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\calendar.py',
+   'PYMODULE'),
+  ('argparse',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\argparse.py',
+   'PYMODULE'),
+  ('textwrap',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\textwrap.py',
+   'PYMODULE'),
+  ('threading',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\threading.py',
+   'PYMODULE'),
+  ('_threading_local',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_threading_local.py',
+   'PYMODULE'),
+  ('contextlib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\contextlib.py',
+   'PYMODULE'),
+  ('pywin.mfc.thread',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\pywin\\mfc\\thread.py',
+   'PYMODULE'),
+  ('pywin.mfc.object',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\pywin\\mfc\\object.py',
+   'PYMODULE'),
+  ('pywin.mfc.dialog',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\pywin\\mfc\\dialog.py',
+   'PYMODULE'),
+  ('pywin.mfc.window',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\pywin\\mfc\\window.py',
+   'PYMODULE'),
+  ('pywin.mfc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\pywin\\mfc\\__init__.py',
+   'PYMODULE'),
+  ('pywin.dialogs',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\pywin\\dialogs\\__init__.py',
+   'PYMODULE'),
+  ('pywin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\pywin\\__init__.py',
+   'PYMODULE'),
+  ('win32com.client.gencache',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\client\\gencache.py',
+   'PYMODULE'),
+  ('zipfile',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\zipfile.py',
+   'PYMODULE'),
+  ('py_compile',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\py_compile.py',
+   'PYMODULE'),
+  ('importlib.machinery',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\importlib\\machinery.py',
+   'PYMODULE'),
+  ('importlib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\importlib\\__init__.py',
+   'PYMODULE'),
+  ('importlib.abc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\importlib\\abc.py',
+   'PYMODULE'),
+  ('importlib._bootstrap',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\importlib\\_bootstrap.py',
+   'PYMODULE'),
+  ('importlib._bootstrap_external',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\importlib\\_bootstrap_external.py',
+   'PYMODULE'),
+  ('tokenize',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\tokenize.py',
+   'PYMODULE'),
+  ('token',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\token.py',
+   'PYMODULE'),
+  ('lzma',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lzma.py',
+   'PYMODULE'),
+  ('_compression',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_compression.py',
+   'PYMODULE'),
+  ('bz2',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\bz2.py',
+   'PYMODULE'),
+  ('stat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\stat.py',
+   'PYMODULE'),
+  ('importlib.util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\importlib\\util.py',
+   'PYMODULE'),
+  ('pickle',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\pickle.py',
+   'PYMODULE'),
+  ('pprint',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\pprint.py',
+   'PYMODULE'),
+  ('doctest',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\doctest.py',
+   'PYMODULE'),
+  ('unittest',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\unittest\\__init__.py',
+   'PYMODULE'),
+  ('unittest.signals',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\unittest\\signals.py',
+   'PYMODULE'),
+  ('signal',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\signal.py',
+   'PYMODULE'),
+  ('unittest.main',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\unittest\\main.py',
+   'PYMODULE'),
+  ('unittest.runner',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\unittest\\runner.py',
+   'PYMODULE'),
+  ('unittest.loader',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\unittest\\loader.py',
+   'PYMODULE'),
+  ('fnmatch',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\fnmatch.py',
+   'PYMODULE'),
+  ('posixpath',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\posixpath.py',
+   'PYMODULE'),
+  ('genericpath',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\genericpath.py',
+   'PYMODULE'),
+  ('unittest.suite',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\unittest\\suite.py',
+   'PYMODULE'),
+  ('unittest.case',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\unittest\\case.py',
+   'PYMODULE'),
+  ('logging',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\logging\\__init__.py',
+   'PYMODULE'),
+  ('string',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\string.py',
+   'PYMODULE'),
+  ('unittest.result',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\unittest\\result.py',
+   'PYMODULE'),
+  ('unittest.util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\unittest\\util.py',
+   'PYMODULE'),
+  ('pdb',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\pdb.py',
+   'PYMODULE'),
+  ('pydoc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\pydoc.py',
+   'PYMODULE'),
+  ('webbrowser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\webbrowser.py',
+   'PYMODULE'),
+  ('socket',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\socket.py',
+   'PYMODULE'),
+  ('selectors',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\selectors.py',
+   'PYMODULE'),
+  ('email.message',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\message.py',
+   'PYMODULE'),
+  ('email.policy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\policy.py',
+   'PYMODULE'),
+  ('email.contentmanager',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\contentmanager.py',
+   'PYMODULE'),
+  ('email.quoprimime',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\quoprimime.py',
+   'PYMODULE'),
+  ('email.headerregistry',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\headerregistry.py',
+   'PYMODULE'),
+  ('email._header_value_parser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\_header_value_parser.py',
+   'PYMODULE'),
+  ('urllib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\urllib\\__init__.py',
+   'PYMODULE'),
+  ('email.iterators',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\iterators.py',
+   'PYMODULE'),
+  ('email.generator',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\generator.py',
+   'PYMODULE'),
+  ('random',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\random.py',
+   'PYMODULE'),
+  ('bisect',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\bisect.py',
+   'PYMODULE'),
+  ('hashlib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\hashlib.py',
+   'PYMODULE'),
+  ('email._encoded_words',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\_encoded_words.py',
+   'PYMODULE'),
+  ('base64',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\base64.py',
+   'PYMODULE'),
+  ('email.charset',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\charset.py',
+   'PYMODULE'),
+  ('email.encoders',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\encoders.py',
+   'PYMODULE'),
+  ('email.base64mime',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\base64mime.py',
+   'PYMODULE'),
+  ('email._policybase',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\_policybase.py',
+   'PYMODULE'),
+  ('email.header',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\header.py',
+   'PYMODULE'),
+  ('email.errors',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\errors.py',
+   'PYMODULE'),
+  ('email.utils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\utils.py',
+   'PYMODULE'),
+  ('email._parseaddr',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\_parseaddr.py',
+   'PYMODULE'),
+  ('email',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\__init__.py',
+   'PYMODULE'),
+  ('email.parser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\parser.py',
+   'PYMODULE'),
+  ('email.feedparser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\email\\feedparser.py',
+   'PYMODULE'),
+  ('quopri',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\quopri.py',
+   'PYMODULE'),
+  ('uu',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\uu.py',
+   'PYMODULE'),
+  ('optparse',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\optparse.py',
+   'PYMODULE'),
+  ('http.server',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\http\\server.py',
+   'PYMODULE'),
+  ('http',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\http\\__init__.py',
+   'PYMODULE'),
+  ('socketserver',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\socketserver.py',
+   'PYMODULE'),
+  ('mimetypes',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\mimetypes.py',
+   'PYMODULE'),
+  ('http.client',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\http\\client.py',
+   'PYMODULE'),
+  ('ssl',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ssl.py',
+   'PYMODULE'),
+  ('html',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\html\\__init__.py',
+   'PYMODULE'),
+  ('html.entities',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\html\\entities.py',
+   'PYMODULE'),
+  ('pydoc_data.topics',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\pydoc_data\\topics.py',
+   'PYMODULE'),
+  ('pydoc_data',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\pydoc_data\\__init__.py',
+   'PYMODULE'),
+  ('tty',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\tty.py',
+   'PYMODULE'),
+  ('subprocess',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\subprocess.py',
+   'PYMODULE'),
+  ('urllib.parse',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\urllib\\parse.py',
+   'PYMODULE'),
+  ('platform',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\platform.py',
+   'PYMODULE'),
+  ('plistlib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\plistlib.py',
+   'PYMODULE'),
+  ('xml.parsers.expat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\parsers\\expat.py',
+   'PYMODULE'),
+  ('xml.parsers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\parsers\\__init__.py',
+   'PYMODULE'),
+  ('xml',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\__init__.py',
+   'PYMODULE'),
+  ('xml.sax.expatreader',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\sax\\expatreader.py',
+   'PYMODULE'),
+  ('xml.sax.saxutils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\sax\\saxutils.py',
+   'PYMODULE'),
+  ('urllib.request',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\urllib\\request.py',
+   'PYMODULE'),
+  ('getpass',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\getpass.py',
+   'PYMODULE'),
+  ('nturl2path',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\nturl2path.py',
+   'PYMODULE'),
+  ('ftplib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ftplib.py',
+   'PYMODULE'),
+  ('netrc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\netrc.py',
+   'PYMODULE'),
+  ('http.cookiejar',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\http\\cookiejar.py',
+   'PYMODULE'),
+  ('urllib.response',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\urllib\\response.py',
+   'PYMODULE'),
+  ('urllib.error',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\urllib\\error.py',
+   'PYMODULE'),
+  ('xml.sax',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\sax\\__init__.py',
+   'PYMODULE'),
+  ('xml.sax.handler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\sax\\handler.py',
+   'PYMODULE'),
+  ('xml.sax._exceptions',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\sax\\_exceptions.py',
+   'PYMODULE'),
+  ('xml.sax.xmlreader',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\sax\\xmlreader.py',
+   'PYMODULE'),
+  ('pkgutil',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\pkgutil.py',
+   'PYMODULE'),
+  ('runpy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\runpy.py',
+   'PYMODULE'),
+  ('shlex',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\shlex.py',
+   'PYMODULE'),
+  ('code',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\code.py',
+   'PYMODULE'),
+  ('codeop',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\codeop.py',
+   'PYMODULE'),
+  ('dis',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\dis.py',
+   'PYMODULE'),
+  ('opcode',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\opcode.py',
+   'PYMODULE'),
+  ('bdb',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\bdb.py',
+   'PYMODULE'),
+  ('cmd',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\cmd.py',
+   'PYMODULE'),
+  ('inspect',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\inspect.py',
+   'PYMODULE'),
+  ('ast',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ast.py',
+   'PYMODULE'),
+  ('difflib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\difflib.py',
+   'PYMODULE'),
+  ('__future__',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\__future__.py',
+   'PYMODULE'),
+  ('_compat_pickle',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_compat_pickle.py',
+   'PYMODULE'),
+  ('glob',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\glob.py',
+   'PYMODULE'),
+  ('win32com.client.selecttlb',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\client\\selecttlb.py',
+   'PYMODULE'),
+  ('pywin.dialogs.list',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\pywin\\dialogs\\list.py',
+   'PYMODULE'),
+  ('commctrl',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\lib\\commctrl.py',
+   'PYMODULE'),
+  ('win32com.client.genpy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\client\\genpy.py',
+   'PYMODULE'),
+  ('win32com.client.CLSIDToClass',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\client\\CLSIDToClass.py',
+   'PYMODULE'),
+  ('win32com.client.dynamic',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\client\\dynamic.py',
+   'PYMODULE'),
+  ('win32com.client.build',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\client\\build.py',
+   'PYMODULE'),
+  ('pywintypes',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\lib\\pywintypes.py',
+   'PYMODULE'),
+  ('distutils.sysconfig',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\sysconfig.py',
+   'PYMODULE'),
+  ('distutils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\__init__.py',
+   'PYMODULE'),
+  ('distutils.archive_util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\archive_util.py',
+   'PYMODULE'),
+  ('tarfile',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\tarfile.py',
+   'PYMODULE'),
+  ('gzip',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\gzip.py',
+   'PYMODULE'),
+  ('distutils.dir_util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\dir_util.py',
+   'PYMODULE'),
+  ('distutils.file_util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\file_util.py',
+   'PYMODULE'),
+  ('distutils.dep_util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\dep_util.py',
+   'PYMODULE'),
+  ('distutils.spawn',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\spawn.py',
+   'PYMODULE'),
+  ('distutils.debug',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\debug.py',
+   'PYMODULE'),
+  ('distutils.log',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\log.py',
+   'PYMODULE'),
+  ('distutils.text_file',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\text_file.py',
+   'PYMODULE'),
+  ('_osx_support',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_osx_support.py',
+   'PYMODULE'),
+  ('distutils.errors',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\errors.py',
+   'PYMODULE'),
+  ('win32com.server',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\server\\__init__.py',
+   'PYMODULE'),
+  ('win32com.universal',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\universal.py',
+   'PYMODULE'),
+  ('win32com.client.util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32com\\client\\util.py',
+   'PYMODULE'),
+  ('imp',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\imp.py',
+   'PYMODULE'),
+  ('pythoncom',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pythoncom.py',
+   'PYMODULE'),
+  ('tempfile',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\tempfile.py',
+   'PYMODULE'),
+  ('shutil',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\shutil.py',
+   'PYMODULE'),
+  ('pkg_resources',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\__init__.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.requirements',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\requirements.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__init__.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.pyparsing',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\pyparsing.py',
+   'PYMODULE'),
+  ('uuid',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\uuid.py',
+   'PYMODULE'),
+  ('ctypes.util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ctypes\\util.py',
+   'PYMODULE'),
+  ('ctypes._aix',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ctypes\\_aix.py',
+   'PYMODULE'),
+  ('ctypes.macholib.dyld',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ctypes\\macholib\\dyld.py',
+   'PYMODULE'),
+  ('ctypes.macholib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ctypes\\macholib\\__init__.py',
+   'PYMODULE'),
+  ('ctypes.macholib.dylib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ctypes\\macholib\\dylib.py',
+   'PYMODULE'),
+  ('ctypes.macholib.framework',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ctypes\\macholib\\framework.py',
+   'PYMODULE'),
+  ('netbios',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\lib\\netbios.py',
+   'PYMODULE'),
+  ('ctypes',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ctypes\\__init__.py',
+   'PYMODULE'),
+  ('ctypes._endian',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ctypes\\_endian.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\__init__.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging._structures',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_structures.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.specifiers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\specifiers.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.six',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\six.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.__about__',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__about__.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.version',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\version.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging._compat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_compat.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.appdirs',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\appdirs.py',
+   'PYMODULE'),
+  ('win32com.shell.shellcon',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32comext\\shell\\shellcon.py',
+   'PYMODULE'),
+  ('win32com.shell',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32comext\\shell\\__init__.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.markers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\markers.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.utils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\utils.py',
+   'PYMODULE'),
+  ('sysconfig',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\sysconfig.py',
+   'PYMODULE'),
+  ('pkg_resources.py31compat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\py31compat.py',
+   'PYMODULE'),
+  ('pkg_resources.extern',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pkg_resources\\extern\\__init__.py',
+   'PYMODULE'),
+  ('ntpath',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\ntpath.py',
+   'PYMODULE'),
+  ('multiprocessing.popen_fork',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\popen_fork.py',
+   'PYMODULE'),
+  ('multiprocessing.connection',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\connection.py',
+   'PYMODULE'),
+  ('multiprocessing.resource_sharer',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\resource_sharer.py',
+   'PYMODULE'),
+  ('multiprocessing.process',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\process.py',
+   'PYMODULE'),
+  ('xmlrpc.client',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xmlrpc\\client.py',
+   'PYMODULE'),
+  ('xmlrpc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xmlrpc\\__init__.py',
+   'PYMODULE'),
+  ('decimal',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\decimal.py',
+   'PYMODULE'),
+  ('_pydecimal',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_pydecimal.py',
+   'PYMODULE'),
+  ('contextvars',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\contextvars.py',
+   'PYMODULE'),
+  ('numbers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\numbers.py',
+   'PYMODULE'),
+  ('hmac',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\hmac.py',
+   'PYMODULE'),
+  ('multiprocessing.context',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\context.py',
+   'PYMODULE'),
+  ('multiprocessing.popen_forkserver',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\popen_forkserver.py',
+   'PYMODULE'),
+  ('multiprocessing.popen_spawn_posix',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\popen_spawn_posix.py',
+   'PYMODULE'),
+  ('multiprocessing.semaphore_tracker',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\semaphore_tracker.py',
+   'PYMODULE'),
+  ('multiprocessing.forkserver',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\forkserver.py',
+   'PYMODULE'),
+  ('multiprocessing.sharedctypes',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\sharedctypes.py',
+   'PYMODULE'),
+  ('multiprocessing.heap',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\heap.py',
+   'PYMODULE'),
+  ('multiprocessing.pool',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\pool.py',
+   'PYMODULE'),
+  ('multiprocessing.dummy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\dummy\\__init__.py',
+   'PYMODULE'),
+  ('multiprocessing.dummy.connection',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\dummy\\connection.py',
+   'PYMODULE'),
+  ('queue',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\queue.py',
+   'PYMODULE'),
+  ('multiprocessing.queues',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\queues.py',
+   'PYMODULE'),
+  ('multiprocessing.synchronize',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\synchronize.py',
+   'PYMODULE'),
+  ('multiprocessing.managers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\managers.py',
+   'PYMODULE'),
+  ('multiprocessing.reduction',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\reduction.py',
+   'PYMODULE'),
+  ('multiprocessing.util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\util.py',
+   'PYMODULE'),
+  ('multiprocessing.popen_spawn_win32',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\popen_spawn_win32.py',
+   'PYMODULE'),
+  ('multiprocessing.spawn',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\spawn.py',
+   'PYMODULE'),
+  ('multiprocessing',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\multiprocessing\\__init__.py',
+   'PYMODULE'),
+  ('_py_abc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_py_abc.py',
+   'PYMODULE'),
+  ('typing',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\typing.py',
+   'PYMODULE'),
+  ('stringprep',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\stringprep.py',
+   'PYMODULE'),
+  ('tracemalloc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\tracemalloc.py',
+   'PYMODULE'),
+  ('config',
+   'C:\\Users\\Looi Kai Wen\\Desktop\\Spacey_Code\\spacey\\Server\\Node '
+   'Manager\\config.py',
+   'PYMODULE'),
+  ('redis',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\redis\\__init__.py',
+   'PYMODULE'),
+  ('redis.exceptions',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\redis\\exceptions.py',
+   'PYMODULE'),
+  ('redis.utils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\redis\\utils.py',
+   'PYMODULE'),
+  ('redis.connection',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\redis\\connection.py',
+   'PYMODULE'),
+  ('redis._compat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\redis\\_compat.py',
+   'PYMODULE'),
+  ('distutils.version',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\version.py',
+   'PYMODULE'),
+  ('redis.client',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\redis\\client.py',
+   'PYMODULE'),
+  ('redis.lock',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\redis\\lock.py',
+   'PYMODULE'),
+  ('res_info',
+   'C:\\Users\\Looi Kai Wen\\Desktop\\Spacey_Code\\spacey\\Server\\Node '
+   'Manager\\res_info.py',
+   'PYMODULE'),
+  ('imagegen',
+   'C:\\Users\\Looi Kai Wen\\Desktop\\Spacey_Code\\spacey\\Server\\Node '
+   'Manager\\imagegen.py',
+   'PYMODULE'),
+  ('PIL.ImageFilter',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageFilter.py',
+   'PYMODULE'),
+  ('numpy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\__init__.py',
+   'PYMODULE'),
+  ('numpy._pytesttester',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\_pytesttester.py',
+   'PYMODULE'),
+  ('numpy.distutils.cpuinfo',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\cpuinfo.py',
+   'PYMODULE'),
+  ('numpy.distutils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\__init__.py',
+   'PYMODULE'),
+  ('numpy.distutils.fcompiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\fcompiler\\__init__.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.config_compiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\config_compiler.py',
+   'PYMODULE'),
+  ('numpy.distutils.command',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\__init__.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.egg_info',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\egg_info.py',
+   'PYMODULE'),
+  ('setuptools.command.egg_info',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\egg_info.py',
+   'PYMODULE'),
+  ('setuptools.glob',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\glob.py',
+   'PYMODULE'),
+  ('setuptools.unicode_utils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\unicode_utils.py',
+   'PYMODULE'),
+  ('setuptools.command.bdist_egg',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\bdist_egg.py',
+   'PYMODULE'),
+  ('setuptools.extension',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\extension.py',
+   'PYMODULE'),
+  ('setuptools.monkey',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\monkey.py',
+   'PYMODULE'),
+  ('distutils.extension',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\extension.py',
+   'PYMODULE'),
+  ('setuptools.command',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\__init__.py',
+   'PYMODULE'),
+  ('setuptools.command.install_scripts',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\install_scripts.py',
+   'PYMODULE'),
+  ('setuptools.command.easy_install',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\easy_install.py',
+   'PYMODULE'),
+  ('setuptools.dist',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\dist.py',
+   'PYMODULE'),
+  ('setuptools.config',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\config.py',
+   'PYMODULE'),
+  ('setuptools.windows_support',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\windows_support.py',
+   'PYMODULE'),
+  ('setuptools.depends',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\depends.py',
+   'PYMODULE'),
+  ('setuptools.py33compat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\py33compat.py',
+   'PYMODULE'),
+  ('html.parser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\html\\parser.py',
+   'PYMODULE'),
+  ('_markupbase',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_markupbase.py',
+   'PYMODULE'),
+  ('distutils.cmd',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\cmd.py',
+   'PYMODULE'),
+  ('setuptools.wheel',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\wheel.py',
+   'PYMODULE'),
+  ('setuptools.pep425tags',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\pep425tags.py',
+   'PYMODULE'),
+  ('setuptools.glibc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\glibc.py',
+   'PYMODULE'),
+  ('setuptools.package_index',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\package_index.py',
+   'PYMODULE'),
+  ('setuptools.ssl_support',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\ssl_support.py',
+   'PYMODULE'),
+  ('setuptools.archive_util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\archive_util.py',
+   'PYMODULE'),
+  ('setuptools.py27compat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\py27compat.py',
+   'PYMODULE'),
+  ('setuptools.sandbox',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\sandbox.py',
+   'PYMODULE'),
+  ('configparser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\configparser.py',
+   'PYMODULE'),
+  ('site',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PyInstaller\\fake-modules\\site.py',
+   'PYMODULE'),
+  ('distutils.command.build_scripts',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\build_scripts.py',
+   'PYMODULE'),
+  ('distutils.command',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\__init__.py',
+   'PYMODULE'),
+  ('distutils.command.install',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\install.py',
+   'PYMODULE'),
+  ('distutils.command.install_scripts',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\install_scripts.py',
+   'PYMODULE'),
+  ('distutils.command.bdist',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\bdist.py',
+   'PYMODULE'),
+  ('setuptools.command.setopt',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\setopt.py',
+   'PYMODULE'),
+  ('setuptools.command.sdist',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\sdist.py',
+   'PYMODULE'),
+  ('setuptools.command.py36compat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\py36compat.py',
+   'PYMODULE'),
+  ('distutils.command.sdist',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\sdist.py',
+   'PYMODULE'),
+  ('setuptools',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\__init__.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging._structures',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\_structures.py',
+   'PYMODULE'),
+  ('setuptools._vendor.pyparsing',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\pyparsing.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging.specifiers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\specifiers.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging.version',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\version.py',
+   'PYMODULE'),
+  ('setuptools._vendor.six',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\six.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging.requirements',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\requirements.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging.__about__',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\__about__.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging._compat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\_compat.py',
+   'PYMODULE'),
+  ('setuptools._vendor',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\__init__.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging.utils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\utils.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging.markers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\markers.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_vendor\\packaging\\__init__.py',
+   'PYMODULE'),
+  ('setuptools.msvc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\msvc.py',
+   'PYMODULE'),
+  ('distutils.msvc9compiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\msvc9compiler.py',
+   'PYMODULE'),
+  ('distutils.ccompiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\ccompiler.py',
+   'PYMODULE'),
+  ('distutils.command.build_ext',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\build_ext.py',
+   'PYMODULE'),
+  ('distutils._msvccompiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\_msvccompiler.py',
+   'PYMODULE'),
+  ('json',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\json\\__init__.py',
+   'PYMODULE'),
+  ('json.encoder',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\json\\encoder.py',
+   'PYMODULE'),
+  ('json.decoder',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\json\\decoder.py',
+   'PYMODULE'),
+  ('json.scanner',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\json\\scanner.py',
+   'PYMODULE'),
+  ('concurrent.futures',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\concurrent\\futures\\__init__.py',
+   'PYMODULE'),
+  ('concurrent.futures.thread',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\concurrent\\futures\\thread.py',
+   'PYMODULE'),
+  ('concurrent.futures.process',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\concurrent\\futures\\process.py',
+   'PYMODULE'),
+  ('concurrent.futures._base',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\concurrent\\futures\\_base.py',
+   'PYMODULE'),
+  ('concurrent',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\concurrent\\__init__.py',
+   'PYMODULE'),
+  ('setuptools.namespaces',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\namespaces.py',
+   'PYMODULE'),
+  ('setuptools.version',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\version.py',
+   'PYMODULE'),
+  ('setuptools._deprecation_warning',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\_deprecation_warning.py',
+   'PYMODULE'),
+  ('setuptools.extern',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\extern\\__init__.py',
+   'PYMODULE'),
+  ('distutils.filelist',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\filelist.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.develop',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\develop.py',
+   'PYMODULE'),
+  ('setuptools.command.develop',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\develop.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.install_clib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\install_clib.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.bdist_rpm',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\bdist_rpm.py',
+   'PYMODULE'),
+  ('distutils.command.bdist_rpm',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\bdist_rpm.py',
+   'PYMODULE'),
+  ('setuptools.command.bdist_rpm',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\bdist_rpm.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.install',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\install.py',
+   'PYMODULE'),
+  ('setuptools.command.install',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\setuptools\\command\\install.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.install_headers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\install_headers.py',
+   'PYMODULE'),
+  ('distutils.command.install_headers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\install_headers.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.install_data',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\install_data.py',
+   'PYMODULE'),
+  ('distutils.command.install_data',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\install_data.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.sdist',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\sdist.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.build_scripts',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\build_scripts.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.build_clib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\build_clib.py',
+   'PYMODULE'),
+  ('distutils.command.build_clib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\build_clib.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.build_ext',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\build_ext.py',
+   'PYMODULE'),
+  ('numpy.distutils.system_info',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\system_info.py',
+   'PYMODULE'),
+  ('numpy.f2py',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\__init__.py',
+   'PYMODULE'),
+  ('numpy.f2py.diagnose',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\diagnose.py',
+   'PYMODULE'),
+  ('numpy.f2py.f2py_testing',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\f2py_testing.py',
+   'PYMODULE'),
+  ('numpy.f2py.f2py2e',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\f2py2e.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.build_src',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\build_src.py',
+   'PYMODULE'),
+  ('numpy.distutils.conv_template',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\conv_template.py',
+   'PYMODULE'),
+  ('numpy.distutils.from_template',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\from_template.py',
+   'PYMODULE'),
+  ('numpy.f2py.auxfuncs',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\auxfuncs.py',
+   'PYMODULE'),
+  ('numpy.f2py.f90mod_rules',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\f90mod_rules.py',
+   'PYMODULE'),
+  ('numpy.f2py.rules',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\rules.py',
+   'PYMODULE'),
+  ('numpy.f2py.use_rules',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\use_rules.py',
+   'PYMODULE'),
+  ('numpy.f2py.common_rules',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\common_rules.py',
+   'PYMODULE'),
+  ('numpy.f2py.func2subr',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\func2subr.py',
+   'PYMODULE'),
+  ('numpy.f2py.crackfortran',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\crackfortran.py',
+   'PYMODULE'),
+  ('fileinput',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\fileinput.py',
+   'PYMODULE'),
+  ('numpy.f2py.cb_rules',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\cb_rules.py',
+   'PYMODULE'),
+  ('numpy.f2py.capi_maps',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\capi_maps.py',
+   'PYMODULE'),
+  ('numpy.f2py.cfuncs',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\cfuncs.py',
+   'PYMODULE'),
+  ('numpy.f2py.__version__',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\f2py\\__version__.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.build_py',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\build_py.py',
+   'PYMODULE'),
+  ('distutils.command.build_py',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\build_py.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.build',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\build.py',
+   'PYMODULE'),
+  ('distutils.command.build',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\build.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.config',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\config.py',
+   'PYMODULE'),
+  ('numpy.distutils.command.autodist',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\command\\autodist.py',
+   'PYMODULE'),
+  ('numpy.distutils.mingw32ccompiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\mingw32ccompiler.py',
+   'PYMODULE'),
+  ('distutils.msvccompiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\msvccompiler.py',
+   'PYMODULE'),
+  ('distutils.unixccompiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\unixccompiler.py',
+   'PYMODULE'),
+  ('distutils.cygwinccompiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\cygwinccompiler.py',
+   'PYMODULE'),
+  ('distutils.command.config',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\command\\config.py',
+   'PYMODULE'),
+  ('distutils.core',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\core.py',
+   'PYMODULE'),
+  ('distutils.config',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\config.py',
+   'PYMODULE'),
+  ('cgi',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\cgi.py',
+   'PYMODULE'),
+  ('distutils.dist',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\dist.py',
+   'PYMODULE'),
+  ('distutils.versionpredicate',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\versionpredicate.py',
+   'PYMODULE'),
+  ('numpy.distutils.core',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\core.py',
+   'PYMODULE'),
+  ('numpy.distutils.numpy_distribution',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\numpy_distribution.py',
+   'PYMODULE'),
+  ('numpy.distutils.extension',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\extension.py',
+   'PYMODULE'),
+  ('numpy.distutils.fcompiler.environment',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\fcompiler\\environment.py',
+   'PYMODULE'),
+  ('numpy.distutils.exec_command',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\exec_command.py',
+   'PYMODULE'),
+  ('numpy.distutils.misc_util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\misc_util.py',
+   'PYMODULE'),
+  ('curses',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\curses\\__init__.py',
+   'PYMODULE'),
+  ('curses.has_key',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\curses\\has_key.py',
+   'PYMODULE'),
+  ('dummy_threading',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\dummy_threading.py',
+   'PYMODULE'),
+  ('_dummy_thread',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\_dummy_thread.py',
+   'PYMODULE'),
+  ('distutils.util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\util.py',
+   'PYMODULE'),
+  ('lib2to3.refactor',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\refactor.py',
+   'PYMODULE'),
+  ('lib2to3.btm_matcher',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\btm_matcher.py',
+   'PYMODULE'),
+  ('lib2to3.btm_utils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\btm_utils.py',
+   'PYMODULE'),
+  ('lib2to3.pgen2.grammar',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\pgen2\\grammar.py',
+   'PYMODULE'),
+  ('lib2to3.pygram',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\pygram.py',
+   'PYMODULE'),
+  ('lib2to3.pytree',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\pytree.py',
+   'PYMODULE'),
+  ('lib2to3',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\__init__.py',
+   'PYMODULE'),
+  ('lib2to3.patcomp',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\patcomp.py',
+   'PYMODULE'),
+  ('lib2to3.pgen2.parse',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\pgen2\\parse.py',
+   'PYMODULE'),
+  ('lib2to3.pgen2.literals',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\pgen2\\literals.py',
+   'PYMODULE'),
+  ('lib2to3.fixer_util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\fixer_util.py',
+   'PYMODULE'),
+  ('lib2to3.pgen2.token',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\pgen2\\token.py',
+   'PYMODULE'),
+  ('lib2to3.pgen2.tokenize',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\pgen2\\tokenize.py',
+   'PYMODULE'),
+  ('lib2to3.pgen2.driver',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\pgen2\\driver.py',
+   'PYMODULE'),
+  ('lib2to3.pgen2.pgen',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\pgen2\\pgen.py',
+   'PYMODULE'),
+  ('lib2to3.pgen2',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\pgen2\\__init__.py',
+   'PYMODULE'),
+  ('distutils.fancy_getopt',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\distutils\\fancy_getopt.py',
+   'PYMODULE'),
+  ('numpy.distutils.__config__',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\__config__.py',
+   'PYMODULE'),
+  ('numpy.distutils.npy_pkg_config',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\npy_pkg_config.py',
+   'PYMODULE'),
+  ('numpy.distutils.unixccompiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\unixccompiler.py',
+   'PYMODULE'),
+  ('numpy.distutils.ccompiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\ccompiler.py',
+   'PYMODULE'),
+  ('numpy.distutils._shell_utils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\_shell_utils.py',
+   'PYMODULE'),
+  ('pipes',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\pipes.py',
+   'PYMODULE'),
+  ('numpy.distutils.lib2def',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\lib2def.py',
+   'PYMODULE'),
+  ('numpy.distutils.log',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\distutils\\log.py',
+   'PYMODULE'),
+  ('numpy.testing',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\testing\\__init__.py',
+   'PYMODULE'),
+  ('numpy.testing._private.nosetester',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\testing\\_private\\nosetester.py',
+   'PYMODULE'),
+  ('scipy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\__init__.py',
+   'PYMODULE'),
+  ('scipy._lib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\__init__.py',
+   'PYMODULE'),
+  ('scipy.fft',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\fft\\__init__.py',
+   'PYMODULE'),
+  ('numpy.dual',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\dual.py',
+   'PYMODULE'),
+  ('scipy.fft._pocketfft.helper',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\fft\\_pocketfft\\helper.py',
+   'PYMODULE'),
+  ('scipy.fft._backend',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\fft\\_backend.py',
+   'PYMODULE'),
+  ('scipy._lib.uarray',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\uarray.py',
+   'PYMODULE'),
+  ('scipy._lib._uarray',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\_uarray\\__init__.py',
+   'PYMODULE'),
+  ('scipy._lib._uarray._backend',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\_uarray\\_backend.py',
+   'PYMODULE'),
+  ('scipy._lib._pep440',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\_pep440.py',
+   'PYMODULE'),
+  ('scipy.fft._helper',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\fft\\_helper.py',
+   'PYMODULE'),
+  ('scipy.fft._pocketfft',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\fft\\_pocketfft\\__init__.py',
+   'PYMODULE'),
+  ('scipy.fft._pocketfft.realtransforms',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\fft\\_pocketfft\\realtransforms.py',
+   'PYMODULE'),
+  ('scipy.fft._pocketfft.basic',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\fft\\_pocketfft\\basic.py',
+   'PYMODULE'),
+  ('scipy.fft._realtransforms',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\fft\\_realtransforms.py',
+   'PYMODULE'),
+  ('scipy.fft._basic',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\fft\\_basic.py',
+   'PYMODULE'),
+  ('scipy._lib._testutils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\_testutils.py',
+   'PYMODULE'),
+  ('scipy._lib._ccallback',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\_ccallback.py',
+   'PYMODULE'),
+  ('cffi',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\__init__.py',
+   'PYMODULE'),
+  ('cffi.error',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\error.py',
+   'PYMODULE'),
+  ('cffi.api',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\api.py',
+   'PYMODULE'),
+  ('cffi.recompiler',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\recompiler.py',
+   'PYMODULE'),
+  ('cffi.cffi_opcode',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\cffi_opcode.py',
+   'PYMODULE'),
+  ('cffi.verifier',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\verifier.py',
+   'PYMODULE'),
+  ('cffi.lock',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\lock.py',
+   'PYMODULE'),
+  ('cffi.pkgconfig',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\pkgconfig.py',
+   'PYMODULE'),
+  ('cffi.vengine_cpy',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\vengine_cpy.py',
+   'PYMODULE'),
+  ('cffi.vengine_gen',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\vengine_gen.py',
+   'PYMODULE'),
+  ('cffi.ffiplatform',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\ffiplatform.py',
+   'PYMODULE'),
+  ('cffi.cparser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\cparser.py',
+   'PYMODULE'),
+  ('pycparser.lextab',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\lextab.py',
+   'PYMODULE'),
+  ('pycparser.yacctab',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\yacctab.py',
+   'PYMODULE'),
+  ('pycparser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\__init__.py',
+   'PYMODULE'),
+  ('pycparser.c_parser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\c_parser.py',
+   'PYMODULE'),
+  ('pycparser.ast_transforms',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\ast_transforms.py',
+   'PYMODULE'),
+  ('pycparser.plyparser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\plyparser.py',
+   'PYMODULE'),
+  ('pycparser.c_lexer',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\c_lexer.py',
+   'PYMODULE'),
+  ('pycparser.ply.lex',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\ply\\lex.py',
+   'PYMODULE'),
+  ('pycparser.ply.yacc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\ply\\yacc.py',
+   'PYMODULE'),
+  ('pycparser.ply',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\ply\\__init__.py',
+   'PYMODULE'),
+  ('pycparser.c_ast',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pycparser\\c_ast.py',
+   'PYMODULE'),
+  ('cffi.commontypes',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\commontypes.py',
+   'PYMODULE'),
+  ('cffi.model',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\cffi\\model.py',
+   'PYMODULE'),
+  ('scipy._lib._version',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\_version.py',
+   'PYMODULE'),
+  ('scipy._lib.six',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\six.py',
+   'PYMODULE'),
+  ('scipy.version',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\version.py',
+   'PYMODULE'),
+  ('scipy.__config__',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\__config__.py',
+   'PYMODULE'),
+  ('scipy._distributor_init',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_distributor_init.py',
+   'PYMODULE'),
+  ('numpy.lib.scimath',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\scimath.py',
+   'PYMODULE'),
+  ('numpy.lib.type_check',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\type_check.py',
+   'PYMODULE'),
+  ('numpy.core.getlimits',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\getlimits.py',
+   'PYMODULE'),
+  ('numpy.core.umath',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\umath.py',
+   'PYMODULE'),
+  ('numpy.core.machar',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\machar.py',
+   'PYMODULE'),
+  ('numpy.core._ufunc_config',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_ufunc_config.py',
+   'PYMODULE'),
+  ('numpy.core.fromnumeric',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\fromnumeric.py',
+   'PYMODULE'),
+  ('numpy.core._methods',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_methods.py',
+   'PYMODULE'),
+  ('numpy.core._exceptions',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_exceptions.py',
+   'PYMODULE'),
+  ('numpy.core._asarray',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_asarray.py',
+   'PYMODULE'),
+  ('numpy.core.multiarray',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\multiarray.py',
+   'PYMODULE'),
+  ('numpy.lib.ufunclike',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\ufunclike.py',
+   'PYMODULE'),
+  ('numpy.core.overrides',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\overrides.py',
+   'PYMODULE'),
+  ('numpy.compat._inspect',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\compat\\_inspect.py',
+   'PYMODULE'),
+  ('numpy.core.numerictypes',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\numerictypes.py',
+   'PYMODULE'),
+  ('numpy.core._dtype',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_dtype.py',
+   'PYMODULE'),
+  ('numpy.core._type_aliases',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_type_aliases.py',
+   'PYMODULE'),
+  ('numpy.core._string_helpers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_string_helpers.py',
+   'PYMODULE'),
+  ('numpy.core.numeric',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\numeric.py',
+   'PYMODULE'),
+  ('numpy.core.arrayprint',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\arrayprint.py',
+   'PYMODULE'),
+  ('numpy.core.shape_base',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\shape_base.py',
+   'PYMODULE'),
+  ('scipy._lib.deprecation',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\deprecation.py',
+   'PYMODULE'),
+  ('numpy.testing._private.noseclasses',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\testing\\_private\\noseclasses.py',
+   'PYMODULE'),
+  ('numpy.testing._private.decorators',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\testing\\_private\\decorators.py',
+   'PYMODULE'),
+  ('numpy.testing._private.parameterized',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\testing\\_private\\parameterized.py',
+   'PYMODULE'),
+  ('numpy.testing._private',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\testing\\_private\\__init__.py',
+   'PYMODULE'),
+  ('numpy.testing._private.utils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\testing\\_private\\utils.py',
+   'PYMODULE'),
+  ('numpy.matrixlib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\matrixlib\\__init__.py',
+   'PYMODULE'),
+  ('numpy.matrixlib.defmatrix',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\matrixlib\\defmatrix.py',
+   'PYMODULE'),
+  ('numpy.ma',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\ma\\__init__.py',
+   'PYMODULE'),
+  ('numpy.ma.extras',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\ma\\extras.py',
+   'PYMODULE'),
+  ('numpy.lib.index_tricks',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\index_tricks.py',
+   'PYMODULE'),
+  ('numpy.lib.stride_tricks',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\stride_tricks.py',
+   'PYMODULE'),
+  ('numpy.lib.function_base',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\function_base.py',
+   'PYMODULE'),
+  ('numpy.lib.histograms',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\histograms.py',
+   'PYMODULE'),
+  ('numpy.lib.twodim_base',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\twodim_base.py',
+   'PYMODULE'),
+  ('numpy.core.function_base',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\function_base.py',
+   'PYMODULE'),
+  ('numpy.ma.core',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\ma\\core.py',
+   'PYMODULE'),
+  ('numpy.core._internal',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_internal.py',
+   'PYMODULE'),
+  ('numpy.ctypeslib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\ctypeslib.py',
+   'PYMODULE'),
+  ('numpy.random',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\__init__.py',
+   'PYMODULE'),
+  ('numpy.random._pickle',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\_pickle.py',
+   'PYMODULE'),
+  ('numpy.polynomial',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\polynomial\\__init__.py',
+   'PYMODULE'),
+  ('numpy.polynomial.laguerre',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\polynomial\\laguerre.py',
+   'PYMODULE'),
+  ('numpy.polynomial._polybase',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\polynomial\\_polybase.py',
+   'PYMODULE'),
+  ('numpy.polynomial.hermite_e',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\polynomial\\hermite_e.py',
+   'PYMODULE'),
+  ('numpy.polynomial.hermite',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\polynomial\\hermite.py',
+   'PYMODULE'),
+  ('numpy.polynomial.legendre',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\polynomial\\legendre.py',
+   'PYMODULE'),
+  ('numpy.polynomial.chebyshev',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\polynomial\\chebyshev.py',
+   'PYMODULE'),
+  ('numpy.polynomial.polynomial',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\polynomial\\polynomial.py',
+   'PYMODULE'),
+  ('numpy.polynomial.polyutils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\polynomial\\polyutils.py',
+   'PYMODULE'),
+  ('numpy.fft',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\fft\\__init__.py',
+   'PYMODULE'),
+  ('numpy.fft.helper',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\fft\\helper.py',
+   'PYMODULE'),
+  ('numpy.fft._pocketfft',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\fft\\_pocketfft.py',
+   'PYMODULE'),
+  ('numpy.linalg',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\linalg\\__init__.py',
+   'PYMODULE'),
+  ('numpy.linalg.linalg',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\linalg\\linalg.py',
+   'PYMODULE'),
+  ('numpy.lib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\__init__.py',
+   'PYMODULE'),
+  ('numpy.lib._version',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\_version.py',
+   'PYMODULE'),
+  ('numpy.lib.arraypad',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\arraypad.py',
+   'PYMODULE'),
+  ('numpy.lib.arrayterator',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\arrayterator.py',
+   'PYMODULE'),
+  ('numpy.lib.financial',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\financial.py',
+   'PYMODULE'),
+  ('numpy.lib.npyio',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\npyio.py',
+   'PYMODULE'),
+  ('numpy.ma.mrecords',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\ma\\mrecords.py',
+   'PYMODULE'),
+  ('numpy.core.records',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\records.py',
+   'PYMODULE'),
+  ('numpy.lib._iotools',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\_iotools.py',
+   'PYMODULE'),
+  ('numpy.lib._datasource',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\_datasource.py',
+   'PYMODULE'),
+  ('numpy.lib.format',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\format.py',
+   'PYMODULE'),
+  ('numpy.lib.arraysetops',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\arraysetops.py',
+   'PYMODULE'),
+  ('numpy.lib.utils',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\utils.py',
+   'PYMODULE'),
+  ('numpy.lib.polynomial',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\polynomial.py',
+   'PYMODULE'),
+  ('numpy.lib.shape_base',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\shape_base.py',
+   'PYMODULE'),
+  ('numpy.lib.nanfunctions',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\nanfunctions.py',
+   'PYMODULE'),
+  ('numpy.lib.mixins',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\lib\\mixins.py',
+   'PYMODULE'),
+  ('numpy.compat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\compat\\__init__.py',
+   'PYMODULE'),
+  ('numpy.compat.py3k',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\compat\\py3k.py',
+   'PYMODULE'),
+  ('pathlib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\pathlib.py',
+   'PYMODULE'),
+  ('numpy.core',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\__init__.py',
+   'PYMODULE'),
+  ('numpy.core._dtype_ctypes',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_dtype_ctypes.py',
+   'PYMODULE'),
+  ('numpy.core._add_newdocs',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_add_newdocs.py',
+   'PYMODULE'),
+  ('numpy.core.einsumfunc',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\einsumfunc.py',
+   'PYMODULE'),
+  ('numpy.core.memmap',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\memmap.py',
+   'PYMODULE'),
+  ('numpy.core.defchararray',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\defchararray.py',
+   'PYMODULE'),
+  ('numpy._distributor_init',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\_distributor_init.py',
+   'PYMODULE'),
+  ('numpy.version',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\version.py',
+   'PYMODULE'),
+  ('numpy.__config__',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\__config__.py',
+   'PYMODULE'),
+  ('numpy._globals',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\_globals.py',
+   'PYMODULE'),
+  ('PIL.ImageDraw',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageDraw.py',
+   'PYMODULE'),
+  ('PIL.ImageDraw2',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageDraw2.py',
+   'PYMODULE'),
+  ('PIL.ImagePath',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImagePath.py',
+   'PYMODULE'),
+  ('PIL.ImageFont',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageFont.py',
+   'PYMODULE'),
+  ('PIL._util',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\_util.py',
+   'PYMODULE'),
+  ('PIL.ImageColor',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageColor.py',
+   'PYMODULE'),
+  ('colorsys',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\colorsys.py',
+   'PYMODULE'),
+  ('PIL.Image',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\Image.py',
+   'PYMODULE'),
+  ('PIL.Jpeg2KImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\Jpeg2KImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.ImageFile',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageFile.py',
+   'PYMODULE'),
+  ('PIL.ImImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PalmImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PalmImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.EpsImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\EpsImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.XbmImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\XbmImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PcxImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PcxImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FitsStubImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FitsStubImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MpoImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MpoImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.McIdasImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\McIdasImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.GribStubImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\GribStubImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.WebPImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\WebPImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.XpmImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\XpmImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.DcxImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\DcxImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PdfImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PdfImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PdfParser',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PdfParser.py',
+   'PYMODULE'),
+  ('PIL.ImageSequence',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageSequence.py',
+   'PYMODULE'),
+  ('PIL.IcnsImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\IcnsImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.features',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\features.py',
+   'PYMODULE'),
+  ('PIL.IcoImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\IcoImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FtexImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FtexImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PixarImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PixarImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MicImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MicImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PcdImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PcdImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.XVThumbImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\XVThumbImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MspImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MspImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FpxImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FpxImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.WmfImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\WmfImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.IptcImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\IptcImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.BlpImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\BlpImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PsdImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PsdImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.SunImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\SunImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.ImtImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImtImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.GbrImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\GbrImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MpegImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\MpegImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FliImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\FliImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.DdsImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\DdsImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.Hdf5StubImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\Hdf5StubImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.CurImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\CurImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.TgaImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\TgaImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.BufrStubImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\BufrStubImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.SgiImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\SgiImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.SpiderImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\SpiderImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.ImageTk',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageTk.py',
+   'PYMODULE'),
+  ('PIL.TiffImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\TiffImagePlugin.py',
+   'PYMODULE'),
+  ('fractions',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\fractions.py',
+   'PYMODULE'),
+  ('PIL.ImageShow',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageShow.py',
+   'PYMODULE'),
+  ('PIL.ImageQt',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageQt.py',
+   'PYMODULE'),
+  ('PIL.PyAccess',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PyAccess.py',
+   'PYMODULE'),
+  ('PIL.ImagePalette',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImagePalette.py',
+   'PYMODULE'),
+  ('PIL.PaletteFile',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PaletteFile.py',
+   'PYMODULE'),
+  ('PIL.GimpPaletteFile',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\GimpPaletteFile.py',
+   'PYMODULE'),
+  ('PIL.GimpGradientFile',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\GimpGradientFile.py',
+   'PYMODULE'),
+  ('PIL.PngImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PngImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.ImageChops',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageChops.py',
+   'PYMODULE'),
+  ('PIL.PpmImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\PpmImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.JpegImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\JpegImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.JpegPresets',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\JpegPresets.py',
+   'PYMODULE'),
+  ('PIL.GifImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\GifImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.BmpImagePlugin',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\BmpImagePlugin.py',
+   'PYMODULE'),
+  ('PIL._binary',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\_binary.py',
+   'PYMODULE'),
+  ('PIL.TiffTags',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\TiffTags.py',
+   'PYMODULE'),
+  ('PIL.ImageMode',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\ImageMode.py',
+   'PYMODULE'),
+  ('xml.etree.ElementTree',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\etree\\ElementTree.py',
+   'PYMODULE'),
+  ('xml.etree.cElementTree',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\etree\\cElementTree.py',
+   'PYMODULE'),
+  ('xml.etree.ElementInclude',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\etree\\ElementInclude.py',
+   'PYMODULE'),
+  ('xml.etree.ElementPath',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\etree\\ElementPath.py',
+   'PYMODULE'),
+  ('xml.etree',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\xml\\etree\\__init__.py',
+   'PYMODULE'),
+  ('PIL',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\__init__.py',
+   'PYMODULE'),
+  ('PIL._version',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\_version.py',
+   'PYMODULE'),
+  ('os',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\os.py',
+   'PYMODULE')],
+ [('VCRUNTIME140.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\VCRUNTIME140.dll',
+   'BINARY'),
+  ('python37.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\python37.dll',
+   'BINARY'),
+  ('libmvndst.UEXYY5YZLETRZLLV7GKDGWYVIASLDNJ6.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libmvndst.UEXYY5YZLETRZLLV7GKDGWYVIASLDNJ6.gfortran-win32.dll',
+   'BINARY'),
+  ('lib_blas_su.EV7A2WQW43JPO4ZQ5GIRAQ3HEBKWBDEM.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\lib_blas_su.EV7A2WQW43JPO4ZQ5GIRAQ3HEBKWBDEM.gfortran-win32.dll',
+   'BINARY'),
+  ('libblkdta00.NHTRA42AHAJBKEOQCH6GY7ZYFDHTBNAJ.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libblkdta00.NHTRA42AHAJBKEOQCH6GY7ZYFDHTBNAJ.gfortran-win32.dll',
+   'BINARY'),
+  ('libdfft_sub.G6XSI4SNRZLIUVYH6AMDYIRQVDUJJRXQ.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libdfft_sub.G6XSI4SNRZLIUVYH6AMDYIRQVDUJJRXQ.gfortran-win32.dll',
+   'BINARY'),
+  ('libspecfun.4EOQTMYNA23N5GPNA7SCW33J5YXJI2Q6.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libspecfun.4EOQTMYNA23N5GPNA7SCW33J5YXJI2Q6.gfortran-win32.dll',
+   'BINARY'),
+  ('lib_arpack-.AEJ5TYEV5ZKWXL2ZFX4YX4AVWTHY6PZP.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\lib_arpack-.AEJ5TYEV5ZKWXL2ZFX4YX4AVWTHY6PZP.gfortran-win32.dll',
+   'BINARY'),
+  ('pywintypes37.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pywin32_system32\\pywintypes37.dll',
+   'BINARY'),
+  ('pythoncom37.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\pywin32_system32\\pythoncom37.dll',
+   'BINARY'),
+  ('libdet.QGVN62UTE5S5E5T7ZGNYYL5ADKTS7UXS.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libdet.QGVN62UTE5S5E5T7ZGNYYL5ADKTS7UXS.gfortran-win32.dll',
+   'BINARY'),
+  ('lib_test_fo.6QS7HUU6UWQ3ZZ2H5HU3YC3T72Y24U6T.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\lib_test_fo.6QS7HUU6UWQ3ZZ2H5HU3YC3T72Y24U6T.gfortran-win32.dll',
+   'BINARY'),
+  ('libchkder.23IDUBONJEDQJXE3WT2KTJUEFGPJBH5V.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libchkder.23IDUBONJEDQJXE3WT2KTJUEFGPJBH5V.gfortran-win32.dll',
+   'BINARY'),
+  ('libdop853.ZDB77F5S63EPO7WWG3LICXZSBW2LFM2N.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libdop853.ZDB77F5S63EPO7WWG3LICXZSBW2LFM2N.gfortran-win32.dll',
+   'BINARY'),
+  ('liblbfgsb.UURJMGTRSA4CCKLIMKCO6DYO5UQY2GGJ.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\liblbfgsb.UURJMGTRSA4CCKLIMKCO6DYO5UQY2GGJ.gfortran-win32.dll',
+   'BINARY'),
+  ('libansari.Q4BAGRNANLWD2YZJOKYPOAUIOLXW2LXK.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libansari.Q4BAGRNANLWD2YZJOKYPOAUIOLXW2LXK.gfortran-win32.dll',
+   'BINARY'),
+  ('libd_odr.QYPW3KLSS67LCDCMEMJJOEURJ7J2E6E5.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libd_odr.QYPW3KLSS67LCDCMEMJJOEURJ7J2E6E5.gfortran-win32.dll',
+   'BINARY'),
+  ('libopenblas.SVHFG5YE3RK3Z27NVFUDAPL2O3W6IMXW.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libopenblas.SVHFG5YE3RK3Z27NVFUDAPL2O3W6IMXW.gfortran-win32.dll',
+   'BINARY'),
+  ('libdfitpack.EM6D2ZEFEP35UVNTFVXVVRYRWM22ZXEY.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libdfitpack.EM6D2ZEFEP35UVNTFVXVVRYRWM22ZXEY.gfortran-win32.dll',
+   'BINARY'),
+  ('libdqag.5BKO2YUCXZGLZTTZ4WNBZJQZTKOATUJT.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libdqag.5BKO2YUCXZGLZTTZ4WNBZJQZTKOATUJT.gfortran-win32.dll',
+   'BINARY'),
+  ('libwrap_dum.A5WLRNKFATKKQJGYRZJAOYXVUUE32K6A.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libwrap_dum.A5WLRNKFATKKQJGYRZJAOYXVUUE32K6A.gfortran-win32.dll',
+   'BINARY'),
+  ('libslsqp_op.MXR5BOTVQOM7FKAXXDEPBABKIXS3O77A.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libslsqp_op.MXR5BOTVQOM7FKAXXDEPBABKIXS3O77A.gfortran-win32.dll',
+   'BINARY'),
+  ('libcobyla2.3BFPWD23GN4DOQSZLNJP2Y3VKAM3SSGW.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libcobyla2.3BFPWD23GN4DOQSZLNJP2Y3VKAM3SSGW.gfortran-win32.dll',
+   'BINARY'),
+  ('libdgamln.V7MAAVYVDAJEJATAUUTFLG5HUPUWUH5X.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libdgamln.V7MAAVYVDAJEJATAUUTFLG5HUPUWUH5X.gfortran-win32.dll',
+   'BINARY'),
+  ('libnnls.GX3LBH56JRQ7JMAOG7UBTDQJYFS6BPRN.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libnnls.GX3LBH56JRQ7JMAOG7UBTDQJYFS6BPRN.gfortran-win32.dll',
+   'BINARY'),
+  ('msvcp140.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\msvcp140.dll',
+   'BINARY'),
+  ('libvode.775SE6UAZSXM3Q64QT2MSTG6UNVD7EXQ.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libvode.775SE6UAZSXM3Q64QT2MSTG6UNVD7EXQ.gfortran-win32.dll',
+   'BINARY'),
+  ('libwrap_dum.JIXN5UE6QFHJ4SF5PUHHMG4LTBAQ7ZHG.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libwrap_dum.JIXN5UE6QFHJ4SF5PUHHMG4LTBAQ7ZHG.gfortran-win32.dll',
+   'BINARY'),
+  ('libdcsrch.CTD6WPTKUW4MYYPI2KYOJ4427ZGGSXEQ.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libdcsrch.CTD6WPTKUW4MYYPI2KYOJ4427ZGGSXEQ.gfortran-win32.dll',
+   'BINARY'),
+  ('libgetbreak.IF7AACEU72KVCL4HI3XGBZ2LYFS5M2R3.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libgetbreak.IF7AACEU72KVCL4HI3XGBZ2LYFS5M2R3.gfortran-win32.dll',
+   'BINARY'),
+  ('libbispeu.KX7AQLB2Z5NFTCADW76YV5UMLBQNDALD.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libbispeu.KX7AQLB2Z5NFTCADW76YV5UMLBQNDALD.gfortran-win32.dll',
+   'BINARY'),
+  ('libopenblas.U35RT5X5BPDSH5ZTF276YADQR2KDU6PR.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\.libs\\libopenblas.U35RT5X5BPDSH5ZTF276YADQR2KDU6PR.gfortran-win32.dll',
+   'BINARY'),
+  ('libbanded5x.WYYO5OALMMMFRTCR4ST4HTYS3OBVBXX5.gfortran-win32.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\.libs\\libbanded5x.WYYO5OALMMMFRTCR4ST4HTYS3OBVBXX5.gfortran-win32.dll',
+   'BINARY'),
+  ('win32trace',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\win32trace.pyd',
+   'EXTENSION'),
+  ('win32ui',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\win32ui.pyd',
+   'EXTENSION'),
+  ('_lzma',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\_lzma.pyd',
+   'EXTENSION'),
+  ('_bz2',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\_bz2.pyd',
+   'EXTENSION'),
+  ('_socket',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\_socket.pyd',
+   'EXTENSION'),
+  ('select',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\select.pyd',
+   'EXTENSION'),
+  ('_hashlib',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\_hashlib.pyd',
+   'EXTENSION'),
+  ('_ssl',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\_ssl.pyd',
+   'EXTENSION'),
+  ('unicodedata',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\unicodedata.pyd',
+   'EXTENSION'),
+  ('pyexpat',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\pyexpat.pyd',
+   'EXTENSION'),
+  ('_win32sysloader',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\_win32sysloader.pyd',
+   'EXTENSION'),
+  ('win32api',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\win32api.pyd',
+   'EXTENSION'),
+  ('win32wnet',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\win32wnet.pyd',
+   'EXTENSION'),
+  ('_ctypes',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\_ctypes.pyd',
+   'EXTENSION'),
+  ('win32com.shell.shell',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32comext\\shell\\shell.pyd',
+   'EXTENSION'),
+  ('_decimal',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\_decimal.pyd',
+   'EXTENSION'),
+  ('_queue',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\_queue.pyd',
+   'EXTENSION'),
+  ('_multiprocessing',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\_multiprocessing.pyd',
+   'EXTENSION'),
+  ('scipy._lib._fpumode',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\_fpumode.cp37-win32.pyd',
+   'EXTENSION'),
+  ('scipy._lib._ccallback_c',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\_ccallback_c.cp37-win32.pyd',
+   'EXTENSION'),
+  ('scipy._lib.messagestream',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\messagestream.cp37-win32.pyd',
+   'EXTENSION'),
+  ('scipy.fft._pocketfft.pypocketfft',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\fft\\_pocketfft\\pypocketfft.cp37-win32.pyd',
+   'EXTENSION'),
+  ('scipy._lib._uarray._uarray',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\scipy\\_lib\\_uarray\\_uarray.cp37-win32.pyd',
+   'EXTENSION'),
+  ('_cffi_backend',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\_cffi_backend.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.core._multiarray_umath',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_multiarray_umath.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.core._multiarray_tests',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\core\\_multiarray_tests.cp37-win32.pyd',
+   'EXTENSION'),
+  ('win32pdh',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\win32\\win32pdh.pyd',
+   'EXTENSION'),
+  ('numpy.linalg.lapack_lite',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\linalg\\lapack_lite.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.random.mtrand',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\mtrand.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.random._sfc64',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\_sfc64.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.random._philox',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\_philox.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.random._pcg64',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\_pcg64.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.random._mt19937',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\_mt19937.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.random.bit_generator',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\bit_generator.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.random._generator',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\_generator.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.random._bounded_integers',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\_bounded_integers.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.random._common',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\random\\_common.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.fft._pocketfft_internal',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\fft\\_pocketfft_internal.cp37-win32.pyd',
+   'EXTENSION'),
+  ('numpy.linalg._umath_linalg',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\numpy\\linalg\\_umath_linalg.cp37-win32.pyd',
+   'EXTENSION'),
+  ('PIL._imagingft',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\_imagingft.cp37-win32.pyd',
+   'EXTENSION'),
+  ('PIL._webp',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\_webp.cp37-win32.pyd',
+   'EXTENSION'),
+  ('PIL._imagingtk',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\_imagingtk.cp37-win32.pyd',
+   'EXTENSION'),
+  ('PIL._imaging',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\PIL\\_imaging.cp37-win32.pyd',
+   'EXTENSION'),
+  ('_elementtree',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\_elementtree.pyd',
+   'EXTENSION'),
+  ('mfc140u.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\site-packages\\Pythonwin\\mfc140u.dll',
+   'BINARY'),
+  ('libcrypto-1_1.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\libcrypto-1_1.dll',
+   'BINARY'),
+  ('libssl-1_1.dll',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\DLLs\\libssl-1_1.dll',
+   'BINARY')],
+ [],
+ [],
+ [('base_library.zip',
+   'C:\\Users\\Looi Kai Wen\\Desktop\\Spacey_Code\\spacey\\Server\\Node '
+   'Manager\\build\\main\\base_library.zip',
+   'DATA'),
+  ('lib2to3\\PatternGrammar.txt',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\PatternGrammar.txt',
+   'DATA'),
+  ('lib2to3\\tests\\data\\README',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\tests\\data\\README',
+   'DATA'),
+  ('Include\\pyconfig.h',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\Include\\pyconfig.h',
+   'DATA'),
+  ('lib2to3\\PatternGrammar3.7.4.final.0.pickle',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\PatternGrammar3.7.4.final.0.pickle',
+   'DATA'),
+  ('lib2to3\\Grammar3.7.4.final.0.pickle',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\Grammar3.7.4.final.0.pickle',
+   'DATA'),
+  ('lib2to3\\Grammar.txt',
+   'c:\\users\\looi kai '
+   'wen\\appdata\\local\\programs\\python\\python37-32\\lib\\lib2to3\\Grammar.txt',
+   'DATA')],
+ [])
