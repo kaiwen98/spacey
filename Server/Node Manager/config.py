@@ -172,6 +172,7 @@ class ResServer(object):
 
         for i in range(len(self.available_restaurants_name)):
             
+            #if self.available_restaurants_name[i] == 'Spacey Cafe' and self.userID == 'NUS': return
             if self.available_restaurants_name[i] == 'Deck' and self.userID == 'NUS': return
             print(self.available_restaurants_name[i])
             occupancy = {}
@@ -182,7 +183,11 @@ class ResServer(object):
             occupancy = cfg.database.client.hgetall(full_name_occupancy)
 
             keys_list = list(occupancy.keys())
-            numRand = int(len(keys_list) * threshold)
+            low = -int(0.2 * len(occupancy.keys()))
+            high = int(0.2 * len(occupancy.keys()))+1
+            numRand = int(len(keys_list) * threshold) + random.randint(low, high)
+            print(numRand)
+            if numRand < 0: numRand = 0
             keys_sample = random.sample(keys_list, numRand)
             for j in occupancy.keys():
                 new_occupancy[j] = '0'
@@ -211,7 +216,7 @@ def main():
     while(True):
         for i in x:
             i.randomize()
-            time.sleep(5)
+            time.sleep(10)
             print("Randomised")
 
 """
