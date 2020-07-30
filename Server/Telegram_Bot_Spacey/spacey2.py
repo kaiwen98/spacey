@@ -1084,49 +1084,11 @@ def main():
 
     dp.add_error_handler(error_callback)
 
-    conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('menu', menu),CommandHandler('notifications', notifications),CommandHandler('setspaceyoccupancy', setspaceyoccupancy)],
-
-        states={
-            LOCATION: [CallbackQueryHandler(check_location)],
-            CHECKAREA: [CallbackQueryHandler(check_area)],
-            CHECKWHAT: [CallbackQueryHandler(check_what)],
-            SUBSCRIBE_MAIN: [CallbackQueryHandler(subscribe_main)],
-            SUBSCRIBE_TYPE: [CallbackQueryHandler(subscribe_type)],
-            SUBSCRIBE_TIME: [CallbackQueryHandler(subscribe_time)],
-            SUBSCRIBE_AREA: [CallbackQueryHandler(subscribe_area)],
-            SUBSCRIBE_LOCATION: [CallbackQueryHandler(subscribe_location)],
-            UNSUBSCRIBE_TYPE: [CallbackQueryHandler(unsubscribe_type)],
-            SETSPACEYVALUE: [CallbackQueryHandler(setspaceyvalue)]
-        },
-
-        fallbacks=[CommandHandler('menu', menu),CommandHandler('notifications', notifications),CommandHandler('setspaceyoccupancy', setspaceyoccupancy)]
-    )
-    dp.add_handler(conv_handler)
     
     # Get job queue
     j = updater.job_queue
 
-    # Set daily notifications
-    daily_notification_12pm_t = datetime.time(4,00,00,000000)
-    dp.add_handler(CallbackQueryHandler(daily_notifications_12pm))
-    job_daily1 = j.run_daily(daily_notifications_12pm, daily_notification_12pm_t)
-
-    daily_notification_1pm_t = datetime.time(5,00,00,000000)
-    dp.add_handler(CallbackQueryHandler(daily_notifications_1pm))
-    job_daily2 = j.run_daily(daily_notifications_1pm, daily_notification_1pm_t)
-
-    daily_notification_2pm_t = datetime.time(6,00,00,000000)
-    dp.add_handler(CallbackQueryHandler(daily_notifications_2pm))
-    job_daily3 = j.run_daily(daily_notifications_2pm, daily_notification_2pm_t)
-
-    # t_1 = datetime.time(13,30,00,000000)
-    # dp.add_handler(CallbackQueryHandler(hourly_info1))
-    # job_daily = j.run_daily(hourly_info1,t_1)
-
-    # t_2 = datetime.time(13,32,00,000000)
-    # dp.add_handler(CallbackQueryHandler(hourly_info2))
-    # job_daily = j.run_daily(hourly_info2,t_2)
+ 
 
     # Set >80% notifications
     dp.add_handler(CallbackQueryHandler(full_notifications))
@@ -1135,19 +1097,12 @@ def main():
     dp.add_handler(CallbackQueryHandler(hourly_update))
     job_minute2 = j.run_repeating(hourly_update, interval=300, first=0)
 
-    # Update seats occupancy
-    # dp.add_handler(CallbackQueryHandler(update_seats))
-    # job_minute2 = j.run_repeating(update_seats, interval=888, first=0) #run every 3 mins 180
+
     
     # Start the Bot
     
     updater.start_polling()
-    """
-    updater.start_webhook(listen="0.0.0.0",
-                      port= int(PORT),
-                      url_path=TOKEN)
-    updater.bot.setWebhook("https://spaceyherok.herokuapp.com/" + TOKEN)
-    """
+
     updater.idle()
 
 
