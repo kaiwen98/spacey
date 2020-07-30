@@ -211,7 +211,7 @@ def main():
     while(True):
         for i in x:
             i.randomize()
-            time.sleep(10)
+            time.sleep(5)
             print("Randomised")
 
 """
