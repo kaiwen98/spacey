@@ -23,6 +23,8 @@ import random
 import time
 import redis
 
+res_store = {}
+
 _root = dir(dir(abspath(__file__)))
 PORT = int(os.environ.get('PORT', 5000))
 TOKEN = '1165909865:AAFStUPdW-W5HpzEfuGabXZK_ysUBy1KJ3s'
@@ -159,6 +161,7 @@ def check_location(update, context):
     return CHECKWHAT
 
 def check_what(update, context):
+    global res_store
     query = update.callback_query
     option = query.data
     query.edit_message_text(text="Selected option: {}".format(option))
@@ -198,7 +201,10 @@ def check_what(update, context):
         plt.savefig(join(image_output_graphic_folder,"chart_"+str(location)+".png"))
         plt.clf()
         #Generate FLOORPLAN
-        config_obj = cfg.ResServer(area)
+        #config_obj = cfg.ResServer(area)
+        print(area)
+        print(res_store.keys())
+        config_obj = res_store[area]
         restaurants_data = config_obj.get_info()
         for loc_data, obj_data in restaurants_data.items():
             if location == loc_data:
@@ -1054,7 +1060,8 @@ class MQBot(telegram.bot.Bot):
 
 
 def main():
-    cfg.main()
+    global res_store
+    res_store = cfg.main()
     # limit global throughput to 3 messages per 3 seconds
     q = mq.MessageQueue(all_burst_limit=29, all_time_limit_ms=1017)
     request = Request(con_pool_size=8)

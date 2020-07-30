@@ -57,6 +57,7 @@ restaurants = None
 cfg.database = redisDB.redis_database(
     _root, cfg.remote_host, cfg.port, cfg.password)
 interrupt = ""
+x = {}
 
 # Serializes image from png to string
 
@@ -162,7 +163,11 @@ class ResServer(object):
 def main():
     userID = 'NUS'
     cfg.database.timeout()
-    x = ResServer(userID)
+    res_list = cfg.database.client.smembers('registered_users')
+    for i in res_list:
+    	x[i] = ResServer(i)
+    return x
+
     
   
 if __name__ == '__main__':
