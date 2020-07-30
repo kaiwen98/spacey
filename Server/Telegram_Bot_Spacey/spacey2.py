@@ -25,7 +25,7 @@ import redis
 
 _root = dir(dir(abspath(__file__)))
 PORT = int(os.environ.get('PORT', 5000))
-TOKEN = NOTOKENFORU
+TOKEN = '1165909865:AAFStUPdW-W5HpzEfuGabXZK_ysUBy1KJ3s'
 
 # users_info_path = os.path.join(_root, "Telegram_Bot_Spacey", "users_info.csv")
 # locations_path = os.path.join(_root, "Telegram_Bot_Spacey", "locations.csv")
@@ -266,7 +266,7 @@ def check_what(update, context):
     elif option == "Recent Statistics":
         data = cfg.database.client.hgetall(area+"_"+location+"_totalvisitors")
         data_keep = data
-        data = sorted(data)
+        data = sorted(data, key=lambda x: datetime.datetime.strptime(x, '%d/%m/%Y %H:%M:%S'))
         latest10 = data[-10:]
             
         total_visitors_list = []
