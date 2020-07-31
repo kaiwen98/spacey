@@ -217,8 +217,8 @@ def randomise_task():
     global x
     res_list = cfg.database.client.smembers('registered_users')
     for i in res_list:
-    	if i not in x.keys():
-		x[i] = ResServer(i)
+    	if i not in x:
+		    x.append(ResServer(i))
     for i in x:
         i.randomize()
         time.sleep(10)

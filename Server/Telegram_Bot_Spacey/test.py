@@ -13,6 +13,7 @@ class randomThread(Thread):
     def __init__(self):
         Thread.__init__(self)
     def run(self):
+        cfg.main()
         while True:
             cfg.randomise_task()
 
