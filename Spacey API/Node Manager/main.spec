@@ -4,10 +4,10 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['C:\\Users\\Looi Kai Wen\\Desktop\\Spacey_Code\\spacey\\Spacey API\\Node Manager'],
+             pathex=['/home/kaiwen98/Desktop/spacey/Spacey API/Node Manager'],
              binaries=[],
              datas=[],
-             hiddenimports=[],
+             hiddenimports=['PIL._tkinter_finder'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False )
+          console=True )

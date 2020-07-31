@@ -1,1 +1,0 @@
-from_redis: c:\Users\Looi Kai Wen\Desktop\Spacey_Code\spacey\Spacey API

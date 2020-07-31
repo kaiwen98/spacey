@@ -1,0 +1,1 @@
+./Node\ Manager/dist/main
