@@ -21,21 +21,29 @@ from platform import system as platf
 
 # Need to choose depending on running from exe or py. Should point to /Spacey API
 
-parentdir = basename(dir(abspath(__file__)))
-if (parentdir == "Node Manager"):
-    _root = dir(dir(abspath(__file__)))
-else:
-    if platf() == 'Linux':
-        _root = dir(dir(dir(abspath(__file__))))
+if platf() == 'Linux':
+    parentdir = dir(dir(sys.executable))
+    print(parentdir)
+    if basename(parentdir) == "Node Manager":
+        _root = dir(parentdir)
+    else: 
+        _root = dir(dir(abspath(__file__)))
 
-    elif platf() == 'Windows':
-        _root = dir(dir(dir(sys.executable)))
+
+
+elif platf() == 'Windows':
+    parentdir = basename(dir(abspath(__file__)))
+    if (parentdir == "Node Manager"):
+        _root = dir(dir(abspath(__file__)))
+    else:
+            _root = dir(dir(dir(sys.executable)))
    
 
 
 #_root = dir(dir(os.path.abspath(__file__))) 
 
 # To extract database interface functions
+print(_root)
 sys.path.append(join(_root, "Redis"))
 with open("text.txt", "w") as outfile:
     outfile.write("from_redis: {}".format(_root))
@@ -62,9 +70,9 @@ private_key_folder = os.path.join(_root, "private key")
 
 # Database information
 
-remote_host = "<REDIS HOST>"
-password = "<REDIS PASSWORD>"
-port = "<REDIS PORT>" #9
+remote_host = "uwu"
+password = "0w0"
+port = "@w@" #9
 
 
 
@@ -279,7 +287,6 @@ def decompile(root, local_disk = True):
         cfg.json_deserialize_image(processed_img, cfg.get_output_graphic_path())
         cfg.json_deserialize_image(processed_floorplan, cfg.get_output_floor_plan_path())
         for i in res_info_op:
-
             globals()[i] = resinfo[i] 
     else:
         no_floor_plan = False

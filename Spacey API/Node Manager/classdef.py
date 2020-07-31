@@ -981,6 +981,13 @@ class json_viewer(object):
             self.buttupdate.pack()
             cfg.session_name = self.dbselect.get()
             self.session_name_set = True
+
+            cfg.res_info = cfg.database.getResInfo(cfg.userid+"_"+cfg.session_name)
+            for i in cfg.res_info_op:
+                print(cfg.res_info)
+                cfg.getvar()[i] = cfg.res_info[i]
+            cfg.res_info.clear()
+
     def updateText(self, _text, _bg):
         
         self.obj.insert(END, _text, _bg)
@@ -1105,10 +1112,10 @@ class json_viewer(object):
         self.t2 = Text(res_addr_hr, width = 15, height = 7)
         self.t2.pack(padx = 2, pady = 2, fill = X)
 
-        Label(info_frame2, text = "Latitude", bg = "gray10", foreground = "white", font = ("Courier, 10")).pack(side = LEFT, padx = 10, pady = 10)
+        Label(info_frame2, text = "Lat", bg = "gray10", foreground = "white", font = ("Courier, 10")).pack(side = LEFT, padx = 10, pady = 10)
         Entry(info_frame2, textvariable = self.text_input[1], width = 7).pack(padx = 10, pady = 10, side = LEFT)
         
-        Label(info_frame2, text = "Longitude", bg = "gray10", foreground = "white", font = ("Courier, 10")).pack(side = LEFT, padx = 10, pady = 10)
+        Label(info_frame2, text = "Long", bg = "gray10", foreground = "white", font = ("Courier, 10")).pack(side = LEFT, padx = 10, pady = 10)
         Entry(info_frame2, textvariable = self.text_input[2], width = 7).pack(padx = 8, pady = 10, side = LEFT)
         #Button(info_frame4, text = "Register restaurant", command = self.uploadDB)
         if update: Button(info_frame4, text = "Update restaurant", command = partial(self.updateInfo, False), font = ("Courier, 10"), height = 3).pack(fill = X, expand = 1, padx = 10, pady = 10)
@@ -1274,7 +1281,7 @@ class json_viewer(object):
         self.session_name_set = False
         cfg.error.updateText("[DB] Created new session: "+ str(cfg.session_name), "pale green")
         cfg.local_disk  = False
-        cfg.database.clearDB(cfg.session_name)
+        #cfg.database.clearDB(cfg.session_name)
         if cfg.img is not None: cfg.img.save()
         #cfg.json_path = cfg.json_path + ".json"
 

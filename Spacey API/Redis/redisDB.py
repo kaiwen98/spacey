@@ -95,9 +95,9 @@ class redis_database(object):
         return self.res_list
 
     def clearDB(self, session_name):
-        if session_name not in self.client.lrange(self.user + "_registered_restaurants", 0, -1): return "Invalid input! Restaurant is not yet registered with your account..."
-        session_name = "NUS_" + session_name
-        for i in ["_coord", "_config", "_hash", "_occupancy", "res_info"]:
+        #if session_name not in self.client.lrange(self.user + "_registered_restaurants", 0, -1): return "Invalid input! Restaurant is not yet registered with your account..."
+        session_name = self.user+"_" + session_name
+        for i in ["_coord", "_config", "_hash", "_occupancy", "_res_info"]:
             name = str(session_name) + i
             self.client.delete(name)
         print("name: ", name)
@@ -130,6 +130,9 @@ class redis_database(object):
         return [json_file_config, json_file_occupancy, json_file_hash, json_file_coord]
 
     def setResInfo(self, name, res_info):
+        print(type(res_info))
+        print(res_info)
+
         full_name = name + "_"+"res_info"
         self.client.hmset(full_name, res_info)
         return True
@@ -148,11 +151,16 @@ class redis_database(object):
 
     # connects to remote database and stores json information there
     def exportToDB(self, session_name, import_from_script = None, reset = True):
-
-        res_name = (session_name.split('_'))[1]
+        
+        res_name = ((session_name.split('_'))[1])
+        res_name = res_name.strip()
+        print("resname>>>>>>>> ", res_name, "end")
         print(res_name)
+        print("reset: ", reset)
+        print(self.get_registered_restaurants())
         if res_name in self.get_registered_restaurants() and reset == True: 
-            self.clearDB(session_name)
+            self.client.set(session_name+"_img_update", "1")
+            self.clearDB(res_name)
             print("Cleared duplicate")
             print(self.client.keys())
 
@@ -195,15 +203,21 @@ class redis_database(object):
                 export_to_script[json_list.index(i)] = data
                 export_limit -= 1
                 if not export_limit: return export_to_script
+    def get_all_restaurant_from_user(self,user):
+        self.user = user
+        attr_name = user + "_registered_restaurants"
+        print(attr_name)
+        len_res = self.client.llen(attr_name)-1
+        return self.client.lrange(attr_name, 0, len_res)
 
 if __name__ == "__main__":
-    remote_host = '<REDIS HOST>'
-    password = '<REDIS PW>'
-    port = '<REDIS PORT>'
+    remote_host = "uwu"
+    password = "0w0"
+    port = "@w@" #9
 
     r = redis_database(root,remote_host, port, password)
     r.timeout()
-    r.user = 'NUS'
+    r.user = 'NTU'
     #r.clearUser('Macdonalds')
     #print(r.clearDB('NUSKFC'))
     print(r.client.lrange("NUS_registered_restaurants", 0,-1))
@@ -216,9 +230,18 @@ if __name__ == "__main__":
     print(r.client.hgetall('NUS_Macdonalds_occupancy'))
     #print(r.client.lrange("NUS" + "_registered_restaurants", 0, -1))
     print(r.client.hgetall('NUS_Frontier_res_info'))
+    print(r.client.keys())
+    print(r.client.lindex("Macdonalds_registered_restaurants", 0))
+    print(r.client.keys())
+    print(r.client.hgetall('users_private_key'))
+    print(r.client.smembers('registered_users'))
+    print(r.get_registered_restaurants())
+    print(r.get_all_restaurant_from_user('NTU'))
+    print(r.client.hgetall('users_info'))
+    print(r.client.hgetall('NTU_Macdonalds_occupancy'))
     # Life Hax
     #r.client.hmset('users_private_key',{'NUS': 'ec9193f8f25777fc0dbd511fdd617feee807ca9c4de6b51045b9cf98c535bcac'})
     #r.client.flushdb()
     #print(r.client.smembers('registered_users'))
-    
-    #r.client.delete("NUSSpacey_res_info")
+    print(r.client.hgetall("NTU_Macdonalds_coord"))
+    #print(r.clearDB("Macdonalds"))
