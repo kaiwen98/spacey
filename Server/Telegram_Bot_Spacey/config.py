@@ -107,14 +107,14 @@ class ResServer(object):
             cfg.json_deserialize_image(
                 coord["processed_img"], cfg.get_output_graphic_path(full_name))
             self.box_len = int(coord["box_len"])
-            del coord["processed_img"]
-            del coord["box_len"]
-            
 
             # self.restaurants.append(res.restaurant_info(
             #     full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len))
-            self.restaurants[i] = res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len)
-            
+            ser_img = coord["processed_img"]
+            del coord["processed_img"]
+            del coord["box_len"]
+
+            self.restaurants[i] = res.restaurant_info(full_name, occupancy, coord, cfg.get_output_graphic_path(full_name), self.box_len, ser_img)
 
     def scan_update(self):
         """

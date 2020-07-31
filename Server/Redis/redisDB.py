@@ -96,6 +96,7 @@ class redis_database(object):
         return self.res_list
 
     def clearDB(self, session_name):
+        print("clearDB")
         session_name = self.user + "_" + session_name
         for i in ["_coord", "_config", "_hash", "_occupancy"]:
             name = str(session_name) + i
@@ -127,7 +128,6 @@ class redis_database(object):
 
     # connects to remote database and stores json information there
     def exportToDB(self, res_name, import_from_script = None, reset = True):
-        
         if res_name in self.get_registered_restaurants() and reset == True: 
             self.clearDB(res_name)
 
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     r = redis_database(root,remote_host, port, password)
     r.timeout()
     
-    r.user = 'NUS'
+    r.user = 'NTU'
     #r.clearUser('Macdonalds')
     print(r.client.keys())
     print(r.client.lindex("Macdonalds_registered_restaurants", 0))
@@ -202,7 +202,7 @@ if __name__ == "__main__":
     print(r.get_registered_restaurants())
     print(r.get_all_restaurant_from_user('NUS'))
     print(r.client.hgetall('users_info'))
-    print(r.client.hgetall('NUS_Deck_occupancy'))
+    print(r.client.hgetall('NTU_Macdonalds_occupancy'))
     # r.client.flushdb()
     #print(r.client.smembers('registered_users'))
 

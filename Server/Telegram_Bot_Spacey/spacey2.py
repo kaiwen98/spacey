@@ -202,17 +202,15 @@ def check_what(update, context):
         plt.clf()
         #Generate FLOORPLAN
         #config_obj = cfg.ResServer(area)
-        print(area)
-        print(res_store.keys())
-        if area not in res_store.keys():
-            res_store[area] = cfg.ResServer(area)
 
-        config_obj = res_store[area]
+
+        config_obj = cfg.ResServer(area)
 		
         restaurants_data = config_obj.get_info()
         for loc_data, obj_data in restaurants_data.items():
             if location == loc_data:
                 occupancy = cfg.database.client.hgetall(area+'_'+location+'_occupancy')
+                obj_data.update_img()
                 imageupdate(obj_data, occupancy)
                 imagegen(obj_data)
 
@@ -1140,14 +1138,14 @@ def main():
     # job_minute2 = j.run_repeating(update_seats, interval=888, first=0) #run every 3 mins 180
     
     # Start the Bot
-    """
+    
     updater.start_polling()
     """
     updater.start_webhook(listen="0.0.0.0",
                       port= int(PORT),
                       url_path=TOKEN)
     updater.bot.setWebhook("https://spaceyherok.herokuapp.com/" + TOKEN)
-    
+    """
     updater.idle()
 
 
