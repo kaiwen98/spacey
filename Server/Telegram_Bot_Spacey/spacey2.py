@@ -1138,14 +1138,14 @@ def main():
     # job_minute2 = j.run_repeating(update_seats, interval=888, first=0) #run every 3 mins 180
     
     # Start the Bot
-    
+    """
     updater.start_polling()
     """
     updater.start_webhook(listen="0.0.0.0",
                       port= int(PORT),
                       url_path=TOKEN)
     updater.bot.setWebhook("https://spaceyherok.herokuapp.com/" + TOKEN)
-    """
+    
     updater.idle()
 
 

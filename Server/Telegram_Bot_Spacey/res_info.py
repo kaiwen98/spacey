@@ -16,10 +16,11 @@ class restaurant_info(object):
 
     def update_img(self):
         coord = {}
-        full_name_coord = self.name + "_coord" 
-        coord = cfg.database.client.hgetall(full_name_coord)
-
-        if self.serialized_img != coord["processed_img"]:
+        full_name_update = self.name + "_img_update" 
+        flag = cfg.database.client.exists(full_name_update)
+        coord = cfg.database.client.hgetall(self.name+"_coord")
+        if flag:
+            cfg.database.client.delete(full_name_update)
             print("image changed!")
             cfg.json_deserialize_image(coord["processed_img"], cfg.get_output_graphic_path(self.name))
             self.occupancy = cfg.database.client.hgetall(self.name + "_occupancy")
