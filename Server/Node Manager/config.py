@@ -214,7 +214,6 @@ def main():
         x.append(ResServer(i))
 
 def randomise_task():
-    while(True):
         for i in x:
             i.randomize()
             time.sleep(10)
