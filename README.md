@@ -1,7 +1,8 @@
 # SPACEY: IoT Solution for occupancy management in restaurant chains
 ![](https://img.theculturetrip.com/wp-content/uploads/2018/05/de4wxm.jpg)
 
-
+## Documentation
+https://tinyurl.com/spaceydoc
 ## How to use:
 * [**Telegram Bot**](https://github.com/kaiwen98/spacey/tree/master/Server)
   <br>You can try our bot right now! Our bot name is @spaceynusbot. Do let us know what you think! </br><br/>
